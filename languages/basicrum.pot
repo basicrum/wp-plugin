@@ -1,0 +1,97 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Basic Rum Wordpress Plugin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-01 08:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.3; wp-6.0.3\n"
+"X-Domain: basicrum"
+
+#. Name of the plugin
+msgid "Basic Rum Wordpress Plugin"
+msgstr ""
+
+#: admin/admin-menu.php:11
+msgid "BasicRUM"
+msgstr ""
+
+#: admin/admin-menu.php:10
+msgid "BasicRUM Config"
+msgstr ""
+
+#. Description of the plugin
+msgid "Budget - Open Source - Real User Monitoring system."
+msgstr ""
+
+#: admin/settings-register.php:43
+msgid "Delay Beacon Sending:"
+msgstr ""
+
+#: admin/settings-callbacks.php:56
+msgid "First Option"
+msgstr ""
+
+#: admin/settings-register.php:16
+msgid "General Settings"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://www.basicrum.com/"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.basicrum.com/contact/"
+msgstr ""
+
+#: admin/settings-callbacks.php:82
+msgid "Insert script in header"
+msgstr ""
+
+#: admin/settings-callbacks.php:83
+msgid "Insert script in the footer"
+msgstr ""
+
+#: admin/settings-register.php:53
+msgid "Script Insert Options:"
+msgstr ""
+
+#: admin/settings-register.php:68
+msgid "Select options"
+msgstr ""
+
+#: admin/settings-register.php:57
+msgid "Select where to insert script."
+msgstr ""
+
+#: admin/settings-register.php:32
+msgid "Send Data to:"
+msgstr ""
+
+#: admin/settings-register.php:47
+msgid "Set delay in milliseconds (For example 5000)"
+msgstr ""
+
+#: admin/settings-register.php:36
+msgid "Set the URL, where data from Boomerang script should be send"
+msgstr ""
+
+#. Author of the plugin
+msgid "Tsvetan Stoychev"
+msgstr ""
+
+#: admin/settings-register.php:64
+msgid "What do you want to monitor:"
+msgstr ""
+
+#: admin/settings-register.php:23
+msgid "What would you like to monitor?"
+msgstr ""

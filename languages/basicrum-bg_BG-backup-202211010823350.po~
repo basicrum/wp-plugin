@@ -1,0 +1,80 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Basic Rum Wordpress Plugin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-31 14:45+0000\n"
+"PO-Revision-Date: 2022-11-01 08:11+0000\n"
+"Last-Translator: \n"
+"Language-Team: Bulgarian\n"
+"Language: bg_BG\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.3; wp-6.0.3\n"
+"X-Domain: basicrum"
+
+#. Name of the plugin
+msgid "Basic Rum Wordpress Plugin"
+msgstr "Basic Rum плъгин за Уърдпрес"
+
+#: admin/admin-menu.php:11
+msgid "BasicRUM"
+msgstr "BasicRUM"
+
+#: admin/admin-menu.php:10
+msgid "BasicRUM Config"
+msgstr "Настройки на BasicRUM"
+
+#. Description of the plugin
+msgid "Budget - Open Source - Real User Monitoring system."
+msgstr "Budget - Open Source - Real User Monitoring system."
+
+#: admin/settings-callbacks.php:56
+msgid "First Option"
+msgstr "Първа опция"
+
+#: admin/settings-register.php:16
+msgid "General Settings"
+msgstr "Основни настройки"
+
+#. URI of the plugin
+msgid "https://www.basicrum.com/"
+msgstr "https://www.basicrum.com/"
+
+#. Author URI of the plugin
+msgid "https://www.basicrum.com/contact/"
+msgstr "https://www.basicrum.com/contact/"
+
+#: admin/settings-callbacks.php:82 admin/settings-validate.php:29
+msgid "Insert script in header"
+msgstr "Вмъкване на скрипта в хед таг-а на сайта"
+
+#: admin/settings-callbacks.php:83 admin/settings-validate.php:30
+msgid "Insert script in the footer"
+msgstr "Вмъкване на скрипта във футъра на сайта"
+
+#: admin/settings-register.php:68
+msgid "Select options"
+msgstr "Изберете опция"
+
+#: admin/settings-register.php:57
+msgid "Select where to insert script."
+msgstr "Изберете къде да бъде вмъкнат скрипта"
+
+#: admin/settings-register.php:47
+msgid "Set delay in milliseconds (For example 5000)"
+msgstr "Задайте забавяне в милисекунди (например 5000)"
+
+#: admin/settings-register.php:36
+msgid "Set the URL, where data from Boomerang script should be send"
+msgstr "Задайте URL, където да бъдат изпращани данните от скрипта"
+
+#. Author of the plugin
+msgid "Tsvetan Stoychev"
+msgstr "Цветан Стойчев"
+
+#: admin/settings-register.php:23
+msgid "What would you like to monitor?"
+msgstr "Какви данни желаете да събирате?"
