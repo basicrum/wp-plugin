@@ -3,31 +3,26 @@
 if ( ! defined( 'ABSPATH' ) ){
     exit;
 }
+
+function basicrum_get_option($key) {
+    // On plugin install, all values doesn't exist in db. That's why we do a check and get values from function basicrum_options_default()
+    $result = get_option('basicrum_options')[$key];
+    if (isset($result)) {
+        return $result;
+    }
+    return basicrum_options_default()[$key];
+}
+
 function basicrum_code() {
-// On plugin install, all values doesn't exist in db. That's why we do a check and get values from function basicrum_options_default()
 
-    if ( !isset( get_option('basicrum_options')['url_to_send_data'] ) ) {
-        $url = basicrum_options_default()['url_to_send_data'];
-    } else {
-        $url = get_option('basicrum_options')['url_to_send_data'];
-    }
-
-    if ( !isset( get_option('basicrum_options')['delay_sending_data'] ) ) {
-        $milliseconds = basicrum_options_default()['delay_sending_data'];
-    } else {
-        $milliseconds = get_option('basicrum_options')['delay_sending_data'];
-    }
-
-    if ( !isset( get_option('basicrum_options')['monitoring_type'] ) ) {
-        $boomerang_version = basicrum_options_default()['monitoring_type'];
-    } else {
-        $boomerang_version = get_option('basicrum_options')['monitoring_type'];
-    }
+    $url = basicrum_get_option('url_to_send_data');
+    $milliseconds = basicrum_get_option('delay_sending_data');
+    $boomerang_version = basicrum_get_option('monitoring_type');
 
     $boomerangConfig = <<<EOT
 <script data-cfasync="false">
 (function(w) {
-    var WAIT_AFTER_ONLOAD_MILLISECONDS = {{$milliseconds}};
+    var WAIT_AFTER_ONLOAD_MILLISECONDS = {$milliseconds};
 
     if (!w) {
         return;
@@ -54,7 +49,7 @@ function basicrum_code() {
     };
 
     w.basicRumBoomerangConfig = {
-        beacon_url: "{{$url}}",
+        beacon_url: "{$url}",
         instrument_xhr: true,
         Continuity: {
             enabled: true
