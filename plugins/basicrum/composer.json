@@ -31,14 +31,17 @@
         }
     },
     "scripts": {
-        "lint": "phpcs",
-        "lint:fix": "phpcbf",
+        "lint": "phpcs --standard=phpcs.ruleset.xml",
+        "lint:fix": "phpcbf --standard=phpcs.ruleset.xml",
         "lint:php": "parallel-lint --exclude vendor --exclude node_modules .",
         "unit": "phpunit",
         "integration": "phpunit --configuration phpunit-with-integration.xml",
         "coverage": "XDEBUG_MODE=coverage phpunit --coverage-clover coverage.xml"
     },
     "config": {
+        "platform": {
+            "php": "7.4.33"
+        },
         "allow-plugins": {
             "composer/installers": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
