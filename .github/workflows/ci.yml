@@ -85,6 +85,11 @@ jobs:
         working-directory: plugins/basicrum
         run: composer install --no-interaction --prefer-dist
 
+      - name: Configure MySQL authentication
+        run: |
+          docker exec "${{ job.services.mysql.id }}" mysql --protocol=socket --user=root --password=root \
+            --execute="ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';"
+
       - name: Install WordPress test library
         run: |
           set -e
