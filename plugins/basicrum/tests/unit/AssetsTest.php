@@ -38,6 +38,7 @@ class AssetsTest extends TestCase {
 			return 'https://example.com/wp-content/plugins/basicrum/' . $path;
 		});
 		Functions\when( 'esc_url' )->returnArg();
+		Functions\when( 'esc_url_raw' )->returnArg();
 		Functions\when( 'sanitize_text_field' )->returnArg();
 		Functions\when( 'absint' )->alias( function( $val ) {
 			return abs( (int) $val );
@@ -219,6 +220,38 @@ class AssetsTest extends TestCase {
 		$this->assertStringContainsString( 'beacon.example.com/catcher', $captured_js );
 		$this->assertStringContainsString( 'basicRumBoomerangConfig', $captured_js );
 		$this->assertStringContainsString( '"instrument_xhr": false', $captured_js );
+	}
+
+	/**
+	 * Test that beacon URL query parameters are not HTML-encoded in JavaScript.
+	 */
+	public function test_beacon_url_query_parameters_are_preserved() {
+		$captured_js = null;
+		$beacon_url  = 'https://beacon.example.com/catcher?site=one&sample=100';
+
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn( $this->enabled_settings( array( 'beacon_url' => $beacon_url ) ) );
+
+		$this->stub_wp_parse_args();
+		$this->stub_apply_filters_passthrough();
+		Functions\when( 'is_user_logged_in' )->justReturn( false );
+		Functions\when( 'wp_register_script' )->justReturn();
+		Functions\when( 'wp_enqueue_script' )->justReturn();
+
+		Functions\expect( 'wp_add_inline_script' )
+			->once()
+			->andReturnUsing( function( $handle, $js, $position ) use ( &$captured_js ) {
+				$captured_js = $js;
+			});
+
+		$assets = new Assets();
+		$assets->maybe_enqueue();
+
+		$this->assertNotNull( $captured_js, 'Inline script should have been added.' );
+		$this->assertStringContainsString( $beacon_url, $captured_js );
+		$this->assertStringNotContainsString( '&#038;', $captured_js );
+		$this->assertStringNotContainsString( '&amp;', $captured_js );
 	}
 
 	// -------------------------------------------------------------------------

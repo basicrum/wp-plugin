@@ -151,7 +151,7 @@ class Assets {
 	private function build_config_js( $settings ) {
 		$page_type_detector = new PageTypeDetector();
 		$page_type          = $page_type_detector->detect();
-		$beacon_url         = esc_url( $settings['beacon_url'] );
+		$beacon_url         = esc_url_raw( $settings['beacon_url'] );
 		$site_id            = sanitize_text_field( $settings['site_id'] );
 		$boomerang_version  = Helpers::get_boomerang_version();
 		$boomerang_url      = esc_url( Helpers::get_asset_url( 'js/boomr/boomerang-' . $boomerang_version . '.cutting-edge.min.js' ) );
