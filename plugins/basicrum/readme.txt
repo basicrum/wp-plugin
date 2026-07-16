@@ -65,14 +65,14 @@ Yes. When WooCommerce is active, the plugin automatically detects shop, product,
 
 = Can I use an HTTP beacon URL during local development? =
 
-Yes. Enable Development Mode under Basicrum's Developer Settings to preserve HTTP beacon URLs. Keep it disabled on production sites so HTTP beacon URLs are automatically upgraded to HTTPS.
+Yes. Enable HTTP Strictness under Basicrum's Developer Settings to preserve HTTP beacon URLs. Keep it disabled on production sites so HTTP beacon URLs are automatically upgraded to HTTPS.
 
 == Screenshots ==
 
 1. Admin settings page - General settings with beacon URL and Brum Site ID.
 2. Privacy settings - Consent mode configuration with JS API documentation.
 3. Performance settings - Beacon timing and script position options.
-4. Developer settings - Development mode and loader debugging options.
+4. Developer settings - HTTP strictness and loader debugging options.
 
 == Changelog ==
 

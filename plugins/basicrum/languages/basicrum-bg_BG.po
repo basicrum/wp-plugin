@@ -212,10 +212,10 @@ msgstr "Невалиден Brum Site ID. Копирайте го от админ
 msgid "Delay cannot exceed 30000 milliseconds. It has been capped at 30000."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:276
-msgid "Development Mode"
-msgstr ""
-
 #: src/Admin/Settings/Page.php:282
 msgid "Allow HTTP beacon URLs for local testing. Do not enable this on production sites."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:276
+msgid "HTTP Strictness"
 msgstr ""

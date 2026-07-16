@@ -164,7 +164,7 @@ msgid "Developer Settings"
 msgstr ""
 
 #: src/Admin/Settings/Page.php:276
-msgid "Development Mode"
+msgid "HTTP Strictness"
 msgstr ""
 
 #: src/Admin/Settings/Page.php:282

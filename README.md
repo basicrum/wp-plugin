@@ -37,7 +37,7 @@ Default local administrator credentials are `admin` /
 port, database, site, or administrator values. `make down` preserves the
 site data; `make clean` resets it.
 
-To use an HTTP beacon URL during local testing, enable **Development Mode**
+To use an HTTP beacon URL during local testing, enable **HTTP Strictness**
 under **Basicrum > Developer Settings**. Keep it disabled on production sites
 so HTTP beacon URLs are automatically upgraded to HTTPS.
 

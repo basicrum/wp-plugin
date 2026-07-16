@@ -273,7 +273,7 @@ class Page {
 
 		add_settings_field(
 			'development_mode',
-			esc_html__( 'Development Mode', 'basicrum' ),
+			esc_html__( 'HTTP Strictness', 'basicrum' ),
 			array( $this, 'render_checkbox_field' ),
 			self::SLUG,
 			'basicrum_section_developer',
