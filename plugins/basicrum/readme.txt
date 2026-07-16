@@ -63,6 +63,10 @@ Yes. Enable Consent Mode in the settings to require explicit user consent before
 
 Yes. When WooCommerce is active, the plugin automatically detects shop, product, cart, checkout, and order confirmation page types.
 
+= Can I use an HTTP beacon URL during local development? =
+
+Yes. Enable Development Mode under Basicrum's Developer Settings to preserve HTTP beacon URLs. Keep it disabled on production sites so HTTP beacon URLs are automatically upgraded to HTTPS.
+
 == Screenshots ==
 
 1. Admin settings page - General settings with beacon URL and Brum Site ID.

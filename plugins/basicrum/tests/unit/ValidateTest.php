@@ -91,6 +91,29 @@ class ValidateTest extends TestCase {
 	}
 
 	/**
+	 * Test HTTP beacon URLs are accepted when development mode is enabled.
+	 */
+	public function test_http_beacon_url_is_accepted_in_development_mode() {
+		$input = array(
+			'beacon_url'       => 'http://127.0.0.1:3100/beacon/catcher',
+			'development_mode' => '1',
+		);
+		$result = $this->validate->sanitize( $this->full_input( $input ) );
+		$this->assertSame( 'http://127.0.0.1:3100/beacon/catcher', $result['beacon_url'] );
+		$this->assertSame( '1', $result['development_mode'] );
+	}
+
+	/**
+	 * Test HTTP beacon URLs are upgraded when development mode is disabled.
+	 */
+	public function test_http_beacon_url_is_upgraded_without_development_mode() {
+		$input  = array( 'beacon_url' => 'http://example.com/beacon' );
+		$result = $this->validate->sanitize( $this->full_input( $input ) );
+		$this->assertSame( 'https://example.com/beacon', $result['beacon_url'] );
+		$this->assertSame( '0', $result['development_mode'] );
+	}
+
+	/**
 	 * Test delay is capped at 30000ms.
 	 */
 	public function test_delay_is_capped_at_max() {
@@ -162,6 +185,7 @@ class ValidateTest extends TestCase {
 	private function full_input( $overrides = array() ) {
 		$defaults = array(
 			'enabled'                => '0',
+			'development_mode'       => '0',
 			'beacon_url'             => '',
 			'brum_site_id'           => '',
 			'consent_enabled'        => '0',

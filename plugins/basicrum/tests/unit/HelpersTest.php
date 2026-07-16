@@ -24,6 +24,7 @@ class HelpersTest extends TestCase {
 
 		$expected_keys = array(
 			'enabled',
+			'development_mode',
 			'beacon_url',
 			'brum_site_id',
 			'track_admins',

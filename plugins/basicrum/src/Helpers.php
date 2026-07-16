@@ -56,6 +56,7 @@ class Helpers {
 	public static function get_defaults() {
 		return array(
 			'enabled'                => '0',
+			'development_mode'       => '0',
 			'beacon_url'             => '',
 			'brum_site_id'           => '',
 			'track_admins'           => '0',

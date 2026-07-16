@@ -256,6 +256,18 @@ class Page {
 		);
 
 		add_settings_field(
+			'development_mode',
+			esc_html__( 'Development Mode', 'basicrum' ),
+			array( $this, 'render_checkbox_field' ),
+			self::SLUG,
+			'basicrum_section_developer',
+			array(
+				'id'    => 'development_mode',
+				'label' => __( 'Allow HTTP beacon URLs for local testing. Do not enable this on production sites.', 'basicrum' ),
+			)
+		);
+
+		add_settings_field(
 			'script_position',
 			esc_html__( 'Script Position', 'basicrum' ),
 			array( $this, 'render_radio_field' ),

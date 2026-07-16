@@ -52,8 +52,11 @@ class Validate {
 		// Enabled (checkbox).
 		$output['enabled'] = $this->sanitize_checkbox( $input, 'enabled' );
 
+		// Development mode (checkbox).
+		$output['development_mode'] = $this->sanitize_checkbox( $input, 'development_mode' );
+
 		// Beacon URL.
-		$output['beacon_url'] = $this->sanitize_beacon_url( $input, $defaults );
+		$output['beacon_url'] = $this->sanitize_beacon_url( $input, $defaults, $output['development_mode'] );
 
 		// Brum Site ID.
 		$output['brum_site_id'] = $this->sanitize_brum_site_id( $input );
@@ -106,19 +109,20 @@ class Validate {
 	/**
 	 * Sanitize and validate the beacon URL.
 	 *
-	 * @param array $input    Raw input.
-	 * @param array $defaults Default values.
+	 * @param array  $input            Raw input.
+	 * @param array  $defaults         Default values.
+	 * @param string $development_mode Whether development mode is enabled.
 	 * @return string Sanitized URL.
 	 */
-	private function sanitize_beacon_url( $input, $defaults ) {
+	private function sanitize_beacon_url( $input, $defaults, $development_mode ) {
 		if ( empty( $input['beacon_url'] ) ) {
 			return $defaults['beacon_url'];
 		}
 
 		$url = esc_url_raw( $input['beacon_url'], array( 'https', 'http' ) );
 
-		// Enforce HTTPS - upgrade HTTP to HTTPS.
-		if ( 0 === strpos( $url, 'http://' ) ) {
+		// Enforce HTTPS unless development mode explicitly allows HTTP.
+		if ( 0 === strpos( $url, 'http://' ) && '1' !== $development_mode ) {
 			$url = 'https://' . substr( $url, 7 );
 
 			add_settings_error(

@@ -148,65 +148,73 @@ msgid "Developer Settings"
 msgstr ""
 
 #: src/Admin/Settings/Page.php:260
-msgid "Script Position"
+msgid "Development Mode"
 msgstr ""
 
 #: src/Admin/Settings/Page.php:266
+msgid "Allow HTTP beacon URLs for local testing. Do not enable this on production sites."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:272
+msgid "Script Position"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:278
 msgid "Where to insert the monitoring script."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:268
+#: src/Admin/Settings/Page.php:280
 msgid "Header (wp_head)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:269
+#: src/Admin/Settings/Page.php:281
 msgid "Footer (wp_footer)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:276
+#: src/Admin/Settings/Page.php:288
 msgid "Use Unminified Loaders"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:282
+#: src/Admin/Settings/Page.php:294
 msgid "Load unminified JavaScript loaders for debugging."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:468
+#: src/Admin/Settings/Page.php:480
 msgid "~30 KB gzipped"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:482
+#: src/Admin/Settings/Page.php:494
 msgid "Consent JavaScript API"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:483
+#: src/Admin/Settings/Page.php:495
 msgid "When consent mode is enabled, Boomerang will not load until the user gives consent. Use the following JavaScript API in your consent banner or cookie notice:"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:484
+#: src/Admin/Settings/Page.php:496
 msgid "Call this to grant consent and start monitoring. Sets a BRUM_CONSENT cookie (1 year, Strict, Secure)."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:485
+#: src/Admin/Settings/Page.php:497
 msgid "Call this to revoke consent. Disables Boomerang and removes tracking cookies."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:486
+#: src/Admin/Settings/Page.php:498
 msgid "Example:"
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:127
+#: src/Admin/Settings/Validate.php:131
 msgid "Beacon URL was automatically upgraded to HTTPS."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:136
+#: src/Admin/Settings/Validate.php:140
 msgid "Invalid Beacon URL. The default URL has been restored."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:162
+#: src/Admin/Settings/Validate.php:166
 msgid "Invalid Brum Site ID. Copy it from the Basicrum backoffice and try again."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:189
+#: src/Admin/Settings/Validate.php:193
 msgid "Delay cannot exceed 30000 milliseconds. It has been capped at 30000."
 msgstr ""
