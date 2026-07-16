@@ -71,7 +71,8 @@ Yes. Enable Development Mode under Basicrum's Developer Settings to preserve HTT
 
 1. Admin settings page - General settings with beacon URL and Brum Site ID.
 2. Privacy settings - Consent mode configuration with JS API documentation.
-3. Developer settings - Script position and debug options.
+3. Performance settings - Beacon timing and script position options.
+4. Developer settings - Development mode and loader debugging options.
 
 == Changelog ==
 

@@ -144,23 +144,23 @@ msgstr ""
 msgid "Milliseconds to delay the beacon after onload. Leave 0 to disable the delay."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:253
+#: src/Admin/Settings/Page.php:269
 msgid "Developer Settings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:272
+#: src/Admin/Settings/Page.php:246
 msgid "Script Position"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:278
+#: src/Admin/Settings/Page.php:252
 msgid "Where to insert the monitoring script."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:280
+#: src/Admin/Settings/Page.php:254
 msgid "Header (wp_head)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:281
+#: src/Admin/Settings/Page.php:255
 msgid "Footer (wp_footer)"
 msgstr ""
 
@@ -212,10 +212,10 @@ msgstr "Невалиден Brum Site ID. Копирайте го от админ
 msgid "Delay cannot exceed 30000 milliseconds. It has been capped at 30000."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:260
+#: src/Admin/Settings/Page.php:276
 msgid "Development Mode"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:266
+#: src/Admin/Settings/Page.php:282
 msgid "Allow HTTP beacon URLs for local testing. Do not enable this on production sites."
 msgstr ""

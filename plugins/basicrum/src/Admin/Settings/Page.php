@@ -240,6 +240,22 @@ class Page {
 				'max'   => 30000,
 			)
 		);
+
+		add_settings_field(
+			'script_position',
+			esc_html__( 'Script Position', 'basicrum' ),
+			array( $this, 'render_radio_field' ),
+			self::SLUG,
+			'basicrum_section_performance',
+			array(
+				'id'      => 'script_position',
+				'label'   => __( 'Where to insert the monitoring script.', 'basicrum' ),
+				'options' => array(
+					'header' => __( 'Header (wp_head)', 'basicrum' ),
+					'footer' => __( 'Footer (wp_footer)', 'basicrum' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -264,22 +280,6 @@ class Page {
 			array(
 				'id'    => 'development_mode',
 				'label' => __( 'Allow HTTP beacon URLs for local testing. Do not enable this on production sites.', 'basicrum' ),
-			)
-		);
-
-		add_settings_field(
-			'script_position',
-			esc_html__( 'Script Position', 'basicrum' ),
-			array( $this, 'render_radio_field' ),
-			self::SLUG,
-			'basicrum_section_developer',
-			array(
-				'id'      => 'script_position',
-				'label'   => __( 'Where to insert the monitoring script.', 'basicrum' ),
-				'options' => array(
-					'header' => __( 'Header (wp_head)', 'basicrum' ),
-					'footer' => __( 'Footer (wp_footer)', 'basicrum' ),
-				),
 			)
 		);
 
