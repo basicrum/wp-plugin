@@ -17,6 +17,12 @@ TMPDIR=$(echo "$TMPDIR" | sed -e "s/\/$//")
 WP_TESTS_DIR=${WP_TESTS_DIR-$TMPDIR/wordpress-tests-lib}
 WP_CORE_DIR=${WP_CORE_DIR-$TMPDIR/wordpress}
 
+if mysql --help 2>&1 | grep -q -- '--ssl-mode'; then
+	MYSQL_SSL_OPTION=' --ssl-mode=DISABLED'
+else
+	MYSQL_SSL_OPTION=' --ssl=0'
+fi
+
 download() {
 	if [ "$(command -v curl)" ]; then
 		curl -s "$1" > "$2"
@@ -142,11 +148,11 @@ install_db() {
 
 	if ! [ -z "$DB_HOSTNAME" ]; then
 		if [ "$(echo "$DB_SOCK_OR_PORT" | grep -e '^[0-9]\{1,\}$')" ]; then
-			EXTRA=" --host=$DB_HOSTNAME --port=$DB_SOCK_OR_PORT --protocol=tcp --skip-ssl"
+			EXTRA=" --host=$DB_HOSTNAME --port=$DB_SOCK_OR_PORT --protocol=tcp$MYSQL_SSL_OPTION"
 		elif ! [ -z "$DB_SOCK_OR_PORT" ]; then
 			EXTRA=" --socket=$DB_SOCK_OR_PORT"
 		else
-			EXTRA=" --host=$DB_HOSTNAME --protocol=tcp --skip-ssl"
+			EXTRA=" --host=$DB_HOSTNAME --protocol=tcp$MYSQL_SSL_OPTION"
 		fi
 	fi
 
