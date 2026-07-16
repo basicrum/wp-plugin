@@ -12,12 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Setup class — handles plugin activation and deactivation.
+ * Setup class - handles plugin activation and deactivation.
  */
 class Setup {
 
 	/**
-	 * Constructor — register lifecycle hooks.
+	 * Constructor - register lifecycle hooks.
 	 */
 	public function __construct() {
 		register_activation_hook( BASICRUM_PLUGIN_FILE, array( $this, 'activate' ) );

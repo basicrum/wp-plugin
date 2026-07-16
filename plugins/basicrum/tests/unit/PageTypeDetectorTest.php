@@ -12,7 +12,7 @@ use Basicrum\WP\Tests\TestCase;
 use Brain\Monkey\Functions;
 
 /**
- * PageTypeDetectorTest — tests all conditional tag mappings.
+ * PageTypeDetectorTest - tests all conditional tag mappings.
  */
 class PageTypeDetectorTest extends TestCase {
 
@@ -195,7 +195,7 @@ class PageTypeDetectorTest extends TestCase {
 	 * @param array $true_conditionals List of conditional function names that should return true.
 	 */
 	private function stub_woocommerce_conditionals( $true_conditionals = array() ) {
-		// Standard WP conditionals — all false.
+		// Standard WP conditionals - all false.
 		$wp_conditionals = array(
 			'is_front_page', 'is_single', 'is_page', 'is_category',
 			'is_tag', 'is_author', 'is_date', 'is_archive', 'is_search', 'is_404',
@@ -204,7 +204,7 @@ class PageTypeDetectorTest extends TestCase {
 			Functions\when( $func )->justReturn( false );
 		}
 
-		// WooCommerce conditionals — define all, set matching ones to true.
+		// WooCommerce conditionals - define all, set matching ones to true.
 		$wc_conditionals = array(
 			'is_order_received_page', 'is_checkout', 'is_cart',
 			'is_product', 'is_product_category', 'is_shop', 'is_account_page',

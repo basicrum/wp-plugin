@@ -16,13 +16,13 @@ Basicrum is a free, open source Real User Monitoring (RUM) system. This plugin i
 
 **Features:**
 
-* **Real User Monitoring** — Collect page load timing, resource timing, and continuity metrics from actual visitors.
-* **Page Type Detection** — Automatically tags beacons with the WordPress page type (home, post, page, category, archive, search, 404) and WooCommerce types (product, cart, checkout).
-* **Site ID** — UUID v4 identifier to distinguish multiple sites reporting to the same beacon endpoint.
-* **GDPR Consent Mode** — Conditional loading with JavaScript API (`OPT_IN_BASIC_RUM()` / `OPT_OUT_BASIC_RUM()`) for consent banner integration.
-* **3-Tier Script Loading** — Preload → iframe → direct script loading strategy for optimal performance.
-* **Configurable Beacon Delay** — Wait after onload before sending the beacon for more complete data collection.
-* **Cache Plugin Compatibility** — Automatically excluded from optimization by WP Rocket, Autoptimize, LiteSpeed Cache, SG Optimizer, W3 Total Cache, and WP Optimize.
+* **Real User Monitoring** - Collect page load timing, resource timing, and continuity metrics from actual visitors.
+* **Page Type Detection** - Automatically tags beacons with the WordPress page type (home, post, page, category, archive, search, 404) and WooCommerce types (product, cart, checkout).
+* **Site ID** - UUID v4 identifier to distinguish multiple sites reporting to the same beacon endpoint.
+* **GDPR Consent Mode** - Conditional loading with JavaScript API (`OPT_IN_BASIC_RUM()` / `OPT_OUT_BASIC_RUM()`) for consent banner integration.
+* **3-Tier Script Loading** - Preload → iframe → direct script loading strategy for optimal performance.
+* **Configurable Beacon Delay** - Wait after onload before sending the beacon for more complete data collection.
+* **Cache Plugin Compatibility** - Automatically excluded from optimization by WP Rocket, Autoptimize, LiteSpeed Cache, SG Optimizer, W3 Total Cache, and WP Optimize.
 
 **How it works:**
 
@@ -65,9 +65,9 @@ Yes. When WooCommerce is active, the plugin automatically detects shop, product,
 
 == Screenshots ==
 
-1. Admin settings page — General settings with beacon URL and Site ID.
-2. Privacy settings — Consent mode configuration with JS API documentation.
-3. Developer settings — Script position and debug options.
+1. Admin settings page - General settings with beacon URL and Site ID.
+2. Privacy settings - Consent mode configuration with JS API documentation.
+3. Developer settings - Script position and debug options.
 
 == Changelog ==
 

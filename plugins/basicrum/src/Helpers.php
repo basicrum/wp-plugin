@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Helpers class — settings retrieval and utility methods.
+ * Helpers class - settings retrieval and utility methods.
  */
 class Helpers {
 

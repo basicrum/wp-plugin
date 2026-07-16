@@ -12,7 +12,7 @@ use Basicrum\WP\Tests\TestCase;
 use Brain\Monkey\Functions;
 
 /**
- * ValidateTest — tests input sanitization and validation.
+ * ValidateTest - tests input sanitization and validation.
  */
 class ValidateTest extends TestCase {
 

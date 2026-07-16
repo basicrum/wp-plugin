@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Validate class — sanitize callback for register_setting().
+ * Validate class - sanitize callback for register_setting().
  *
  * UUID v4 regex ported from basicrum-magento-1 SiteId.php backend model.
  */
@@ -119,7 +119,7 @@ class Validate {
 
 		$url = esc_url_raw( $input['beacon_url'], array( 'https', 'http' ) );
 
-		// Enforce HTTPS — upgrade HTTP to HTTPS.
+		// Enforce HTTPS - upgrade HTTP to HTTPS.
 		if ( 0 === strpos( $url, 'http://' ) ) {
 			$url = 'https://' . substr( $url, 7 );
 

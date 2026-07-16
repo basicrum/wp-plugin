@@ -12,7 +12,7 @@ use Basicrum\WP\Tests\TestCase;
 use Brain\Monkey\Functions;
 
 /**
- * HelpersTest — tests settings retrieval and utility methods.
+ * HelpersTest - tests settings retrieval and utility methods.
  */
 class HelpersTest extends TestCase {
 

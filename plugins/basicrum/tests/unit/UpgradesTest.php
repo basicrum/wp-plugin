@@ -12,7 +12,7 @@ use Basicrum\WP\Tests\TestCase;
 use Brain\Monkey\Functions;
 
 /**
- * UpgradesTest — tests version-based migration logic.
+ * UpgradesTest - tests version-based migration logic.
  */
 class UpgradesTest extends TestCase {
 

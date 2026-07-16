@@ -12,7 +12,7 @@ use Basicrum\WP\Tests\TestCase;
 use Brain\Monkey\Functions;
 
 /**
- * AssetsTest — tests script registration and inline config generation.
+ * AssetsTest - tests script registration and inline config generation.
  */
 class AssetsTest extends TestCase {
 

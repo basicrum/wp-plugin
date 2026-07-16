@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * PageTypeDetector class — maps WordPress conditional tags to
+ * PageTypeDetector class - maps WordPress conditional tags to
  * human-readable page type labels sent as `p_type` in Boomerang beacons.
  *
  * Reference: basicrum-magento-1 PageTypeDetector.php (27 page types)
@@ -95,7 +95,7 @@ class PageTypeDetector {
 	/**
 	 * Detect standard WordPress page types.
 	 *
-	 * Checked in specificity order — most specific first.
+	 * Checked in specificity order - most specific first.
 	 *
 	 * @return string|null Page type or null if undetectable.
 	 */

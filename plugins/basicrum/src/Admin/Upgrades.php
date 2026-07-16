@@ -14,14 +14,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Upgrades class — runs sequential migrations when plugin version changes.
+ * Upgrades class - runs sequential migrations when plugin version changes.
  *
  * Pattern from wordpress-plausible/src/Admin/Upgrades.php.
  */
 class Upgrades {
 
 	/**
-	 * Constructor — hook into init to check for pending upgrades.
+	 * Constructor - hook into init to check for pending upgrades.
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'maybe_upgrade' ), 5 );

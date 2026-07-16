@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Assets class — enqueues the Boomerang library and inline configuration
+ * Assets class - enqueues the Boomerang library and inline configuration
  * on the frontend using proper WordPress script APIs.
  *
  * Replaces the raw heredoc injection from the PoC's core-functions.php.
@@ -34,7 +34,7 @@ class Assets {
 	const HANDLE_CONFIG = 'basicrum-config';
 
 	/**
-	 * Constructor — register the enqueue hook.
+	 * Constructor - register the enqueue hook.
 	 */
 	public function __construct() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'maybe_enqueue' ), 1 );

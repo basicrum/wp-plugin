@@ -4,11 +4,11 @@ This repository now uses a small monorepo-style layout.
 
 ## Layout
 
-- `plugins/basicrum/` — the installable WordPress plugin package
-- `docker/` — Dockerfiles for local development tooling
-- `tools/` — helper scripts for local development and testing
-- `plan-refs/` — planning notes and ADRs
-- `plugin-references/` — external reference implementations kept for study
+- `plugins/basicrum/` - the installable WordPress plugin package
+- `docker/` - Dockerfiles for local development tooling
+- `tools/` - helper scripts for local development and testing
+- `plan-refs/` - planning notes and ADRs
+- `plugin-references/` - external reference implementations kept for study
 
 ## Common Commands
 

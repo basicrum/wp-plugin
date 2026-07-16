@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Page class — registers the admin menu, settings sections, and fields.
+ * Page class - registers the admin menu, settings sections, and fields.
  */
 class Page {
 
@@ -33,7 +33,7 @@ class Page {
 	const SLUG = 'basicrum';
 
 	/**
-	 * Constructor — hook into admin_menu and admin_init.
+	 * Constructor - hook into admin_menu and admin_init.
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_menu_page' ) );
@@ -482,8 +482,8 @@ class Page {
 		<div class="basicrum-consent-info" style="background: #f0f0f1; padding: 12px 16px; border-left: 4px solid #2271b1; margin: 8px 0;">
 			<p><strong><?php esc_html_e( 'Consent JavaScript API', 'basicrum' ); ?></strong></p>
 			<p><?php esc_html_e( 'When consent mode is enabled, Boomerang will not load until the user gives consent. Use the following JavaScript API in your consent banner or cookie notice:', 'basicrum' ); ?></p>
-			<p><code>window.OPT_IN_BASIC_RUM()</code> — <?php esc_html_e( 'Call this to grant consent and start monitoring. Sets a BRUM_CONSENT cookie (1 year, Strict, Secure).', 'basicrum' ); ?></p>
-			<p><code>window.OPT_OUT_BASIC_RUM()</code> — <?php esc_html_e( 'Call this to revoke consent. Disables Boomerang and removes tracking cookies.', 'basicrum' ); ?></p>
+			<p><code>window.OPT_IN_BASIC_RUM()</code> - <?php esc_html_e( 'Call this to grant consent and start monitoring. Sets a BRUM_CONSENT cookie (1 year, Strict, Secure).', 'basicrum' ); ?></p>
+			<p><code>window.OPT_OUT_BASIC_RUM()</code> - <?php esc_html_e( 'Call this to revoke consent. Disables Boomerang and removes tracking cookies.', 'basicrum' ); ?></p>
 			<p><strong><?php esc_html_e( 'Example:', 'basicrum' ); ?></strong></p>
 			<pre style="background: #fff; padding: 8px; border: 1px solid #ddd;">&lt;button onclick="OPT_IN_BASIC_RUM()"&gt;Accept&lt;/button&gt;
 &lt;button onclick="OPT_OUT_BASIC_RUM()"&gt;Decline&lt;/button&gt;</pre>

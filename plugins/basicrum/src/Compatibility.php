@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Compatibility class — excludes Basicrum scripts from optimization by
+ * Compatibility class - excludes Basicrum scripts from optimization by
  * popular caching and performance plugins.
  *
  * Modeled after wordpress-plausible/src/Compatibility.php
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Compatibility {
 
 	/**
-	 * Constructor — register exclusion filters.
+	 * Constructor - register exclusion filters.
 	 */
 	public function __construct() {
 		$this->init();

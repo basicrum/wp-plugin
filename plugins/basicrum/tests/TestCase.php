@@ -10,7 +10,7 @@ namespace Basicrum\WP\Tests;
 use Yoast\WPTestUtils\BrainMonkey\TestCase as BrainMonkeyTestCase;
 
 /**
- * TestCase — base class providing common helper methods for all tests.
+ * TestCase - base class providing common helper methods for all tests.
  */
 class TestCase extends BrainMonkeyTestCase {
 

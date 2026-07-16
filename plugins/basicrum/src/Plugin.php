@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Plugin class — registers all services and hooks.
+ * Plugin class - registers all services and hooks.
  */
 class Plugin {
 
