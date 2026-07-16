@@ -1,0 +1,62 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: basicrum-db
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  wordpress:
+    image: wordpress:6.8-php8.2-apache
+    container_name: basicrum-wordpress
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    ports:
+      - "8080:80"
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./plugins/basicrum:/var/www/html/wp-content/plugins/basicrum
+
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: basicrum-php
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WP_TESTS_DIR: /tmp/wordpress-tests-lib
+      WP_CORE_DIR: /tmp/wordpress
+      XDEBUG_MODE: 'off'
+    working_dir: /workspace
+    volumes:
+      - ./plugins/basicrum:/workspace
+      - ./tools:/tools:ro
+      - wp_tests_lib:/tmp/wordpress-tests-lib
+      - wp_core:/tmp/wordpress
+    tty: true
+
+volumes:
+  db_data:
+  wordpress_data:
+  wp_tests_lib:
+  wp_core:

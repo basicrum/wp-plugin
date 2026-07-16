@@ -1,0 +1,33 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Composer
+/plugins/basicrum/vendor/
+
+# Node
+/node_modules/
+
+# PHPUnit
+.phpunit.result.cache
+coverage.xml
+/plugins/basicrum/.phpunit.result.cache
+/plugins/basicrum/coverage.xml
+
+# Release artifacts
+/release/
+/basicrum.zip
+
+# Local research and planning notes
+/plan-refs/
+/plugin-references/
+
+# Translation backups
+*.pot~
+*.po~
+
+# OS files
+.DS_Store
+Thumbs.db

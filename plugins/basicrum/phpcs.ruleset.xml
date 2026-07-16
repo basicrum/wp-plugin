@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ruleset name="Basicrum WordPress Plugin">
+	<description>Coding standards for the Basicrum WordPress plugin.</description>
+
+	<!-- Scan plugin entry point and src directory -->
+	<file>basicrum.php</file>
+	<file>src/</file>
+
+	<!-- Exclude generated/vendor files -->
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>node_modules/*</exclude-pattern>
+	<exclude-pattern>assets/*</exclude-pattern>
+	<exclude-pattern>tests/*</exclude-pattern>
+
+	<!-- Use WordPress-Core standard -->
+	<rule ref="WordPress-Core">
+		<!-- PSR-4 autoloading requires class names that don't match WP file naming -->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+
+		<!-- Allow short array syntax -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax" />
+	</rule>
+
+	<!-- Enforce text domain -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="basicrum" />
+			</property>
+		</properties>
+	</rule>
+
+	<!-- PHP compatibility -->
+	<config name="minimum_supported_wp_version" value="6.0" />
+	<config name="testVersion" value="7.4-" />
+</ruleset>

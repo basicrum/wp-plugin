@@ -1,0 +1,42 @@
+name: Release Plugin
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  build:
+    name: Build Release Artifact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v2
+          coverage: none
+
+      - name: Install runtime dependencies
+        working-directory: plugins/basicrum
+        run: composer install --no-dev --no-interaction --prefer-dist
+
+      - name: Generate plugin artifact
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y rsync zip
+
+          mkdir -p release/basicrum
+          rsync -rc --exclude-from="$GITHUB_WORKSPACE/plugins/basicrum/.distignore" "$GITHUB_WORKSPACE/plugins/basicrum/" release/basicrum/ --delete --delete-excluded
+
+          cd "$GITHUB_WORKSPACE/release"
+          zip -r "$GITHUB_WORKSPACE/basicrum.zip" basicrum
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: basicrum.zip
