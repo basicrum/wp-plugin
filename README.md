@@ -25,7 +25,16 @@ make lint
 make package
 ```
 
-The WordPress development site is exposed at `http://localhost:8080`.
+### Local WordPress
+
+`make up` installs Composer dependencies, starts the stack, provisions
+WordPress on a new database, and activates Basicrum. The development site is at
+`http://localhost:8080/wp-admin/`.
+
+Default local administrator credentials are `admin` /
+`basicrum-dev-password`. Copy `.env.example` to `.env` to override the
+port, database, site, or administrator values. `make down` preserves the
+site data; `make clean` resets it.
 
 ## Plugin Source
 

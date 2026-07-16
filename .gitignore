@@ -4,6 +4,9 @@
 *.swp
 *.swo
 
+# Local Docker configuration
+/.env
+
 # Composer
 /plugins/basicrum/vendor/
 

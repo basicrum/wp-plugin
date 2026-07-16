@@ -2,6 +2,7 @@ COMPOSE ?= docker compose
 PHP_SERVICE = php
 WP_SERVICE = wordpress
 DB_SERVICE = db
+WPCLI_SERVICE = wpcli
 PLUGIN_DIR = plugins/basicrum
 PLUGIN_WORKDIR = /workspace
 TEST_DB_NAME = wordpress_test
@@ -10,12 +11,13 @@ TEST_DB_PASS = root
 TEST_DB_HOST = db
 WP_TEST_VERSION ?= latest
 
-.PHONY: help build up down restart logs shell composer-install lint lint-fix lint-php unit integration-setup integration test package clean
+.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php integration-setup integration test package clean
 
 help:
 	@echo "Targets:"
 	@echo "  build              Build or rebuild local Docker images"
-	@echo "  up                 Start WordPress and MySQL for local development"
+	@echo "  up                 Start and provision local WordPress with Basicrum active"
+	@echo "  wp-install         Install WordPress and activate Basicrum if needed"
 	@echo "  down               Stop containers"
 	@echo "  restart            Restart containers"
 	@echo "  logs               Tail logs from WordPress and MySQL"
@@ -34,7 +36,12 @@ build:
 	$(COMPOSE) build $(PHP_SERVICE)
 
 up:
+	$(MAKE) composer-install
+	$(MAKE) wp-install
+
+wp-install:
 	$(COMPOSE) up -d $(DB_SERVICE) $(WP_SERVICE)
+	$(COMPOSE) run --rm $(WPCLI_SERVICE) sh /tools/setup-wordpress.sh
 
 down:
 	$(COMPOSE) down
