@@ -25,7 +25,7 @@ class HelpersTest extends TestCase {
 		$expected_keys = array(
 			'enabled',
 			'beacon_url',
-			'site_id',
+			'brum_site_id',
 			'track_admins',
 			'consent_enabled',
 			'consent_mode',
@@ -66,6 +66,24 @@ class HelpersTest extends TestCase {
 		$this->assertSame( 'https://custom.example.com/beacon', $settings['beacon_url'] );
 		// Defaults filled in.
 		$this->assertSame( 0, $settings['delay_ms'] );
+	}
+
+	/**
+	 * Test get_settings maps the legacy site ID setting to Brum Site ID.
+	 */
+	public function test_get_settings_maps_legacy_site_id() {
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn( array( 'site_id' => '550e8400-e29b-41d4-a716-446655440000' ) );
+
+		Functions\when( 'wp_parse_args' )->alias( function( $args, $defaults ) {
+			return array_merge( $defaults, $args );
+		});
+
+		$settings = Helpers::get_settings();
+
+		$this->assertSame( '550e8400-e29b-41d4-a716-446655440000', $settings['brum_site_id'] );
+		$this->assertArrayNotHasKey( 'site_id', $settings );
 	}
 
 	/**

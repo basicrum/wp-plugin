@@ -2,95 +2,212 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Basic Rum Wordpress Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-31 14:45+0000\n"
-"PO-Revision-Date: 2022-11-01 08:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
-"Language: bg_BG\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-16T14:01:43+00:00\n"
+"PO-Revision-Date: 2026-07-16 14:01+0000\n"
+"Language: bg_BG\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.3; wp-6.0.3\n"
-"X-Domain: basicrum"
+"X-Domain: basicrum\n"
 
-#. Name of the plugin
-msgid "Basic Rum Wordpress Plugin"
-msgstr "Basic Rum плъгин за Уърдпрес"
+#. Plugin Name of the plugin
+#: basicrum.php
+msgid "Basicrum - Real User Monitoring"
+msgstr ""
 
-#: admin/admin-menu.php:11
-msgid "Basicrum"
-msgstr "Basicrum"
-
-#: admin/admin-menu.php:10
-msgid "Basicrum Config"
-msgstr "Настройки на Basicrum"
-
-#. Description of the plugin
-msgid "Budget - Open Source - Real User Monitoring system."
-msgstr "Budget - Open Source - Real User Monitoring system."
-
-#: admin/settings-register.php:43
-msgid "Delay Beacon Sending:"
-msgstr "Забавяне на изпращаните данни:"
-
-#: admin/settings-callbacks.php:56
-msgid "First Option"
-msgstr "Първа опция"
-
-#: admin/settings-register.php:16
-msgid "General Settings"
-msgstr "Основни настройки"
-
-#. URI of the plugin
+#. Plugin URI of the plugin
+#: basicrum.php
 msgid "https://www.basicrum.com/"
 msgstr "https://www.basicrum.com/"
 
-#. Author URI of the plugin
-msgid "https://www.basicrum.com/contact/"
-msgstr "https://www.basicrum.com/contact/"
-
-#: admin/settings-callbacks.php:82
-msgid "Insert script in header"
-msgstr "Вмъкване на скрипта в хед таг-а на сайта"
-
-#: admin/settings-callbacks.php:83
-msgid "Insert script in the footer"
-msgstr "Вмъкване на скрипта във футъра на сайта"
-
-#: admin/settings-register.php:53
-msgid "Script Insert Options:"
-msgstr "Опции за вмъкване на скрипт кода:"
-
-#: admin/settings-register.php:68
-msgid "Select options"
-msgstr "Изберете опция"
-
-#: admin/settings-register.php:57
-msgid "Select where to insert script."
-msgstr "Изберете къде да бъде вмъкнат скрипта"
-
-#: admin/settings-register.php:32
-msgid "Send Data to:"
-msgstr "Изпращане на данните към:"
-
-#: admin/settings-register.php:47
-msgid "Set delay in milliseconds (For example 5000)"
-msgstr "Задайте забавяне в милисекунди (например 5000)"
-
-#: admin/settings-register.php:36
-msgid "Set the URL, where data from Boomerang script should be send"
-msgstr "Задайте URL, където да бъдат изпращани данните от скрипта"
+#. Description of the plugin
+#: basicrum.php
+msgid "Budget, open source, Real User Monitoring powered by Boomerang.js. Track page load performance, page types, and Web Vitals."
+msgstr ""
 
 #. Author of the plugin
+#: basicrum.php
 msgid "Tsvetan Stoychev"
 msgstr "Цветан Стойчев"
 
-#: admin/settings-register.php:64
-msgid "What do you want to monitor:"
-msgstr "Какво желаете да наблюдавате:"
+#. Author URI of the plugin
+#: basicrum.php
+msgid "https://www.basicrum.com/contact/"
+msgstr "https://www.basicrum.com/contact/"
 
-#: admin/settings-register.php:23
-msgid "What would you like to monitor?"
-msgstr "Какви данни желаете да събирате?"
+#: src/Admin/Settings/Page.php:51
+msgid "Basicrum Settings"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:52
+msgid "Basicrum"
+msgstr "Basicrum"
+
+#: src/Admin/Settings/Page.php:89
+msgid "General Settings"
+msgstr "Основни настройки"
+
+#: src/Admin/Settings/Page.php:96
+msgid "Enable Basicrum"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:102
+msgid "Enable real user monitoring on your site."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:108
+msgid "Beacon URL"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:114
+msgid "URL where Boomerang beacons are sent. Example: https://www.example.com/beacon/catcher"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:121
+msgid "Brum Site ID"
+msgstr "Brum Site ID"
+
+#: src/Admin/Settings/Page.php:127
+msgid "Copy the Brum Site ID from the Basicrum backoffice."
+msgstr "Копирайте Brum Site ID от административния панел на Basicrum."
+
+#: src/Admin/Settings/Page.php:134
+msgid "Track Admin Users"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:140
+msgid "Track logged-in administrators (users with manage_options capability)."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:146
+msgid "Boomerang Version"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:161
+msgid "Privacy / GDPR"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:168
+msgid "Require Consent"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:174
+msgid "When enabled, Boomerang only loads after user gives consent."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:180
+msgid "Consent Mode"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:186
+msgid "How consent is obtained from the user."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:188
+msgid "Explicit Consent"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:189
+msgid "Implicit Consent"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:190
+msgid "Cookie Banner"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:191
+msgid "GDPR Banner"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:213
+msgid "Performance"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:220
+msgid "Wait After Onload"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:226
+msgid "Delay beacon sending until after page load completes."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:232
+msgid "Delay (milliseconds)"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:238
+msgid "Milliseconds to delay the beacon after onload. Leave 0 to disable the delay."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:253
+msgid "Developer Settings"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:260
+msgid "Script Position"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:266
+msgid "Where to insert the monitoring script."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:268
+msgid "Header (wp_head)"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:269
+msgid "Footer (wp_footer)"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:276
+msgid "Use Unminified Loaders"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:282
+msgid "Load unminified JavaScript loaders for debugging."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:468
+msgid "~30 KB gzipped"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:482
+msgid "Consent JavaScript API"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:483
+msgid "When consent mode is enabled, Boomerang will not load until the user gives consent. Use the following JavaScript API in your consent banner or cookie notice:"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:484
+msgid "Call this to grant consent and start monitoring. Sets a BRUM_CONSENT cookie (1 year, Strict, Secure)."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:485
+msgid "Call this to revoke consent. Disables Boomerang and removes tracking cookies."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:486
+msgid "Example:"
+msgstr ""
+
+#: src/Admin/Settings/Validate.php:127
+msgid "Beacon URL was automatically upgraded to HTTPS."
+msgstr ""
+
+#: src/Admin/Settings/Validate.php:136
+msgid "Invalid Beacon URL. The default URL has been restored."
+msgstr ""
+
+#: src/Admin/Settings/Validate.php:162
+msgid "Invalid Brum Site ID. Copy it from the Basicrum backoffice and try again."
+msgstr "Невалиден Brum Site ID. Копирайте го от административния панел на Basicrum и опитайте отново."
+
+#: src/Admin/Settings/Validate.php:189
+msgid "Delay cannot exceed 30000 milliseconds. It has been capped at 30000."
+msgstr ""

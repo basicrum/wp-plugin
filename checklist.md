@@ -123,9 +123,9 @@ Acceptance criteria:
 - [ ] Record the minifier and its version in a lock file.
 - [ ] Make CI regenerate the loaders and fail when the committed output differs.
 - [ ] Document the source and version of the bundled Boomerang asset.
-- [ ] Add a repeatable command for generating `languages/basicrum.pot`.
-- [ ] Add a repeatable command for compiling translation MO files.
-- [ ] Make CI detect stale POT or MO files.
+- [x] Add a repeatable command for generating `languages/basicrum.pot`.
+- [x] Add a repeatable command for compiling translation MO files.
+- [x] Make CI detect stale POT or MO files.
 
 Acceptance criteria:
 

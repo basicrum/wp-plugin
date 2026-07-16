@@ -87,7 +87,7 @@ class AssetsTest extends TestCase {
 		return array_merge( array(
 			'enabled'                => '1',
 			'beacon_url'             => 'https://beacon.example.com/catcher',
-			'site_id'                => '',
+			'brum_site_id'           => '',
 			'track_admins'           => '0',
 			'script_position'        => 'footer',
 			'consent_enabled'        => '0',
@@ -121,7 +121,7 @@ class AssetsTest extends TestCase {
 		Functions\expect( 'get_option' )
 			->with( 'basicrum_settings', array() )
 			->andReturn( $this->enabled_settings( array(
-				'site_id'           => '550e8400-e29b-41d4-a716-446655440000',
+				'brum_site_id'      => '550e8400-e29b-41d4-a716-446655440000',
 				'wait_after_onload' => '1',
 				'delay_ms'          => 5000,
 			) ) );
@@ -192,7 +192,7 @@ class AssetsTest extends TestCase {
 		Functions\expect( 'get_option' )
 			->with( 'basicrum_settings', array() )
 			->andReturn( $this->enabled_settings( array(
-				'site_id'           => '550e8400-e29b-41d4-a716-446655440000',
+				'brum_site_id'      => '550e8400-e29b-41d4-a716-446655440000',
 				'wait_after_onload' => '1',
 				'delay_ms'          => 5000,
 			) ) );

@@ -46,39 +46,39 @@ class ValidateTest extends TestCase {
 	}
 
 	/**
-	 * Test valid UUID v4 is accepted.
+	 * Test a valid Brum Site ID is accepted.
 	 */
-	public function test_valid_uuid_v4_is_accepted() {
-		$input  = array( 'site_id' => '550e8400-e29b-41d4-a716-446655440000' );
+	public function test_valid_brum_site_id_is_accepted() {
+		$input  = array( 'brum_site_id' => '550e8400-e29b-41d4-a716-446655440000' );
 		$result = $this->validate->sanitize( $this->full_input( $input ) );
-		$this->assertSame( '550e8400-e29b-41d4-a716-446655440000', $result['site_id'] );
+		$this->assertSame( '550e8400-e29b-41d4-a716-446655440000', $result['brum_site_id'] );
 	}
 
 	/**
-	 * Test invalid UUID is rejected.
+	 * Test an invalid Brum Site ID is rejected.
 	 */
-	public function test_invalid_uuid_is_rejected() {
-		$input  = array( 'site_id' => 'not-a-uuid' );
+	public function test_invalid_brum_site_id_is_rejected() {
+		$input  = array( 'brum_site_id' => 'invalid-site-id' );
 		$result = $this->validate->sanitize( $this->full_input( $input ) );
-		$this->assertSame( '', $result['site_id'] );
+		$this->assertSame( '', $result['brum_site_id'] );
 	}
 
 	/**
-	 * Test empty UUID is allowed (optional field).
+	 * Test an empty Brum Site ID is allowed.
 	 */
-	public function test_empty_uuid_is_allowed() {
-		$input  = array( 'site_id' => '' );
+	public function test_empty_brum_site_id_is_allowed() {
+		$input  = array( 'brum_site_id' => '' );
 		$result = $this->validate->sanitize( $this->full_input( $input ) );
-		$this->assertSame( '', $result['site_id'] );
+		$this->assertSame( '', $result['brum_site_id'] );
 	}
 
 	/**
-	 * Test UUID v1 is rejected (only v4 allowed).
+	 * Test an unsupported Brum Site ID format is rejected.
 	 */
-	public function test_uuid_v1_is_rejected() {
-		$input  = array( 'site_id' => '550e8400-e29b-11d4-a716-446655440000' );
+	public function test_unsupported_brum_site_id_format_is_rejected() {
+		$input  = array( 'brum_site_id' => '550e8400-e29b-11d4-a716-446655440000' );
 		$result = $this->validate->sanitize( $this->full_input( $input ) );
-		$this->assertSame( '', $result['site_id'] );
+		$this->assertSame( '', $result['brum_site_id'] );
 	}
 
 	/**
@@ -163,7 +163,7 @@ class ValidateTest extends TestCase {
 		$defaults = array(
 			'enabled'                => '0',
 			'beacon_url'             => '',
-			'site_id'                => '',
+			'brum_site_id'           => '',
 			'consent_enabled'        => '0',
 			'consent_mode'           => 'explicit',
 			'wait_after_onload'      => '0',

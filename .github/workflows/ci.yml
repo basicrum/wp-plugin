@@ -9,6 +9,27 @@ on:
   workflow_dispatch:
 
 jobs:
+  translations:
+    name: Translation catalogs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup PHP and WP-CLI
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: wp-cli:2.12.0
+          coverage: none
+
+      - name: Regenerate translation catalogs
+        run: sh tools/update-translations.sh plugins/basicrum
+
+      - name: Check for stale translation artifacts
+        run: git diff --exit-code -- plugins/basicrum/languages
+
   unit:
     name: Unit (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest

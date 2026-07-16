@@ -38,6 +38,7 @@ make lint-php
 make unit
 make integration-setup
 make integration
+make translations
 ```
 
 Unit tests use Brain\Monkey; integration tests use the WordPress test suite.

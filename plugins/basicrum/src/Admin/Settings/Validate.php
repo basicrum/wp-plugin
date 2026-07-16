@@ -15,17 +15,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Validate class - sanitize callback for register_setting().
- *
- * UUID v4 regex ported from basicrum-magento-1 SiteId.php backend model.
  */
 class Validate {
 
 	/**
-	 * UUID v4 regex pattern.
+	 * Expected Brum Site ID pattern.
 	 *
 	 * @var string
 	 */
-	const UUID_V4_PATTERN = '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i';
+	const BRUM_SITE_ID_PATTERN = '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i';
 
 	/**
 	 * Allowed consent mode values.
@@ -57,8 +55,8 @@ class Validate {
 		// Beacon URL.
 		$output['beacon_url'] = $this->sanitize_beacon_url( $input, $defaults );
 
-		// Site ID (UUID v4).
-		$output['site_id'] = $this->sanitize_site_id( $input );
+		// Brum Site ID.
+		$output['brum_site_id'] = $this->sanitize_brum_site_id( $input );
 
 		// Track admins (checkbox).
 		$output['track_admins'] = $this->sanitize_checkbox( $input, 'track_admins' );
@@ -145,29 +143,29 @@ class Validate {
 	}
 
 	/**
-	 * Sanitize and validate the Site ID (UUID v4).
+	 * Sanitize and validate the Brum Site ID.
 	 *
 	 * @param array $input Raw input.
-	 * @return string Sanitized Site ID or empty string.
+	 * @return string Sanitized Brum Site ID or empty string.
 	 */
-	private function sanitize_site_id( $input ) {
-		if ( empty( $input['site_id'] ) ) {
+	private function sanitize_brum_site_id( $input ) {
+		if ( empty( $input['brum_site_id'] ) ) {
 			return '';
 		}
 
-		$site_id = sanitize_text_field( $input['site_id'] );
+		$brum_site_id = sanitize_text_field( $input['brum_site_id'] );
 
-		if ( ! preg_match( self::UUID_V4_PATTERN, $site_id ) ) {
+		if ( ! preg_match( self::BRUM_SITE_ID_PATTERN, $brum_site_id ) ) {
 			add_settings_error(
 				'basicrum_settings',
-				'site_id_invalid',
-				esc_html__( 'Invalid Site ID. Please enter a valid UUID v4 (e.g. 550e8400-e29b-41d4-a716-446655440000).', 'basicrum' ),
+				'brum_site_id_invalid',
+				esc_html__( 'Invalid Brum Site ID. Copy it from the Basicrum backoffice and try again.', 'basicrum' ),
 				'error'
 			);
 			return '';
 		}
 
-		return $site_id;
+		return $brum_site_id;
 	}
 
 	/**

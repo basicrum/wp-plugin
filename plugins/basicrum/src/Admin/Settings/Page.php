@@ -99,7 +99,7 @@ class Page {
 			'basicrum_section_general',
 			array(
 				'id'    => 'enabled',
-				'label' => esc_html__( 'Enable real user monitoring on your site.', 'basicrum' ),
+				'label' => __( 'Enable real user monitoring on your site.', 'basicrum' ),
 			)
 		);
 
@@ -111,22 +111,21 @@ class Page {
 			'basicrum_section_general',
 			array(
 				'id'    => 'beacon_url',
-				'label' => esc_html__( 'URL where Boomerang beacons are sent. Example: https://www.example.com/beacon/catcher', 'basicrum' ),
+				'label' => __( 'URL where Boomerang beacons are sent. Example: https://www.example.com/beacon/catcher', 'basicrum' ),
 				'size'  => 60,
 			)
 		);
 
 		add_settings_field(
-			'site_id',
-			esc_html__( 'Site ID', 'basicrum' ),
+			'brum_site_id',
+			esc_html__( 'Brum Site ID', 'basicrum' ),
 			array( $this, 'render_text_field' ),
 			self::SLUG,
 			'basicrum_section_general',
 			array(
-				'id'          => 'site_id',
-				'label'       => esc_html__( 'UUID v4 identifier for this site (e.g. 550e8400-e29b-41d4-a716-446655440000).', 'basicrum' ),
-				'size'        => 40,
-				'placeholder' => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
+				'id'    => 'brum_site_id',
+				'label' => __( 'Copy the Brum Site ID from the Basicrum backoffice.', 'basicrum' ),
+				'size'  => 40,
 			)
 		);
 
@@ -138,7 +137,7 @@ class Page {
 			'basicrum_section_general',
 			array(
 				'id'    => 'track_admins',
-				'label' => esc_html__( 'Track logged-in administrators (users with manage_options capability).', 'basicrum' ),
+				'label' => __( 'Track logged-in administrators (users with manage_options capability).', 'basicrum' ),
 			)
 		);
 
@@ -172,7 +171,7 @@ class Page {
 			'basicrum_section_privacy',
 			array(
 				'id'    => 'consent_enabled',
-				'label' => esc_html__( 'When enabled, Boomerang only loads after user gives consent.', 'basicrum' ),
+				'label' => __( 'When enabled, Boomerang only loads after user gives consent.', 'basicrum' ),
 			)
 		);
 
@@ -184,12 +183,12 @@ class Page {
 			'basicrum_section_privacy',
 			array(
 				'id'      => 'consent_mode',
-				'label'   => esc_html__( 'How consent is obtained from the user.', 'basicrum' ),
+				'label'   => __( 'How consent is obtained from the user.', 'basicrum' ),
 				'options' => array(
-					'explicit'      => esc_html__( 'Explicit Consent', 'basicrum' ),
-					'implicit'      => esc_html__( 'Implicit Consent', 'basicrum' ),
-					'cookie_banner' => esc_html__( 'Cookie Banner', 'basicrum' ),
-					'gdpr_banner'   => esc_html__( 'GDPR Banner', 'basicrum' ),
+					'explicit'      => __( 'Explicit Consent', 'basicrum' ),
+					'implicit'      => __( 'Implicit Consent', 'basicrum' ),
+					'cookie_banner' => __( 'Cookie Banner', 'basicrum' ),
+					'gdpr_banner'   => __( 'GDPR Banner', 'basicrum' ),
 				),
 			)
 		);
@@ -224,7 +223,7 @@ class Page {
 			'basicrum_section_performance',
 			array(
 				'id'    => 'wait_after_onload',
-				'label' => esc_html__( 'Delay beacon sending until after page load completes.', 'basicrum' ),
+				'label' => __( 'Delay beacon sending until after page load completes.', 'basicrum' ),
 			)
 		);
 
@@ -236,7 +235,7 @@ class Page {
 			'basicrum_section_performance',
 			array(
 				'id'    => 'delay_ms',
-				'label' => esc_html__( 'Milliseconds to delay the beacon after onload. Leave 0 to disable the delay.', 'basicrum' ),
+				'label' => __( 'Milliseconds to delay the beacon after onload. Leave 0 to disable the delay.', 'basicrum' ),
 				'min'   => 0,
 				'max'   => 30000,
 			)
@@ -264,10 +263,10 @@ class Page {
 			'basicrum_section_developer',
 			array(
 				'id'      => 'script_position',
-				'label'   => esc_html__( 'Where to insert the monitoring script.', 'basicrum' ),
+				'label'   => __( 'Where to insert the monitoring script.', 'basicrum' ),
 				'options' => array(
-					'header' => esc_html__( 'Header (wp_head)', 'basicrum' ),
-					'footer' => esc_html__( 'Footer (wp_footer)', 'basicrum' ),
+					'header' => __( 'Header (wp_head)', 'basicrum' ),
+					'footer' => __( 'Footer (wp_footer)', 'basicrum' ),
 				),
 			)
 		);
@@ -280,7 +279,7 @@ class Page {
 			'basicrum_section_developer',
 			array(
 				'id'    => 'use_unminified_loaders',
-				'label' => esc_html__( 'Load unminified JavaScript loaders for debugging.', 'basicrum' ),
+				'label' => __( 'Load unminified JavaScript loaders for debugging.', 'basicrum' ),
 			)
 		);
 	}

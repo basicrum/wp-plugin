@@ -22,6 +22,7 @@ make unit
 make integration-setup
 make integration
 make lint
+make translations
 make package
 ```
 

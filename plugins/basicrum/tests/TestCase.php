@@ -40,13 +40,13 @@ class TestCase extends BrainMonkeyTestCase {
 	}
 
 	/**
-	 * Set the site ID for tests.
+	 * Set the Brum Site ID for tests.
 	 *
-	 * @param string $site_id UUID v4 site ID.
+	 * @param string $brum_site_id Brum Site ID.
 	 * @return void
 	 */
-	protected function set_site_id( $site_id ) {
-		$this->set_settings( array( 'site_id' => $site_id ) );
+	protected function set_brum_site_id( $brum_site_id ) {
+		$this->set_settings( array( 'brum_site_id' => $brum_site_id ) );
 	}
 
 	/**

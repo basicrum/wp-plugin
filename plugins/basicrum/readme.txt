@@ -18,7 +18,7 @@ Basicrum is a free, open source Real User Monitoring (RUM) system. This plugin i
 
 * **Real User Monitoring** - Collect page load timing, resource timing, and continuity metrics from actual visitors.
 * **Page Type Detection** - Automatically tags beacons with the WordPress page type (home, post, page, category, archive, search, 404) and WooCommerce types (product, cart, checkout).
-* **Site ID** - UUID v4 identifier to distinguish multiple sites reporting to the same beacon endpoint.
+* **Brum Site ID** - Connect this WordPress site to the matching site in your Basicrum backoffice.
 * **GDPR Consent Mode** - Conditional loading with JavaScript API (`OPT_IN_BASIC_RUM()` / `OPT_OUT_BASIC_RUM()`) for consent banner integration.
 * **3-Tier Script Loading** - Preload → iframe → direct script loading strategy for optimal performance.
 * **Configurable Beacon Delay** - Wait after onload before sending the beacon for more complete data collection.
@@ -27,7 +27,7 @@ Basicrum is a free, open source Real User Monitoring (RUM) system. This plugin i
 **How it works:**
 
 1. Configure your beacon endpoint URL (or use the default Basicrum collector).
-2. Enable monitoring and optionally set a Site ID.
+2. Enable monitoring and copy the Brum Site ID from your Basicrum backoffice.
 3. The plugin injects Boomerang.js on your frontend pages.
 4. Performance beacons are sent to your collector for analysis.
 
@@ -38,7 +38,7 @@ Visit [basicrum.com](https://www.basicrum.com/) for more information about the B
 1. Upload the `basicrum` folder to `/wp-content/plugins/`.
 2. Activate the plugin through the "Plugins" menu in WordPress.
 3. Go to **Basicrum** in the admin sidebar to configure settings.
-4. Set your beacon URL and Site ID.
+4. Set your beacon URL and Brum Site ID.
 5. Enable monitoring.
 
 == Frequently Asked Questions ==
@@ -65,7 +65,7 @@ Yes. When WooCommerce is active, the plugin automatically detects shop, product,
 
 == Screenshots ==
 
-1. Admin settings page - General settings with beacon URL and Site ID.
+1. Admin settings page - General settings with beacon URL and Brum Site ID.
 2. Privacy settings - Consent mode configuration with JS API documentation.
 3. Developer settings - Script position and debug options.
 
@@ -74,7 +74,7 @@ Yes. When WooCommerce is active, the plugin automatically detects shop, product,
 = 1.0.1 =
 * Complete rewrite with OOP architecture and PSR-4 autoloading.
 * Added page type detection (WordPress + WooCommerce).
-* Added Site ID (UUID v4) support.
+* Added Brum Site ID support.
 * Added GDPR consent mode with JavaScript API.
 * Added 3-tier script loading strategy (preload → iframe → direct).
 * Upgraded Boomerang.js to v1.815.60.

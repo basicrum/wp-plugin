@@ -22,7 +22,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function register() {
-		add_action( 'init', array( $this, 'load_textdomain' ), 1000 );
+		add_action( 'init', array( $this, 'load_textdomain' ) );
 
 		// Services loaded on every request (frontend + admin).
 		new Setup();

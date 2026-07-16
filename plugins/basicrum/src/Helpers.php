@@ -38,6 +38,13 @@ class Helpers {
 	public static function get_settings() {
 		$settings = get_option( self::OPTION_KEY, array() );
 
+		// Preserve values saved under the setting name used before 1.0.1.
+		if ( ! array_key_exists( 'brum_site_id', $settings ) && isset( $settings['site_id'] ) ) {
+			$settings['brum_site_id'] = $settings['site_id'];
+		}
+
+		unset( $settings['site_id'] );
+
 		return wp_parse_args( $settings, self::get_defaults() );
 	}
 
@@ -50,7 +57,7 @@ class Helpers {
 		return array(
 			'enabled'                => '0',
 			'beacon_url'             => '',
-			'site_id'                => '',
+			'brum_site_id'           => '',
 			'track_admins'           => '0',
 			'consent_enabled'        => '0',
 			'consent_mode'           => 'explicit',

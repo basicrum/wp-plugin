@@ -3,6 +3,7 @@ PHP_SERVICE = php
 WP_SERVICE = wordpress
 DB_SERVICE = db
 WPCLI_SERVICE = wpcli
+WPCLI_PLUGIN_WORKDIR = /var/www/html/wp-content/plugins/basicrum
 PLUGIN_DIR = plugins/basicrum
 PLUGIN_WORKDIR = /workspace
 TEST_DB_NAME = wordpress_test
@@ -11,7 +12,7 @@ TEST_DB_PASS = root
 TEST_DB_HOST = db
 WP_TEST_VERSION ?= latest
 
-.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php integration-setup integration test package clean
+.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php translations integration-setup integration test package clean
 
 help:
 	@echo "Targets:"
@@ -26,6 +27,7 @@ help:
 	@echo "  lint-php           Run PHP syntax lint"
 	@echo "  lint               Run PHPCS"
 	@echo "  lint-fix           Run PHPCBF"
+	@echo "  translations       Update POT, PO, and MO translation catalogs"
 	@echo "  unit               Run unit tests"
 	@echo "  integration-setup  Install WordPress test suite inside containers"
 	@echo "  integration        Run integration tests"
@@ -65,6 +67,9 @@ lint:
 
 lint-fix:
 	$(COMPOSE) run --rm -w $(PLUGIN_WORKDIR) $(PHP_SERVICE) composer lint:fix
+
+translations:
+	$(COMPOSE) run --rm --no-deps --user "$$(id -u):$$(id -g)" -e HOME=/tmp -w $(WPCLI_PLUGIN_WORKDIR) $(WPCLI_SERVICE) sh /tools/update-translations.sh .
 
 unit:
 	$(COMPOSE) run --rm -w $(PLUGIN_WORKDIR) $(PHP_SERVICE) composer unit

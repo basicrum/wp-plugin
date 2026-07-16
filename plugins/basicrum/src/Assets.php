@@ -152,7 +152,7 @@ class Assets {
 		$page_type_detector = new PageTypeDetector();
 		$page_type          = $page_type_detector->detect();
 		$beacon_url         = esc_url_raw( $settings['beacon_url'] );
-		$site_id            = sanitize_text_field( $settings['site_id'] );
+		$brum_site_id       = sanitize_text_field( $settings['brum_site_id'] );
 		$boomerang_version  = Helpers::get_boomerang_version();
 		$boomerang_url      = esc_url( Helpers::get_asset_url( 'js/boomr/boomerang-' . $boomerang_version . '.cutting-edge.min.js' ) );
 		$delay_ms           = absint( $settings['delay_ms'] );
@@ -163,8 +163,8 @@ class Assets {
 			array( 'addVar', array( 'p_gen' => 'wp' ) ),
 		);
 
-		if ( ! empty( $site_id ) ) {
-			$boomr_mq[] = array( 'addVar', array( 'brum_site_id' => $site_id ) );
+		if ( ! empty( $brum_site_id ) ) {
+			$boomr_mq[] = array( 'addVar', array( 'brum_site_id' => $brum_site_id ) );
 		}
 
 		$js  = '(function(w) {' . "\n";

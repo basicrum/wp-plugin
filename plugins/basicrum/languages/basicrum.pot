@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-10T22:45:27+00:00\n"
+"POT-Creation-Date: \n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: basicrum\n"
@@ -68,145 +68,145 @@ msgid "URL where Boomerang beacons are sent. Example: https://www.example.com/be
 msgstr ""
 
 #: src/Admin/Settings/Page.php:121
-msgid "Site ID"
+msgid "Brum Site ID"
 msgstr ""
 
 #: src/Admin/Settings/Page.php:127
-msgid "UUID v4 identifier for this site (e.g. 550e8400-e29b-41d4-a716-446655440000)."
+msgid "Copy the Brum Site ID from the Basicrum backoffice."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:135
+#: src/Admin/Settings/Page.php:134
 msgid "Track Admin Users"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:141
+#: src/Admin/Settings/Page.php:140
 msgid "Track logged-in administrators (users with manage_options capability)."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:147
+#: src/Admin/Settings/Page.php:146
 msgid "Boomerang Version"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:162
+#: src/Admin/Settings/Page.php:161
 msgid "Privacy / GDPR"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:169
+#: src/Admin/Settings/Page.php:168
 msgid "Require Consent"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:175
+#: src/Admin/Settings/Page.php:174
 msgid "When enabled, Boomerang only loads after user gives consent."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:181
+#: src/Admin/Settings/Page.php:180
 msgid "Consent Mode"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:187
+#: src/Admin/Settings/Page.php:186
 msgid "How consent is obtained from the user."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:189
+#: src/Admin/Settings/Page.php:188
 msgid "Explicit Consent"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:190
+#: src/Admin/Settings/Page.php:189
 msgid "Implicit Consent"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:191
+#: src/Admin/Settings/Page.php:190
 msgid "Cookie Banner"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:192
+#: src/Admin/Settings/Page.php:191
 msgid "GDPR Banner"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:214
+#: src/Admin/Settings/Page.php:213
 msgid "Performance"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:221
+#: src/Admin/Settings/Page.php:220
 msgid "Wait After Onload"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:227
+#: src/Admin/Settings/Page.php:226
 msgid "Delay beacon sending until after page load completes."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:233
+#: src/Admin/Settings/Page.php:232
 msgid "Delay (milliseconds)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:239
+#: src/Admin/Settings/Page.php:238
 msgid "Milliseconds to delay the beacon after onload. Leave 0 to disable the delay."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:254
+#: src/Admin/Settings/Page.php:253
 msgid "Developer Settings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:261
+#: src/Admin/Settings/Page.php:260
 msgid "Script Position"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:267
+#: src/Admin/Settings/Page.php:266
 msgid "Where to insert the monitoring script."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:269
+#: src/Admin/Settings/Page.php:268
 msgid "Header (wp_head)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:270
+#: src/Admin/Settings/Page.php:269
 msgid "Footer (wp_footer)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:277
+#: src/Admin/Settings/Page.php:276
 msgid "Use Unminified Loaders"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:283
+#: src/Admin/Settings/Page.php:282
 msgid "Load unminified JavaScript loaders for debugging."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:469
+#: src/Admin/Settings/Page.php:468
 msgid "~30 KB gzipped"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:483
+#: src/Admin/Settings/Page.php:482
 msgid "Consent JavaScript API"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:484
+#: src/Admin/Settings/Page.php:483
 msgid "When consent mode is enabled, Boomerang will not load until the user gives consent. Use the following JavaScript API in your consent banner or cookie notice:"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:485
+#: src/Admin/Settings/Page.php:484
 msgid "Call this to grant consent and start monitoring. Sets a BRUM_CONSENT cookie (1 year, Strict, Secure)."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:486
+#: src/Admin/Settings/Page.php:485
 msgid "Call this to revoke consent. Disables Boomerang and removes tracking cookies."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:487
+#: src/Admin/Settings/Page.php:486
 msgid "Example:"
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:129
+#: src/Admin/Settings/Validate.php:127
 msgid "Beacon URL was automatically upgraded to HTTPS."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:138
+#: src/Admin/Settings/Validate.php:136
 msgid "Invalid Beacon URL. The default URL has been restored."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:164
-msgid "Invalid Site ID. Please enter a valid UUID v4 (e.g. 550e8400-e29b-41d4-a716-446655440000)."
+#: src/Admin/Settings/Validate.php:162
+msgid "Invalid Brum Site ID. Copy it from the Basicrum backoffice and try again."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:191
+#: src/Admin/Settings/Validate.php:189
 msgid "Delay cannot exceed 30000 milliseconds. It has been capped at 30000."
 msgstr ""
