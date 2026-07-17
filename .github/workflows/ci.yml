@@ -190,7 +190,7 @@ jobs:
         run: sh tools/smoke-test-release.sh release/basicrum.zip
 
       - name: Upload release artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: basicrum-release
           path: |
