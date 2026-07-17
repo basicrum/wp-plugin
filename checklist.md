@@ -19,8 +19,8 @@ Acceptance criteria:
 
 ## 2. Resolve the unused consent mode setting
 
-- [ ] Define the intended behavior for `explicit`, `implicit`, `cookie_banner`,
-  and `gdpr_banner` modes.
+- [ ] Define the intended behavior for `explicit`, `implicit`, and `cookie_popup`
+  modes.
 - [ ] Decide whether each mode has distinct runtime behavior.
 - [ ] Implement the defined behavior, or remove modes that do not represent real
   behavior and keep a single consent-enabled switch.

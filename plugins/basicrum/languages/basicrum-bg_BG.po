@@ -40,186 +40,209 @@ msgstr "Цветан Стойчев"
 msgid "https://www.basicrum.com/contact/"
 msgstr "https://www.basicrum.com/contact/"
 
-#: src/Admin/Settings/Page.php:51
+#: src/Admin/Settings/Page.php:93
+#: src/Admin/Settings/Page.php:454
 msgid "Basicrum Settings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:52
+#: src/Admin/Settings/Page.php:94
 msgid "Basicrum"
 msgstr "Basicrum"
 
-#: src/Admin/Settings/Page.php:89
+#: src/Admin/Settings/Page.php:133
 msgid "General Settings"
 msgstr "Основни настройки"
 
-#: src/Admin/Settings/Page.php:96
+#: src/Admin/Settings/Page.php:140
 msgid "Enable Basicrum"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:102
+#: src/Admin/Settings/Page.php:146
 msgid "Enable real user monitoring on your site."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:108
+#: src/Admin/Settings/Page.php:152
 msgid "Beacon URL"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:114
-msgid "URL where Boomerang beacons are sent. Example: https://www.example.com/beacon/catcher"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:121
+#: src/Admin/Settings/Page.php:169
 msgid "Brum Site ID"
 msgstr "Brum Site ID"
 
-#: src/Admin/Settings/Page.php:127
-msgid "Copy the Brum Site ID from the Basicrum backoffice."
-msgstr "Копирайте Brum Site ID от административния панел на Basicrum."
-
-#: src/Admin/Settings/Page.php:134
+#: src/Admin/Settings/Page.php:186
 msgid "Track Admin Users"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:140
+#: src/Admin/Settings/Page.php:192
 msgid "Track logged-in administrators (users with manage_options capability)."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:146
+#: src/Admin/Settings/Page.php:198
 msgid "Boomerang Version"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:161
+#: src/Admin/Settings/Page.php:265
 msgid "Privacy / GDPR"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:168
+#: src/Admin/Settings/Page.php:272
 msgid "Require Consent"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:174
+#: src/Admin/Settings/Page.php:278
 msgid "When enabled, Boomerang only loads after user gives consent."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:180
+#: src/Admin/Settings/Page.php:284
 msgid "Consent Mode"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:186
+#: src/Admin/Settings/Page.php:290
 msgid "How consent is obtained from the user."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:188
+#: src/Admin/Settings/Page.php:292
 msgid "Explicit Consent"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:189
+#: src/Admin/Settings/Page.php:293
 msgid "Implicit Consent"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:190
-msgid "Cookie Banner"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:191
-msgid "GDPR Banner"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:213
+#: src/Admin/Settings/Page.php:316
 msgid "Performance"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:220
+#: src/Admin/Settings/Page.php:323
 msgid "Wait After Onload"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:226
+#: src/Admin/Settings/Page.php:329
 msgid "Delay beacon sending until after page load completes."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:232
+#: src/Admin/Settings/Page.php:335
 msgid "Delay (milliseconds)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:238
+#: src/Admin/Settings/Page.php:341
 msgid "Milliseconds to delay the beacon after onload. Leave 0 to disable the delay."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:269
+#: src/Admin/Settings/Page.php:372
 msgid "Developer Settings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:246
+#: src/Admin/Settings/Page.php:349
 msgid "Script Position"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:252
+#: src/Admin/Settings/Page.php:355
 msgid "Where to insert the monitoring script."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:254
+#: src/Admin/Settings/Page.php:357
 msgid "Header (wp_head)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:255
+#: src/Admin/Settings/Page.php:358
 msgid "Footer (wp_footer)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:288
+#: src/Admin/Settings/Page.php:391
 msgid "Use Unminified Loaders"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:294
+#: src/Admin/Settings/Page.php:397
 msgid "Load unminified JavaScript loaders for debugging."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:480
+#: src/Admin/Settings/Page.php:703
 msgid "~30 KB gzipped"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:494
+#: src/Admin/Settings/Page.php:717
 msgid "Consent JavaScript API"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:495
+#: src/Admin/Settings/Page.php:718
 msgid "When consent mode is enabled, Boomerang will not load until the user gives consent. Use the following JavaScript API in your consent banner or cookie notice:"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:496
+#: src/Admin/Settings/Page.php:719
 msgid "Call this to grant consent and start monitoring. Sets a BRUM_CONSENT cookie (1 year, Strict, Secure)."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:497
+#: src/Admin/Settings/Page.php:720
 msgid "Call this to revoke consent. Disables Boomerang and removes tracking cookies."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:498
+#: src/Admin/Settings/Page.php:721
 msgid "Example:"
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:131
+#: src/Admin/Settings/Validate.php:124
 msgid "Beacon URL was automatically upgraded to HTTPS."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:140
+#: src/Admin/Settings/Validate.php:133
 msgid "Invalid Beacon URL. The default URL has been restored."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:166
+#: src/Admin/Settings/Validate.php:159
 msgid "Invalid Brum Site ID. Copy it from the Basicrum backoffice and try again."
 msgstr "Невалиден Brum Site ID. Копирайте го от административния панел на Basicrum и опитайте отново."
 
-#: src/Admin/Settings/Validate.php:193
+#: src/Admin/Settings/Validate.php:186
 msgid "Delay cannot exceed 30000 milliseconds. It has been capped at 30000."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:282
+#: src/Admin/Settings/Page.php:385
 msgid "Allow HTTP beacon URLs for local testing. Do not enable this on production sites."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:276
+#: src/Admin/Settings/Page.php:379
 msgid "HTTP Strictness"
 msgstr ""
 
 #: basicrum.php:37
 msgid "Basicrum could not start because its Composer dependencies are missing. Reinstall the plugin from an official release ZIP."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:294
+msgid "Cookie Popup"
+msgstr ""
+
+#. translators: %s: Link to the Basicrum settings page.
+#: src/Admin/Settings/Page.php:459
+#, php-format
+msgid "Basicrum monitoring is enabled but inactive because the Beacon URL and Brum Site ID are missing. Configure them in %s."
+msgstr ""
+
+#. translators: %s: Link to the Basicrum settings page.
+#: src/Admin/Settings/Page.php:462
+#, php-format
+msgid "Basicrum monitoring is enabled but inactive because the Beacon URL is missing. Configure it in %s."
+msgstr ""
+
+#. translators: %s: Link to the Basicrum settings page.
+#: src/Admin/Settings/Page.php:465
+#, php-format
+msgid "Basicrum monitoring is enabled but inactive because the Brum Site ID is missing. Configure it in %s."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:159
+msgid "URL where Boomerang beacons are sent. Example: https://www.example.com/beacon/catcher. Required when Basicrum is enabled."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:163
+msgid "Beacon URL is required when Basicrum is enabled."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:176
+msgid "Copy the Brum Site ID from the Basicrum backoffice. Required when Basicrum is enabled."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:180
+msgid "Brum Site ID is required when Basicrum is enabled."
 msgstr ""

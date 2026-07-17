@@ -31,6 +31,20 @@ class Helpers {
 	const VERSION_KEY = 'basicrum_version';
 
 	/**
+	 * Supported consent mode values.
+	 *
+	 * @var array
+	 */
+	const CONSENT_MODES = array( 'explicit', 'implicit', 'cookie_popup' );
+
+	/**
+	 * Settings required before monitoring can run.
+	 *
+	 * @var array
+	 */
+	const REQUIRED_SETTINGS = array( 'beacon_url', 'brum_site_id' );
+
+	/**
 	 * Get plugin settings merged with defaults.
 	 *
 	 * @return array
@@ -45,7 +59,29 @@ class Helpers {
 
 		unset( $settings['site_id'] );
 
+		if ( isset( $settings['consent_mode'] ) ) {
+			$settings['consent_mode'] = self::normalize_consent_mode( $settings['consent_mode'] );
+		}
+
 		return wp_parse_args( $settings, self::get_defaults() );
+	}
+
+	/**
+	 * Normalize current and legacy consent mode values.
+	 *
+	 * @param string $consent_mode Stored consent mode.
+	 * @return string Supported consent mode.
+	 */
+	public static function normalize_consent_mode( $consent_mode ) {
+		if ( 'cookie_banner' === $consent_mode ) {
+			return 'cookie_popup';
+		}
+
+		if ( ! in_array( $consent_mode, self::CONSENT_MODES, true ) ) {
+			return 'explicit';
+		}
+
+		return $consent_mode;
 	}
 
 	/**
@@ -67,6 +103,24 @@ class Helpers {
 			'script_position'        => 'footer',
 			'use_unminified_loaders' => '0',
 		);
+	}
+
+	/**
+	 * Get the required settings that have not been populated.
+	 *
+	 * @param array $settings Plugin settings.
+	 * @return array Missing setting keys.
+	 */
+	public static function get_missing_required_settings( $settings ) {
+		$missing_settings = array();
+
+		foreach ( self::REQUIRED_SETTINGS as $setting_key ) {
+			if ( ! isset( $settings[ $setting_key ] ) || '' === trim( (string) $settings[ $setting_key ] ) ) {
+				$missing_settings[] = $setting_key;
+			}
+		}
+
+		return $missing_settings;
 	}
 
 	/**

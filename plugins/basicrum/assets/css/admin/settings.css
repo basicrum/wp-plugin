@@ -1,0 +1,24 @@
+.basicrum-field-control {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	max-width: 100%;
+}
+
+.basicrum-field-control .regular-text {
+	min-width: 0;
+}
+
+.basicrum-field-error-icon {
+	color: #d63638;
+	flex: 0 0 auto;
+}
+
+.basicrum-field-error-icon[hidden] {
+	display: none;
+}
+
+.form-table p.basicrum-field-error-message {
+	color: #d63638;
+	font-weight: 600;
+}

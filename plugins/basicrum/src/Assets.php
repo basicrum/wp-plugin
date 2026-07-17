@@ -72,8 +72,8 @@ class Assets {
 			return false;
 		}
 
-		// Match Magento 1: do not enqueue any loader unless a beacon endpoint is configured.
-		if ( '' === trim( (string) $settings['beacon_url'] ) ) {
+		// Both identifiers are required before any monitoring scripts are injected.
+		if ( ! empty( Helpers::get_missing_required_settings( $settings ) ) ) {
 			return false;
 		}
 

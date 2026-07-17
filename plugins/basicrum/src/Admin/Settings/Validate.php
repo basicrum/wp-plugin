@@ -26,13 +26,6 @@ class Validate {
 	const BRUM_SITE_ID_PATTERN = '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i';
 
 	/**
-	 * Allowed consent mode values.
-	 *
-	 * @var array
-	 */
-	const CONSENT_MODES = array( 'explicit', 'implicit', 'cookie_banner', 'gdpr_banner' );
-
-	/**
 	 * Allowed script position values.
 	 *
 	 * @var array
@@ -71,7 +64,7 @@ class Validate {
 		$output['consent_mode'] = $this->sanitize_select(
 			$input,
 			'consent_mode',
-			self::CONSENT_MODES,
+			Helpers::CONSENT_MODES,
 			$defaults['consent_mode']
 		);
 

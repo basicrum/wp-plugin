@@ -19,6 +19,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Page {
 
 	/**
+	 * Script handle for the settings-page behavior.
+	 *
+	 * @var string
+	 */
+	const HANDLE_SETTINGS = 'basicrum-admin-settings';
+
+	/**
+	 * Style handle for the settings-page behavior.
+	 *
+	 * @var string
+	 */
+	const HANDLE_SETTINGS_STYLE = 'basicrum-admin-settings-style';
+
+	/**
 	 * Settings group name.
 	 *
 	 * @var string
@@ -39,6 +53,34 @@ class Page {
 		add_action( 'admin_menu', array( $this, 'add_menu_page' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+	}
+
+	/**
+	 * Enqueue behavior used only by the Basicrum settings page.
+	 *
+	 * @param string $hook_suffix Current admin page hook suffix.
+	 * @return void
+	 */
+	public function enqueue_admin_assets( $hook_suffix ) {
+		if ( 'toplevel_page_' . self::SLUG !== $hook_suffix ) {
+			return;
+		}
+
+		wp_enqueue_script(
+			self::HANDLE_SETTINGS,
+			Helpers::get_asset_url( 'js/admin/settings.js' ),
+			array(),
+			BASICRUM_VERSION,
+			true
+		);
+
+		wp_enqueue_style(
+			self::HANDLE_SETTINGS_STYLE,
+			Helpers::get_asset_url( 'css/admin/settings.css' ),
+			array(),
+			BASICRUM_VERSION
+		);
 	}
 
 	/**
@@ -84,6 +126,8 @@ class Page {
 	 * @return void
 	 */
 	private function add_general_section() {
+		$settings = Helpers::get_settings();
+
 		add_settings_section(
 			'basicrum_section_general',
 			esc_html__( 'General Settings', 'basicrum' ),
@@ -110,9 +154,13 @@ class Page {
 			self::SLUG,
 			'basicrum_section_general',
 			array(
-				'id'    => 'beacon_url',
-				'label' => __( 'URL where Boomerang beacons are sent. Example: https://www.example.com/beacon/catcher', 'basicrum' ),
-				'size'  => 60,
+				'id'                    => 'beacon_url',
+				'label_for'             => 'basicrum_beacon_url',
+				'label'                 => __( 'URL where Boomerang beacons are sent. Example: https://www.example.com/beacon/catcher. Required when Basicrum is enabled.', 'basicrum' ),
+				'size'                  => 60,
+				'class'                 => $this->get_required_field_row_class( $settings, 'beacon_url' ),
+				'required_when_enabled' => true,
+				'required_message'      => __( 'Beacon URL is required when Basicrum is enabled.', 'basicrum' ),
 			)
 		);
 
@@ -123,9 +171,13 @@ class Page {
 			self::SLUG,
 			'basicrum_section_general',
 			array(
-				'id'    => 'brum_site_id',
-				'label' => __( 'Copy the Brum Site ID from the Basicrum backoffice.', 'basicrum' ),
-				'size'  => 40,
+				'id'                    => 'brum_site_id',
+				'label_for'             => 'basicrum_brum_site_id',
+				'label'                 => __( 'Copy the Brum Site ID from the Basicrum backoffice. Required when Basicrum is enabled.', 'basicrum' ),
+				'size'                  => 40,
+				'class'                 => $this->get_required_field_row_class( $settings, 'brum_site_id' ),
+				'required_when_enabled' => true,
+				'required_message'      => __( 'Brum Site ID is required when Basicrum is enabled.', 'basicrum' ),
 			)
 		);
 
@@ -147,6 +199,58 @@ class Page {
 			array( $this, 'render_boomerang_version' ),
 			self::SLUG,
 			'basicrum_section_general'
+		);
+	}
+
+	/**
+	 * Get WordPress core classes for an invalid settings row.
+	 *
+	 * @param array  $settings    Plugin settings.
+	 * @param string $setting_key Setting key.
+	 * @return string Field row classes.
+	 */
+	private function get_required_field_row_class( $settings, $setting_key ) {
+		if ( '1' !== $settings['enabled'] ) {
+			return '';
+		}
+
+		if ( ! isset( $settings[ $setting_key ] ) || '' === trim( (string) $settings[ $setting_key ] ) ) {
+			return 'form-invalid';
+		}
+
+		return '';
+	}
+
+	/**
+	 * Determine whether a settings control should be disabled.
+	 *
+	 * @param string $setting_key Setting key.
+	 * @param array  $settings    Plugin settings.
+	 * @return bool Whether the control should be disabled.
+	 */
+	private function is_field_disabled( $setting_key, $settings ) {
+		return 'enabled' !== $setting_key && '1' !== $settings['enabled'];
+	}
+
+	/**
+	 * Preserve the value of a disabled control during no-JavaScript submissions.
+	 *
+	 * Disabled HTML controls are not submitted by browsers.
+	 *
+	 * @param string $name        Control name.
+	 * @param mixed  $value       Stored control value.
+	 * @param bool   $is_disabled Whether the visible control is disabled.
+	 * @return void
+	 */
+	private function render_preserved_disabled_value( $name, $value, $is_disabled ) {
+		if ( ! $is_disabled ) {
+			return;
+		}
+
+		printf(
+			'<input type="hidden" class="basicrum-disabled-setting-value" name="%1$s" value="%2$s">',
+			esc_attr( $name ),
+			esc_attr( $value )
 		);
 	}
 
@@ -185,10 +289,9 @@ class Page {
 				'id'      => 'consent_mode',
 				'label'   => __( 'How consent is obtained from the user.', 'basicrum' ),
 				'options' => array(
-					'explicit'      => __( 'Explicit Consent', 'basicrum' ),
-					'implicit'      => __( 'Implicit Consent', 'basicrum' ),
-					'cookie_banner' => __( 'Cookie Banner', 'basicrum' ),
-					'gdpr_banner'   => __( 'GDPR Banner', 'basicrum' ),
+					'explicit'     => __( 'Explicit Consent', 'basicrum' ),
+					'implicit'     => __( 'Implicit Consent', 'basicrum' ),
+					'cookie_popup' => __( 'Cookie Popup', 'basicrum' ),
 				),
 			)
 		);
@@ -320,12 +423,54 @@ class Page {
 	}
 
 	/**
-	 * Display admin notices for settings errors.
+	 * Display admin notices for settings errors and incomplete configuration.
 	 *
 	 * @return void
 	 */
 	public function admin_notices() {
+		if ( current_user_can( 'manage_options' ) ) {
+			$this->add_required_settings_notice();
+		}
+
 		settings_errors();
+	}
+
+	/**
+	 * Add a warning when monitoring is enabled without its required settings.
+	 *
+	 * @return void
+	 */
+	private function add_required_settings_notice() {
+		$settings         = Helpers::get_settings();
+		$missing_settings = Helpers::get_missing_required_settings( $settings );
+
+		if ( '1' !== $settings['enabled'] || empty( $missing_settings ) ) {
+			return;
+		}
+
+		$settings_link = sprintf(
+			'<a href="%1$s">%2$s</a>',
+			esc_url( admin_url( 'admin.php?page=' . self::SLUG ) ),
+			esc_html__( 'Basicrum Settings', 'basicrum' )
+		);
+
+		if ( in_array( 'beacon_url', $missing_settings, true ) && in_array( 'brum_site_id', $missing_settings, true ) ) {
+			/* translators: %s: Link to the Basicrum settings page. */
+			$message = sprintf( __( 'Basicrum monitoring is enabled but inactive because the Beacon URL and Brum Site ID are missing. Configure them in %s.', 'basicrum' ), $settings_link );
+		} elseif ( in_array( 'beacon_url', $missing_settings, true ) ) {
+			/* translators: %s: Link to the Basicrum settings page. */
+			$message = sprintf( __( 'Basicrum monitoring is enabled but inactive because the Beacon URL is missing. Configure it in %s.', 'basicrum' ), $settings_link );
+		} else {
+			/* translators: %s: Link to the Basicrum settings page. */
+			$message = sprintf( __( 'Basicrum monitoring is enabled but inactive because the Brum Site ID is missing. Configure it in %s.', 'basicrum' ), $settings_link );
+		}
+
+		add_settings_error(
+			Helpers::OPTION_KEY,
+			'basicrum_missing_required_settings',
+			$message,
+			'warning'
+		);
 	}
 
 	// -------------------------------------------------------------------------
@@ -335,28 +480,72 @@ class Page {
 	/**
 	 * Render a text input field.
 	 *
-	 * @param array $args Field arguments: id, label, size, placeholder.
+	 * @param array $args Field arguments, including conditional required state.
 	 * @return void
 	 */
 	public function render_text_field( $args ) {
-		$settings    = Helpers::get_settings();
-		$id          = isset( $args['id'] ) ? $args['id'] : '';
-		$label       = isset( $args['label'] ) ? $args['label'] : '';
-		$size        = isset( $args['size'] ) ? (int) $args['size'] : 40;
-		$placeholder = isset( $args['placeholder'] ) ? $args['placeholder'] : '';
-		$value       = isset( $settings[ $id ] ) ? esc_attr( $settings[ $id ] ) : '';
-		$name        = Helpers::OPTION_KEY . '[' . $id . ']';
+		$settings              = Helpers::get_settings();
+		$id                    = isset( $args['id'] ) ? $args['id'] : '';
+		$label                 = isset( $args['label'] ) ? $args['label'] : '';
+		$size                  = isset( $args['size'] ) ? (int) $args['size'] : 40;
+		$placeholder           = isset( $args['placeholder'] ) ? $args['placeholder'] : '';
+		$value                 = isset( $settings[ $id ] ) ? $settings[ $id ] : '';
+		$name                  = Helpers::OPTION_KEY . '[' . $id . ']';
+		$required_when_enabled = ! empty( $args['required_when_enabled'] );
+		$required_message      = isset( $args['required_message'] ) ? $args['required_message'] : '';
+		$is_required           = $required_when_enabled && '1' === $settings['enabled'];
+		$is_invalid            = $is_required && '' === trim( (string) $value );
+		$is_disabled           = $this->is_field_disabled( $id, $settings );
+		$input_classes         = array( 'regular-text' );
+		$description_id        = 'basicrum_' . $id . '_description';
+		$error_id              = 'basicrum_' . $id . '_error';
+		$describedby           = trim( ( $label ? $description_id : '' ) . ( $required_message ? ' ' . $error_id : '' ) );
 
+		if ( $is_required ) {
+			$input_classes[] = 'form-required';
+		}
+
+		$this->render_preserved_disabled_value( $name, $value, $is_disabled );
+
+		echo '<span class="basicrum-field-control">';
 		printf(
-			'<input id="basicrum_%1$s" name="%2$s" type="text" size="%3$d" value="%4$s" placeholder="%5$s" class="regular-text"><br>',
+			'<input id="basicrum_%1$s" name="%2$s" type="text" size="%3$d" value="%4$s" placeholder="%5$s" class="%6$s"',
 			esc_attr( $id ),
 			esc_attr( $name ),
 			$size,
-			$value,
-			esc_attr( $placeholder )
+			esc_attr( $value ),
+			esc_attr( $placeholder ),
+			esc_attr( implode( ' ', $input_classes ) )
 		);
+		if ( $is_required ) {
+			echo ' required="required"';
+		}
+		if ( $is_disabled ) {
+			echo ' disabled="disabled"';
+		}
+		printf(
+			' aria-required="%1$s" aria-invalid="%2$s" aria-disabled="%3$s" aria-describedby="%4$s" data-required-message="%5$s">',
+			esc_attr( $is_required ? 'true' : 'false' ),
+			esc_attr( $is_invalid ? 'true' : 'false' ),
+			esc_attr( $is_disabled ? 'true' : 'false' ),
+			esc_attr( $describedby ),
+			esc_attr( $required_message )
+		);
+		if ( $is_invalid ) {
+			printf( '<span id="%s" class="dashicons dashicons-warning basicrum-field-error-icon" aria-hidden="true"></span>', esc_attr( $error_id . '_icon' ) );
+		} else {
+			printf( '<span id="%s" class="dashicons dashicons-warning basicrum-field-error-icon" aria-hidden="true" hidden></span>', esc_attr( $error_id . '_icon' ) );
+		}
+		echo '</span><br>';
 		if ( $label ) {
-			printf( '<p class="description">%s</p>', esc_html( $label ) );
+			printf( '<p id="%1$s" class="description">%2$s</p>', esc_attr( $description_id ), esc_html( $label ) );
+		}
+		if ( $required_message ) {
+			if ( $is_invalid ) {
+				printf( '<p id="%1$s" class="description basicrum-field-error-message">%2$s</p>', esc_attr( $error_id ), esc_html( $required_message ) );
+			} else {
+				printf( '<p id="%1$s" class="description basicrum-field-error-message" hidden>%2$s</p>', esc_attr( $error_id ), esc_html( $required_message ) );
+			}
 		}
 	}
 
@@ -367,22 +556,29 @@ class Page {
 	 * @return void
 	 */
 	public function render_number_field( $args ) {
-		$settings = Helpers::get_settings();
-		$id       = isset( $args['id'] ) ? $args['id'] : '';
-		$label    = isset( $args['label'] ) ? $args['label'] : '';
-		$min      = isset( $args['min'] ) ? (int) $args['min'] : 0;
-		$max      = isset( $args['max'] ) ? (int) $args['max'] : 30000;
-		$value    = isset( $settings[ $id ] ) ? absint( $settings[ $id ] ) : 0;
-		$name     = Helpers::OPTION_KEY . '[' . $id . ']';
+		$settings    = Helpers::get_settings();
+		$id          = isset( $args['id'] ) ? $args['id'] : '';
+		$label       = isset( $args['label'] ) ? $args['label'] : '';
+		$min         = isset( $args['min'] ) ? (int) $args['min'] : 0;
+		$max         = isset( $args['max'] ) ? (int) $args['max'] : 30000;
+		$value       = isset( $settings[ $id ] ) ? absint( $settings[ $id ] ) : 0;
+		$name        = Helpers::OPTION_KEY . '[' . $id . ']';
+		$is_disabled = $this->is_field_disabled( $id, $settings );
+
+		$this->render_preserved_disabled_value( $name, $value, $is_disabled );
 
 		printf(
-			'<input id="basicrum_%1$s" name="%2$s" type="number" min="%3$d" max="%4$d" value="%5$d"><br>',
+			'<input id="basicrum_%1$s" name="%2$s" type="number" min="%3$d" max="%4$d" value="%5$d"',
 			esc_attr( $id ),
 			esc_attr( $name ),
 			$min,
 			$max,
 			$value
 		);
+		if ( $is_disabled ) {
+			echo ' disabled="disabled"';
+		}
+		printf( ' aria-disabled="%s"><br>', esc_attr( $is_disabled ? 'true' : 'false' ) );
 		if ( $label ) {
 			printf( '<p class="description">%s</p>', esc_html( $label ) );
 		}
@@ -395,16 +591,26 @@ class Page {
 	 * @return void
 	 */
 	public function render_checkbox_field( $args ) {
-		$settings = Helpers::get_settings();
-		$id       = isset( $args['id'] ) ? $args['id'] : '';
-		$label    = isset( $args['label'] ) ? $args['label'] : '';
-		$value    = isset( $settings[ $id ] ) ? $settings[ $id ] : '0';
-		$name     = Helpers::OPTION_KEY . '[' . $id . ']';
+		$settings    = Helpers::get_settings();
+		$id          = isset( $args['id'] ) ? $args['id'] : '';
+		$label       = isset( $args['label'] ) ? $args['label'] : '';
+		$value       = isset( $settings[ $id ] ) ? $settings[ $id ] : '0';
+		$name        = Helpers::OPTION_KEY . '[' . $id . ']';
+		$is_disabled = $this->is_field_disabled( $id, $settings );
+
+		$this->render_preserved_disabled_value( $name, $value, $is_disabled );
 
 		printf(
-			'<label><input id="basicrum_%1$s" name="%2$s" type="checkbox" value="1" %3$s> %4$s</label>',
+			'<label><input id="basicrum_%1$s" name="%2$s" type="checkbox" value="1"',
 			esc_attr( $id ),
-			esc_attr( $name ),
+			esc_attr( $name )
+		);
+		if ( $is_disabled ) {
+			echo ' disabled="disabled"';
+		}
+		printf(
+			' aria-disabled="%1$s" %2$s> %3$s</label>',
+			esc_attr( $is_disabled ? 'true' : 'false' ),
 			checked( '1', $value, false ),
 			esc_html( $label )
 		);
@@ -417,18 +623,28 @@ class Page {
 	 * @return void
 	 */
 	public function render_radio_field( $args ) {
-		$settings = Helpers::get_settings();
-		$id       = isset( $args['id'] ) ? $args['id'] : '';
-		$label    = isset( $args['label'] ) ? $args['label'] : '';
-		$options  = isset( $args['options'] ) ? $args['options'] : array();
-		$current  = isset( $settings[ $id ] ) ? $settings[ $id ] : '';
-		$name     = Helpers::OPTION_KEY . '[' . $id . ']';
+		$settings    = Helpers::get_settings();
+		$id          = isset( $args['id'] ) ? $args['id'] : '';
+		$label       = isset( $args['label'] ) ? $args['label'] : '';
+		$options     = isset( $args['options'] ) ? $args['options'] : array();
+		$current     = isset( $settings[ $id ] ) ? $settings[ $id ] : '';
+		$name        = Helpers::OPTION_KEY . '[' . $id . ']';
+		$is_disabled = $this->is_field_disabled( $id, $settings );
+
+		$this->render_preserved_disabled_value( $name, $current, $is_disabled );
 
 		foreach ( $options as $value => $option_label ) {
 			printf(
-				'<label><input name="%1$s" type="radio" value="%2$s" %3$s> <span>%4$s</span></label><br>',
+				'<label><input name="%1$s" type="radio" value="%2$s"',
 				esc_attr( $name ),
-				esc_attr( $value ),
+				esc_attr( $value )
+			);
+			if ( $is_disabled ) {
+				echo ' disabled="disabled"';
+			}
+			printf(
+				' aria-disabled="%1$s" %2$s> <span>%3$s</span></label><br>',
+				esc_attr( $is_disabled ? 'true' : 'false' ),
 				checked( $current, $value, false ),
 				esc_html( $option_label )
 			);
@@ -445,14 +661,21 @@ class Page {
 	 * @return void
 	 */
 	public function render_select_field( $args ) {
-		$settings = Helpers::get_settings();
-		$id       = isset( $args['id'] ) ? $args['id'] : '';
-		$label    = isset( $args['label'] ) ? $args['label'] : '';
-		$options  = isset( $args['options'] ) ? $args['options'] : array();
-		$current  = isset( $settings[ $id ] ) ? $settings[ $id ] : '';
-		$name     = Helpers::OPTION_KEY . '[' . $id . ']';
+		$settings    = Helpers::get_settings();
+		$id          = isset( $args['id'] ) ? $args['id'] : '';
+		$label       = isset( $args['label'] ) ? $args['label'] : '';
+		$options     = isset( $args['options'] ) ? $args['options'] : array();
+		$current     = isset( $settings[ $id ] ) ? $settings[ $id ] : '';
+		$name        = Helpers::OPTION_KEY . '[' . $id . ']';
+		$is_disabled = $this->is_field_disabled( $id, $settings );
 
-		printf( '<select id="basicrum_%1$s" name="%2$s">', esc_attr( $id ), esc_attr( $name ) );
+		$this->render_preserved_disabled_value( $name, $current, $is_disabled );
+
+		printf( '<select id="basicrum_%1$s" name="%2$s"', esc_attr( $id ), esc_attr( $name ) );
+		if ( $is_disabled ) {
+			echo ' disabled="disabled"';
+		}
+		printf( ' aria-disabled="%s">', esc_attr( $is_disabled ? 'true' : 'false' ) );
 		foreach ( $options as $value => $option_label ) {
 			printf(
 				'<option value="%1$s" %2$s>%3$s</option>',

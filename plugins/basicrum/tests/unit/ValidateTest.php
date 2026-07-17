@@ -144,9 +144,18 @@ class ValidateTest extends TestCase {
 	 * Test valid consent mode is accepted.
 	 */
 	public function test_valid_consent_mode_is_accepted() {
-		$input  = array( 'consent_mode' => 'gdpr_banner' );
+		$input  = array( 'consent_mode' => 'cookie_popup' );
 		$result = $this->validate->sanitize( $this->full_input( $input ) );
-		$this->assertSame( 'gdpr_banner', $result['consent_mode'] );
+		$this->assertSame( 'cookie_popup', $result['consent_mode'] );
+	}
+
+	/**
+	 * Test the retired Cookie Banner mode cannot be saved again.
+	 */
+	public function test_legacy_cookie_banner_mode_falls_back_to_default() {
+		$input  = array( 'consent_mode' => 'cookie_banner' );
+		$result = $this->validate->sanitize( $this->full_input( $input ) );
+		$this->assertSame( 'explicit', $result['consent_mode'] );
 	}
 
 	/**

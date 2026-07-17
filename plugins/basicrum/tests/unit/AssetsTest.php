@@ -87,7 +87,7 @@ class AssetsTest extends TestCase {
 		return array_merge( array(
 			'enabled'                => '1',
 			'beacon_url'             => 'https://beacon.example.com/catcher',
-			'brum_site_id'           => '',
+			'brum_site_id'           => '550e8400-e29b-41d4-a716-446655440000',
 			'track_admins'           => '0',
 			'script_position'        => 'footer',
 			'consent_enabled'        => '0',
@@ -145,7 +145,12 @@ class AssetsTest extends TestCase {
 	public function test_should_track_filter_can_prevent_tracking() {
 		Functions\expect( 'get_option' )
 			->with( 'basicrum_settings', array() )
-			->andReturn( array( 'enabled' => '1', 'track_admins' => '0', 'beacon_url' => 'https://beacon.example.com/catcher' ) );
+			->andReturn( array(
+				'enabled'      => '1',
+				'track_admins' => '0',
+				'beacon_url'   => 'https://beacon.example.com/catcher',
+				'brum_site_id' => '550e8400-e29b-41d4-a716-446655440000',
+			) );
 
 		$this->stub_wp_parse_args();
 		Functions\when( 'is_user_logged_in' )->justReturn( false );
@@ -167,6 +172,24 @@ class AssetsTest extends TestCase {
 		Functions\expect( 'get_option' )
 			->with( 'basicrum_settings', array() )
 			->andReturn( array( 'enabled' => '1', 'track_admins' => '0', 'beacon_url' => '' ) );
+
+		$this->stub_wp_parse_args();
+		$this->stub_apply_filters_passthrough();
+		Functions\when( 'is_user_logged_in' )->justReturn( false );
+
+		Functions\expect( 'wp_register_script' )->never();
+
+		$assets = new Assets();
+		$assets->maybe_enqueue();
+	}
+
+	/**
+	 * Test that scripts are not enqueued when the Brum Site ID is blank.
+	 */
+	public function test_scripts_not_enqueued_when_brum_site_id_is_blank() {
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn( $this->enabled_settings( array( 'brum_site_id' => '' ) ) );
 
 		$this->stub_wp_parse_args();
 		$this->stub_apply_filters_passthrough();

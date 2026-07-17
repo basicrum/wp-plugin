@@ -88,6 +88,40 @@ class HelpersTest extends TestCase {
 	}
 
 	/**
+	 * Test get_settings maps the legacy Cookie Banner mode to Cookie Popup.
+	 */
+	public function test_get_settings_maps_legacy_cookie_banner_mode() {
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn( array( 'consent_mode' => 'cookie_banner' ) );
+
+		Functions\when( 'wp_parse_args' )->alias( function( $args, $defaults ) {
+			return array_merge( $defaults, $args );
+		});
+
+		$settings = Helpers::get_settings();
+
+		$this->assertSame( 'cookie_popup', $settings['consent_mode'] );
+	}
+
+	/**
+	 * Test unsupported stored consent modes fall back to explicit consent.
+	 */
+	public function test_get_settings_rejects_unsupported_consent_mode() {
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn( array( 'consent_mode' => 'retired_mode' ) );
+
+		Functions\when( 'wp_parse_args' )->alias( function( $args, $defaults ) {
+			return array_merge( $defaults, $args );
+		});
+
+		$settings = Helpers::get_settings();
+
+		$this->assertSame( 'explicit', $settings['consent_mode'] );
+	}
+
+	/**
 	 * Test get_boomerang_version returns expected version.
 	 */
 	public function test_boomerang_version() {
@@ -122,5 +156,33 @@ class HelpersTest extends TestCase {
 		});
 
 		$this->assertTrue( Helpers::is_enabled() );
+	}
+
+	/**
+	 * Test required settings are reported when they are blank.
+	 */
+	public function test_get_missing_required_settings_reports_blank_values() {
+		$missing_settings = Helpers::get_missing_required_settings(
+			array(
+				'beacon_url'   => '',
+				'brum_site_id' => '   ',
+			)
+		);
+
+		$this->assertSame( array( 'beacon_url', 'brum_site_id' ), $missing_settings );
+	}
+
+	/**
+	 * Test a complete monitoring configuration has no missing settings.
+	 */
+	public function test_get_missing_required_settings_accepts_populated_values() {
+		$missing_settings = Helpers::get_missing_required_settings(
+			array(
+				'beacon_url'   => 'https://beacon.example.com/catcher',
+				'brum_site_id' => '550e8400-e29b-41d4-a716-446655440000',
+			)
+		);
+
+		$this->assertSame( array(), $missing_settings );
 	}
 }
