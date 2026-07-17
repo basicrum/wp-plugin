@@ -17,7 +17,7 @@ phpunit-with-integration.xml
 README.md
 package.json
 package-lock.json
-playwright.config.js
+playwright*.config.js
 
 coverage.xml
 basicrum.zip

@@ -8,7 +8,8 @@
   "scripts": {
     "test": "npm run test:js",
     "test:js": "playwright test",
-    "test:js:headed": "playwright test --headed"
+    "test:js:headed": "playwright test --headed",
+    "test:e2e:woocommerce": "playwright test --config=playwright.woocommerce-e2e.config.js"
   },
   "devDependencies": {
     "@playwright/test": "1.61.1"

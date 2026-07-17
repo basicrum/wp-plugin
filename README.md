@@ -28,6 +28,7 @@ make composer-audit
 make conventions
 make translations
 make js-test
+make woocommerce-e2e
 make package
 make package-smoke
 ```
@@ -120,6 +121,15 @@ actual minified and unminified files from `plugins/basicrum/assets/js/loaders/`,
 intercept the synthetic Boomerang request, and block every unexpected network
 request. They cover consent gating, repeated opt-in, opt-out cleanup, and cookie
 behavior on HTTP, HTTPS, localhost, and subdomains.
+
+`make woocommerce-e2e` starts an isolated WordPress 6.9 and WooCommerce 10.9.4
+stack, seeds a product and completed order, then uses Playwright to visit the
+shop, product, cart, checkout, and order-received pages. It intercepts the
+synthetic collector and verifies the actual Basicrum beacon `p_type` values.
+The WooCommerce download is pinned and checksum-verified in
+`tools/setup-woocommerce-e2e.sh`; update its version and checksum together.
+The stack's Docker image tags and immutable digests are reviewed together in
+`docker/woocommerce-e2e.yml`.
 
 The JavaScript package, Playwright configuration, and browser tests live at the
 repository root. The release builder copies only `plugins/basicrum/`, and the

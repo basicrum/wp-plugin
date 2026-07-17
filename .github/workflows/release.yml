@@ -23,6 +23,9 @@ jobs:
           BASICRUM_RELEASE_TAG: ${{ github.event.release.tag_name }}
         run: make conventions
 
+      - name: Run WooCommerce E2E page-type tests
+        run: make woocommerce-e2e
+
       - name: Setup release PHP
         uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
         with:

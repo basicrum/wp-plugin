@@ -32,6 +32,10 @@ namespace, PSR-4 Composer autoloading, PHP 7.4+, and WordPress 6.0+.
   hard-coded script handles.
 - Boomerang lives in `assets/js/boomr/`; standard and consent loaders live in
   `assets/js/loaders/`.
+- WooCommerce browser E2E tests are root-level test tooling. Keep the pinned
+  WooCommerce version and checksum synchronized in `tools/setup-woocommerce-e2e.sh`.
+  Review and update each Docker image tag and digest together in
+  `docker/woocommerce-e2e.yml`.
 - Pin third-party GitHub Actions to full 40-character commit SHAs. Keep the
   reviewed release tag in the adjacent comment and update pins through reviewed
   Dependabot pull requests.
@@ -50,6 +54,7 @@ make composer-audit
 make conventions
 make unit
 make js-test
+make woocommerce-e2e
 make integration-setup
 make integration
 make translations
