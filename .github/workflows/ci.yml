@@ -12,6 +12,17 @@ permissions:
   contents: read
 
 jobs:
+  conventions:
+    name: Repository conventions
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Enforce repository conventions
+        run: make conventions
+
   quality:
     name: Static and dependency analysis
     runs-on: ubuntu-latest
@@ -187,6 +198,7 @@ jobs:
     name: Release ZIP smoke test
     runs-on: ubuntu-latest
     needs:
+      - conventions
       - quality
       - translations
       - javascript

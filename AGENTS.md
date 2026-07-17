@@ -26,6 +26,8 @@ namespace, PSR-4 Composer autoloading, PHP 7.4+, and WordPress 6.0+.
 - Guard PHP files with `ABSPATH`; escape output and sanitize all input.
 - Use ASCII hyphens (`-`); do not use typographic dashes in source, comments,
   documentation, or user-facing text.
+- Keep the plugin header Version, `BASICRUM_VERSION`, `Stable tag`, and top
+  changelog version identical. Release tags use the `v<version>` form.
 - Prefix hooks with `basicrum_`; use `Assets` handle constants rather than
   hard-coded script handles.
 - Boomerang lives in `assets/js/boomr/`; standard and consent loaders live in
@@ -45,6 +47,7 @@ make lint
 make analyse
 make composer-validate
 make composer-audit
+make conventions
 make unit
 make js-test
 make integration-setup

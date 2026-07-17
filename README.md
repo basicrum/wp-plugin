@@ -25,6 +25,7 @@ make lint
 make analyse
 make composer-validate
 make composer-audit
+make conventions
 make translations
 make js-test
 make package
@@ -131,6 +132,13 @@ configuration is stored in `plugins/basicrum/phpstan.neon.dist`.
 `make composer-validate` checks Composer metadata and lock-file consistency in
 strict mode. `make composer-audit` checks the complete lock file against current
 security advisories. CI runs all three checks on every push and pull request.
+
+`make conventions` rejects en dash and em dash characters in tracked text files.
+It also verifies that the plugin header version, `BASICRUM_VERSION`, WordPress
+`Stable tag`, and top changelog version match. Release workflows additionally
+compare the GitHub release tag to that version. Release tags must use the
+`v<version>` form, such as `v1.0.2`. To check a planned release locally, run
+`BASICRUM_RELEASE_TAG=v<version> make conventions`.
 
 Dependabot checks npm, Composer dependencies, and GitHub Actions weekly. CI
 workflows use a read-only `GITHUB_TOKEN`; release and pre-release workflows

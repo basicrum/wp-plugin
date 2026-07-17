@@ -13,7 +13,7 @@ TEST_DB_PASS = root
 TEST_DB_HOST = db
 WP_TEST_VERSION ?= latest
 
-.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php analyse composer-validate composer-audit translations js-install js-test integration-setup integration test package package-verify package-smoke clean
+.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php analyse composer-validate composer-audit conventions translations js-install js-test integration-setup integration test package package-verify package-smoke clean
 
 help:
 	@echo "Targets:"
@@ -31,6 +31,7 @@ help:
 	@echo "  analyse            Run PHPStan static analysis"
 	@echo "  composer-validate  Validate Composer metadata and lock file"
 	@echo "  composer-audit     Audit locked Composer dependencies"
+	@echo "  conventions        Enforce ASCII hyphens and version consistency"
 	@echo "  translations       Update POT, PO, and MO translation catalogs"
 	@echo "  js-install         Install locked JavaScript test dependencies"
 	@echo "  js-test            Run loader behavior tests in Chromium"
@@ -84,6 +85,10 @@ composer-validate:
 
 composer-audit:
 	$(COMPOSE) run --rm -w $(PLUGIN_WORKDIR) $(PHP_SERVICE) composer audit --locked
+
+conventions:
+	sh tools/verify-ascii-hyphens.sh
+	sh tools/verify-version-consistency.sh
 
 translations:
 	$(COMPOSE) run --rm --no-deps --user "$$(id -u):$$(id -g)" -e HOME=/tmp -w $(WPCLI_PLUGIN_WORKDIR) $(WPCLI_SERVICE) sh /tools/update-translations.sh .

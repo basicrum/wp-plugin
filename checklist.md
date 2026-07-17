@@ -145,16 +145,16 @@ Acceptance criteria:
 
 ## 8. Enforce repository conventions in CI
 
-- [ ] Add an automated check that rejects en dash and em dash characters in
+- [x] Add an automated check that rejects en dash and em dash characters in
   tracked source, comments, documentation, and user-facing text.
-- [ ] Add a version consistency check covering the plugin header,
+- [x] Add a version consistency check covering the plugin header,
   `BASICRUM_VERSION`, `Stable tag`, changelog, and release tag.
-- [ ] Run both checks in pull requests and pushes to the main branch.
-- [ ] Document the checks in `AGENTS.md` and the contributor documentation.
+- [x] Run both checks in pull requests and pushes to the main branch.
+- [x] Document the checks in `AGENTS.md` and the contributor documentation.
 
 Acceptance criteria:
 
-- [ ] Repository conventions and version metadata cannot drift silently even when
+- [x] Repository conventions and version metadata cannot drift silently even when
   changes are made without an agent.
 
 ## Final release gate
@@ -168,4 +168,4 @@ Acceptance criteria:
 - [x] Composer validation and audit pass.
 - [ ] Generated asset checks pass.
 - [x] The packaged ZIP smoke test passes.
-- [ ] Version and repository convention checks pass.
+- [x] Version and repository convention checks pass.
