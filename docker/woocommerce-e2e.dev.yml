@@ -1,0 +1,10 @@
+services:
+  wordpress:
+    ports:
+      - "${WOOCOMMERCE_E2E_PORT:-9081}:80"
+
+  wpcli:
+    environment:
+      WP_URL: http://localhost:${WOOCOMMERCE_E2E_PORT:-9081}
+      WP_TITLE: Basicrum WooCommerce Local
+      HTTP_HOST: localhost:${WOOCOMMERCE_E2E_PORT:-9081}

@@ -51,7 +51,7 @@ while ! compose exec -T wordpress test -f /var/www/html/wp-includes/version.php;
 	sleep 2
 done
 
-compose run --rm --no-deps --user "$(id -u):$(id -g)" -e COMPOSER_HOME=/tmp/composer composer \
+compose run --rm --no-deps -e COMPOSER_HOME=/tmp/composer composer \
 	install --no-dev --no-interaction --prefer-dist
 
 compose run --rm wpcli sh /tools/setup-woocommerce-e2e.sh

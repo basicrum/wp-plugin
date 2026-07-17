@@ -58,7 +58,13 @@ if [ "$(wp plugin get woocommerce --field=version --path="${WP_PATH}")" != "$WOO
 fi
 
 wp wc tool run install_pages --user=1 --path="${WP_PATH}"
+
+# Fresh WooCommerce installs enable Coming soon mode for anonymous visitors.
+wp option update woocommerce_coming_soon no --path="${WP_PATH}"
+wp option update woocommerce_store_pages_only no --path="${WP_PATH}"
+
 wp plugin activate basicrum --path="${WP_PATH}"
+wp rewrite structure '/%postname%/' --hard --path="${WP_PATH}"
 
 wp option update basicrum_settings \
 	'{"enabled":"1","development_mode":"0","beacon_url":"https://collector.basicrum.test/beacon","brum_site_id":"550e8400-e29b-41d4-a716-446655440000","track_admins":"0","consent_enabled":"0","wait_after_onload":"0","delay_ms":0,"script_position":"footer","use_unminified_loaders":"0"}' \

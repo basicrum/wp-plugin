@@ -29,6 +29,7 @@ make conventions
 make translations
 make js-test
 make woocommerce-e2e
+make woocommerce-e2e-up
 make package
 make package-smoke
 ```
@@ -126,10 +127,20 @@ behavior on HTTP, HTTPS, localhost, and subdomains.
 stack, seeds a product and completed order, then uses Playwright to visit the
 shop, product, cart, checkout, and order-received pages. It intercepts the
 synthetic collector and verifies the actual Basicrum beacon `p_type` values.
+WooCommerce Coming soon mode is disabled in this isolated stack, so the shop
+also proves that the seeded product is visible to anonymous visitors.
 The WooCommerce download is pinned and checksum-verified in
 `tools/setup-woocommerce-e2e.sh`; update its version and checksum together.
 The stack's Docker image tags and immutable digests are reviewed together in
 `docker/woocommerce-e2e.yml`.
+
+To inspect the same seeded WooCommerce storefront manually, run
+`make woocommerce-e2e-up`. It exposes an isolated stack at
+`http://localhost:9081/` with `admin` / `basicrum-e2e-password`; use
+`make woocommerce-e2e-down` to stop and reset it. Set
+`WOOCOMMERCE_E2E_PORT` to use a different host port. The inspectable stack
+keeps its own data and plugin copy, so run `make woocommerce-e2e-down` and then
+`make woocommerce-e2e-up` after changing plugin source.
 
 The JavaScript package, Playwright configuration, and browser tests live at the
 repository root. The release builder copies only `plugins/basicrum/`, and the

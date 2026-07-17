@@ -47,6 +47,16 @@ async function visitAndCaptureBeacon( page, route, expectedPageType, prepare ) {
 	expect( response.ok() ).toBeTruthy();
 	await expect( page.locator( '#basicrum-loader-js' ) ).toHaveCount( 1 );
 
+	if ( 'shop' === expectedPageType ) {
+		const productLink = page.getByRole( 'link', {
+			name: 'Basicrum E2E Product',
+			exact: true,
+		} );
+
+		await expect( productLink ).toHaveCount( 1 );
+		await expect( productLink ).toBeVisible();
+	}
+
 	const inlineConfig = await page.locator( 'script' ).evaluateAll( ( scripts ) => {
 		return scripts
 			.map( ( script ) => script.textContent || '' )
@@ -79,6 +89,7 @@ test.beforeAll( async ( { request } ) => {
 
 	expect( response.ok() ).toBeTruthy();
 	fixture = await response.json();
+	expect( new URL( fixture.routes.product ).pathname ).toBe( '/product/basicrum-e2e-product/' );
 } );
 
 for ( const [ routeName, expectedPageType ] of expectedPageTypes ) {

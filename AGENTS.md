@@ -34,6 +34,8 @@ namespace, PSR-4 Composer autoloading, PHP 7.4+, and WordPress 6.0+.
   `assets/js/loaders/`.
 - WooCommerce browser E2E tests are root-level test tooling. Keep the pinned
   WooCommerce version and checksum synchronized in `tools/setup-woocommerce-e2e.sh`.
+  The setup disables WooCommerce Coming soon mode so anonymous storefront tests
+  can see the seeded product.
   Review and update each Docker image tag and digest together in
   `docker/woocommerce-e2e.yml`.
 - Pin third-party GitHub Actions to full 40-character commit SHAs. Keep the
@@ -55,6 +57,8 @@ make conventions
 make unit
 make js-test
 make woocommerce-e2e
+make woocommerce-e2e-up
+make woocommerce-e2e-down
 make integration-setup
 make integration
 make translations

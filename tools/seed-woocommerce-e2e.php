@@ -10,9 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit( 1 );
 }
 
-update_option( 'permalink_structure', '/%postname%/' );
-flush_rewrite_rules();
-
 $product = new WC_Product_Simple();
 $product->set_name( 'Basicrum E2E Product' );
 $product->set_regular_price( '10.00' );

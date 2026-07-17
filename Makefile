@@ -13,7 +13,7 @@ TEST_DB_PASS = root
 TEST_DB_HOST = db
 WP_TEST_VERSION ?= latest
 
-.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php analyse composer-validate composer-audit conventions translations js-install js-test woocommerce-e2e integration-setup integration test package package-verify package-smoke clean
+.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php analyse composer-validate composer-audit conventions translations js-install js-test woocommerce-e2e woocommerce-e2e-up woocommerce-e2e-down integration-setup integration test package package-verify package-smoke clean
 
 help:
 	@echo "Targets:"
@@ -36,6 +36,8 @@ help:
 	@echo "  js-install         Install locked JavaScript test dependencies"
 	@echo "  js-test            Run loader behavior tests in Chromium"
 	@echo "  woocommerce-e2e    Run WooCommerce page-type browser tests"
+	@echo "  woocommerce-e2e-up Start the inspectable WooCommerce test stack on port 9081"
+	@echo "  woocommerce-e2e-down Stop and reset the inspectable WooCommerce test stack"
 	@echo "  unit               Run unit tests"
 	@echo "  integration-setup  Install WordPress test suite inside containers"
 	@echo "  integration        Run integration tests"
@@ -102,6 +104,12 @@ js-test: js-install
 
 woocommerce-e2e:
 	sh tools/run-woocommerce-e2e.sh
+
+woocommerce-e2e-up:
+	sh tools/up-woocommerce-e2e.sh
+
+woocommerce-e2e-down:
+	sh tools/down-woocommerce-e2e.sh
 
 unit:
 	$(COMPOSE) run --rm -w $(PLUGIN_WORKDIR) $(PHP_SERVICE) composer unit
