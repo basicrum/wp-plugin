@@ -8,7 +8,41 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
+  quality:
+    name: Static and dependency analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+          coverage: none
+
+      - name: Validate Composer metadata
+        working-directory: plugins/basicrum
+        run: composer validate --strict
+
+      - name: Audit locked dependencies
+        working-directory: plugins/basicrum
+        run: composer audit --locked
+
+      - name: Install dependencies
+        working-directory: plugins/basicrum
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Static analysis
+        working-directory: plugins/basicrum
+        run: composer analyse
+
   translations:
     name: Translation catalogs
     runs-on: ubuntu-latest
@@ -128,6 +162,7 @@ jobs:
     name: Release ZIP smoke test
     runs-on: ubuntu-latest
     needs:
+      - quality
       - translations
       - unit
       - integration

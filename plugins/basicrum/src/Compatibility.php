@@ -57,7 +57,7 @@ class Compatibility {
 	/**
 	 * Add boomerang script URL to exclusion arrays.
 	 *
-	 * @param array $exclusions Current exclusion list.
+	 * @param mixed $exclusions Current exclusion list supplied by third-party filters.
 	 * @return array
 	 */
 	public function exclude_js( $exclusions ) {

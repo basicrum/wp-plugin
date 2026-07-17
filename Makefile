@@ -12,7 +12,7 @@ TEST_DB_PASS = root
 TEST_DB_HOST = db
 WP_TEST_VERSION ?= latest
 
-.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php translations integration-setup integration test package package-verify package-smoke clean
+.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php analyse composer-validate composer-audit translations integration-setup integration test package package-verify package-smoke clean
 
 help:
 	@echo "Targets:"
@@ -27,6 +27,9 @@ help:
 	@echo "  lint-php           Run PHP syntax lint"
 	@echo "  lint               Run PHPCS"
 	@echo "  lint-fix           Run PHPCBF"
+	@echo "  analyse            Run PHPStan static analysis"
+	@echo "  composer-validate  Validate Composer metadata and lock file"
+	@echo "  composer-audit     Audit locked Composer dependencies"
 	@echo "  translations       Update POT, PO, and MO translation catalogs"
 	@echo "  unit               Run unit tests"
 	@echo "  integration-setup  Install WordPress test suite inside containers"
@@ -69,6 +72,15 @@ lint:
 
 lint-fix:
 	$(COMPOSE) run --rm -w $(PLUGIN_WORKDIR) $(PHP_SERVICE) composer lint:fix
+
+analyse:
+	$(COMPOSE) run --rm -w $(PLUGIN_WORKDIR) $(PHP_SERVICE) composer analyse
+
+composer-validate:
+	$(COMPOSE) run --rm -w $(PLUGIN_WORKDIR) $(PHP_SERVICE) composer validate --strict
+
+composer-audit:
+	$(COMPOSE) run --rm -w $(PLUGIN_WORKDIR) $(PHP_SERVICE) composer audit --locked
 
 translations:
 	$(COMPOSE) run --rm --no-deps --user "$$(id -u):$$(id -g)" -e HOME=/tmp -w $(WPCLI_PLUGIN_WORKDIR) $(WPCLI_SERVICE) sh /tools/update-translations.sh .

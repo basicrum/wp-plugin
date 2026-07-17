@@ -22,6 +22,9 @@ make unit
 make integration-setup
 make integration
 make lint
+make analyse
+make composer-validate
+make composer-audit
 make translations
 make package
 make package-smoke
@@ -66,3 +69,16 @@ WordPress logs contain PHP warnings or fatal errors.
 CI runs this same build and smoke-test path and retains both the ZIP and its
 SHA-256 checksum as workflow artifacts. Release and pre-release workflows attach
 both files to the GitHub release.
+
+## Automated Quality Controls
+
+`make analyse` runs PHPStan level 5 with WordPress-aware stubs. The enforced
+configuration is stored in `plugins/basicrum/phpstan.neon.dist`.
+
+`make composer-validate` checks Composer metadata and lock-file consistency in
+strict mode. `make composer-audit` checks the complete lock file against current
+security advisories. CI runs all three checks on every push and pull request.
+
+Dependabot checks Composer dependencies and GitHub Actions weekly. CI workflows
+use a read-only `GITHUB_TOKEN`; release and pre-release workflows receive only
+the `contents: write` permission required to attach release assets.

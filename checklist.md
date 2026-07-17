@@ -101,19 +101,19 @@ Acceptance criteria:
 
 ## 6. Add stronger automated analysis and dependency controls
 
-- [ ] Add PHPStan with WordPress stubs and select an initial enforced level.
-- [ ] Add `composer validate --strict` to CI.
-- [ ] Add `composer audit --locked` to CI.
-- [ ] Configure dependency update automation for Composer and GitHub Actions.
-- [ ] Set explicit minimal `GITHUB_TOKEN` permissions in every workflow.
-- [ ] Give release workflows only the additional permissions required to upload
+- [x] Add PHPStan with WordPress stubs and select an initial enforced level.
+- [x] Add `composer validate --strict` to CI.
+- [x] Add `composer audit --locked` to CI.
+- [x] Configure dependency update automation for Composer and GitHub Actions.
+- [x] Set explicit minimal `GITHUB_TOKEN` permissions in every workflow.
+- [x] Give release workflows only the additional permissions required to upload
   assets.
 - [ ] Pin third-party GitHub Actions to immutable commit SHAs.
 - [ ] Document how pinned actions are reviewed and updated.
 
 Acceptance criteria:
 
-- [ ] Type issues, invalid package metadata, known dependency advisories, and
+- [x] Type issues, invalid package metadata, known dependency advisories, and
   excessive workflow permissions are checked automatically.
 
 ## 7. Make JavaScript and translation artifacts reproducible
@@ -153,8 +153,8 @@ Acceptance criteria:
 - [ ] PHP unit tests pass across the supported PHP matrix.
 - [ ] WordPress integration tests pass across the supported WordPress matrix.
 - [ ] JavaScript tests pass.
-- [ ] Static analysis passes.
-- [ ] Composer validation and audit pass.
+- [x] Static analysis passes.
+- [x] Composer validation and audit pass.
 - [ ] Generated asset checks pass.
 - [x] The packaged ZIP smoke test passes.
 - [ ] Version and repository convention checks pass.

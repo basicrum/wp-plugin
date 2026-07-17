@@ -35,6 +35,10 @@ Run from the repository root:
 ```bash
 make composer-install
 make lint-php
+make lint
+make analyse
+make composer-validate
+make composer-audit
 make unit
 make integration-setup
 make integration
