@@ -255,43 +255,36 @@ class Page {
 	}
 
 	/**
-	 * Add Privacy / GDPR section and its fields.
+	 * Add visitor privacy section and its fields.
 	 *
 	 * @return void
 	 */
 	private function add_privacy_section() {
 		add_settings_section(
 			'basicrum_section_privacy',
-			esc_html__( 'Privacy / GDPR', 'basicrum' ),
-			'__return_empty_string',
+			esc_html__( 'Visitor Privacy', 'basicrum' ),
+			array( $this, 'render_privacy_section_intro' ),
 			self::SLUG
 		);
 
 		add_settings_field(
 			'consent_enabled',
-			esc_html__( 'Require Consent', 'basicrum' ),
-			array( $this, 'render_checkbox_field' ),
+			esc_html__( 'Monitoring Start', 'basicrum' ),
+			array( $this, 'render_radio_field' ),
 			self::SLUG,
 			'basicrum_section_privacy',
 			array(
-				'id'    => 'consent_enabled',
-				'label' => __( 'When enabled, Boomerang only loads after user gives consent.', 'basicrum' ),
-			)
-		);
-
-		add_settings_field(
-			'consent_mode',
-			esc_html__( 'Consent Mode', 'basicrum' ),
-			array( $this, 'render_select_field' ),
-			self::SLUG,
-			'basicrum_section_privacy',
-			array(
-				'id'      => 'consent_mode',
-				'label'   => __( 'How consent is obtained from the user.', 'basicrum' ),
+				'id'      => 'consent_enabled',
+				'label'   => __( 'Select when Boomerang may load on an eligible page.', 'basicrum' ),
 				'options' => array(
-					'explicit'     => __( 'Explicit Consent', 'basicrum' ),
-					'implicit'     => __( 'Implicit Consent', 'basicrum' ),
-					'cookie_popup' => __( 'Cookie Popup', 'basicrum' ),
+					'1' => array(
+						'label'       => __( 'Wait for visitor consent', 'basicrum' ),
+						'description' => __( 'Boomerang remains blocked until your consent or cookie tool calls the opt-in callback on each page.', 'basicrum' ),
+					),
+					'0' => array(
+						'label'       => __( 'Load immediately', 'basicrum' ),
+						'description' => __( 'Boomerang loads on eligible pages without waiting for a consent signal. This may set cookies and send performance data. Use this only when your site is permitted to monitor without prior consent.', 'basicrum' ),
+					),
 				),
 			)
 		);
@@ -302,6 +295,18 @@ class Page {
 			array( $this, 'render_consent_info' ),
 			self::SLUG,
 			'basicrum_section_privacy'
+		);
+	}
+
+	/**
+	 * Explain the scope of Basicrum's privacy controls.
+	 *
+	 * @return void
+	 */
+	public function render_privacy_section_intro() {
+		printf(
+			'<p>%s</p>',
+			esc_html__( 'Choose when monitoring starts. Basicrum does not display a consent popup, determine your legal basis, or make a site compliant by itself.', 'basicrum' )
 		);
 	}
 
@@ -633,9 +638,14 @@ class Page {
 
 		$this->render_preserved_disabled_value( $name, $current, $is_disabled );
 
-		foreach ( $options as $value => $option_label ) {
+		foreach ( $options as $value => $option ) {
+			$option_label       = is_array( $option ) && isset( $option['label'] ) ? $option['label'] : $option;
+			$option_description = is_array( $option ) && isset( $option['description'] ) ? $option['description'] : '';
+			$option_id          = 'basicrum_' . $id . '_' . sanitize_html_class( $value );
+
 			printf(
-				'<label><input name="%1$s" type="radio" value="%2$s"',
+				'<div class="basicrum-radio-option"><label for="%1$s"><input id="%1$s" name="%2$s" type="radio" value="%3$s"',
+				esc_attr( $option_id ),
 				esc_attr( $name ),
 				esc_attr( $value )
 			);
@@ -643,48 +653,16 @@ class Page {
 				echo ' disabled="disabled"';
 			}
 			printf(
-				' aria-disabled="%1$s" %2$s> <span>%3$s</span></label><br>',
+				' aria-disabled="%1$s" %2$s> <strong>%3$s</strong></label>',
 				esc_attr( $is_disabled ? 'true' : 'false' ),
 				checked( $current, $value, false ),
 				esc_html( $option_label )
 			);
+			if ( $option_description ) {
+				printf( '<p class="description">%s</p>', esc_html( $option_description ) );
+			}
+			echo '</div>';
 		}
-		if ( $label ) {
-			printf( '<p class="description">%s</p>', esc_html( $label ) );
-		}
-	}
-
-	/**
-	 * Render a select dropdown field.
-	 *
-	 * @param array $args Field arguments: id, label, options.
-	 * @return void
-	 */
-	public function render_select_field( $args ) {
-		$settings    = Helpers::get_settings();
-		$id          = isset( $args['id'] ) ? $args['id'] : '';
-		$label       = isset( $args['label'] ) ? $args['label'] : '';
-		$options     = isset( $args['options'] ) ? $args['options'] : array();
-		$current     = isset( $settings[ $id ] ) ? $settings[ $id ] : '';
-		$name        = Helpers::OPTION_KEY . '[' . $id . ']';
-		$is_disabled = $this->is_field_disabled( $id, $settings );
-
-		$this->render_preserved_disabled_value( $name, $current, $is_disabled );
-
-		printf( '<select id="basicrum_%1$s" name="%2$s"', esc_attr( $id ), esc_attr( $name ) );
-		if ( $is_disabled ) {
-			echo ' disabled="disabled"';
-		}
-		printf( ' aria-disabled="%s">', esc_attr( $is_disabled ? 'true' : 'false' ) );
-		foreach ( $options as $value => $option_label ) {
-			printf(
-				'<option value="%1$s" %2$s>%3$s</option>',
-				esc_attr( $value ),
-				selected( $current, $value, false ),
-				esc_html( $option_label )
-			);
-		}
-		echo '</select>';
 		if ( $label ) {
 			printf( '<p class="description">%s</p>', esc_html( $label ) );
 		}
@@ -705,22 +683,35 @@ class Page {
 	}
 
 	/**
-	 * Render consent mode inline help text with JS API documentation.
-	 *
-	 * Ported from basicrum-magento-1 ConsentInfo.php.
+	 * Render consent integration help.
 	 *
 	 * @return void
 	 */
 	public function render_consent_info() {
+		$example_code = implode(
+			"\n",
+			array(
+				'function reportBasicrumConsent(allowed) {',
+				'  var callbackName = allowed',
+				"    ? 'OPT_IN_BASICRUM_LOADER_WRAPPER'",
+				"    : 'OPT_OUT_BASICRUM_LOADER_WRAPPER';",
+				'',
+				"  if (typeof window[callbackName] === 'function') {",
+				'    window[callbackName]();',
+				'  }',
+				'}',
+			)
+		);
 		?>
-		<div class="basicrum-consent-info" style="background: #f0f0f1; padding: 12px 16px; border-left: 4px solid #2271b1; margin: 8px 0;">
-			<p><strong><?php esc_html_e( 'Consent JavaScript API', 'basicrum' ); ?></strong></p>
-			<p><?php esc_html_e( 'When consent mode is enabled, Boomerang will not load until the user gives consent. Use the following JavaScript API in your consent banner or cookie notice:', 'basicrum' ); ?></p>
-			<p><code>window.OPT_IN_BASIC_RUM()</code> - <?php esc_html_e( 'Call this to grant consent and start monitoring. Sets a BRUM_CONSENT cookie (1 year, Strict, Secure).', 'basicrum' ); ?></p>
-			<p><code>window.OPT_OUT_BASIC_RUM()</code> - <?php esc_html_e( 'Call this to revoke consent. Disables Boomerang and removes tracking cookies.', 'basicrum' ); ?></p>
+		<div class="basicrum-consent-info notice notice-info inline">
+			<p><strong><?php esc_html_e( 'Consent Tool Integration', 'basicrum' ); ?></strong></p>
+			<p><?php esc_html_e( 'When "Wait for visitor consent" is selected, connect the example below to your consent or cookie tool. Call one of the two callbacks on every page after the Basicrum consent loader is available.', 'basicrum' ); ?></p>
+			<p><code>window.OPT_IN_BASICRUM_LOADER_WRAPPER()</code> - <?php esc_html_e( 'Call when the visitor allows performance monitoring. This executes the standard Boomerang loader.', 'basicrum' ); ?></p>
+			<p><code>window.OPT_OUT_BASICRUM_LOADER_WRAPPER()</code> - <?php esc_html_e( 'Call when consent is rejected, expires, or is withdrawn. Basicrum disables loaded collection and attempts to remove the Boomerang RT and BA cookies, but it cannot retract data already sent.', 'basicrum' ); ?></p>
+			<p><?php esc_html_e( 'The callbacks are registered at the configured Script Position. Load the consent integration after that point; calls made before registration are not replayed.', 'basicrum' ); ?></p>
+			<p><?php esc_html_e( 'Basicrum does not persist consent across page loads or in its own cookie or server-side record, and it does not display a consent popup. Your consent tool remains the source of truth. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.', 'basicrum' ); ?></p>
 			<p><strong><?php esc_html_e( 'Example:', 'basicrum' ); ?></strong></p>
-			<pre style="background: #fff; padding: 8px; border: 1px solid #ddd;">&lt;button onclick="OPT_IN_BASIC_RUM()"&gt;Accept&lt;/button&gt;
-&lt;button onclick="OPT_OUT_BASIC_RUM()"&gt;Decline&lt;/button&gt;</pre>
+			<pre><?php echo esc_html( $example_code ); ?></pre>
 		</div>
 		<?php
 	}

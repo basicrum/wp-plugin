@@ -45,6 +45,7 @@ class Plugin {
 	 */
 	private function register_admin_services() {
 		new Admin\Settings\Page();
+		new Admin\Privacy();
 		new Admin\Upgrades();
 	}
 

@@ -2,7 +2,7 @@
 Plugin Name:       Basic Rum Wordpress Plugin
 Plugin URI:        https://www.basicrum.com/
 Description:       Budget - Open Source - Real User Monitoring system.
-Version:           1.0.1
+Version:           1.0.2
 Author:            Tsvetan Stoychev
 Author URI:        https://www.basicrum.com/contact/
 License:           MIT

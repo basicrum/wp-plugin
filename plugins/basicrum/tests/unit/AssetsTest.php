@@ -23,7 +23,7 @@ class AssetsTest extends TestCase {
 		parent::set_up();
 
 		if ( ! defined( 'BASICRUM_VERSION' ) ) {
-			define( 'BASICRUM_VERSION', '1.0.1' );
+			define( 'BASICRUM_VERSION', '1.0.2' );
 		}
 
 		if ( ! defined( 'BASICRUM_PLUGIN_FILE' ) ) {
@@ -278,23 +278,44 @@ class AssetsTest extends TestCase {
 	}
 
 	// -------------------------------------------------------------------------
-	// Consent mode switching tests
+	// Monitoring start policy tests
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Test that standard loader is enqueued when consent is disabled.
+	 * Test every monitoring policy and loader build combination.
+	 *
+	 * @dataProvider loader_selection_provider
+	 *
+	 * @param string $consent_enabled Whether consent-controlled loading is enabled.
+	 * @param string $use_unminified  Whether development loaders are enabled.
+	 * @param string $expected_file   Expected loader filename.
 	 */
-	public function test_standard_loader_when_consent_disabled() {
+	public function test_loader_selection( $consent_enabled, $use_unminified, $expected_file ) {
 		$captured_url = null;
 
 		Functions\expect( 'get_option' )
 			->with( 'basicrum_settings', array() )
-			->andReturn( $this->enabled_settings() );
+			->andReturn(
+				$this->enabled_settings(
+					array(
+						'consent_enabled'        => $consent_enabled,
+						'use_unminified_loaders' => $use_unminified,
+					)
+				)
+			);
 
 		$this->stub_wp_parse_args();
 		$this->stub_apply_filters_passthrough();
 		Functions\when( 'is_user_logged_in' )->justReturn( false );
-		Functions\when( 'wp_register_script' )->justReturn();
+		Functions\expect( 'wp_register_script' )
+			->once()
+			->with(
+				'basicrum-config',
+				false,
+				array(),
+				BASICRUM_VERSION,
+				true
+			);
 		Functions\when( 'wp_add_inline_script' )->justReturn();
 
 		// Capture the loader URL.
@@ -309,44 +330,24 @@ class AssetsTest extends TestCase {
 		$assets = new Assets();
 		$assets->maybe_enqueue();
 
-		$this->assertNotNull( $captured_url, 'Loader script should have been enqueued.' );
-		$this->assertStringContainsString( 'boomerang-loader-v15.min.js', $captured_url );
-		$this->assertStringNotContainsString( 'consent-', $captured_url );
+		$this->assertSame(
+			'https://example.com/wp-content/plugins/basicrum/assets/js/loaders/' . $expected_file,
+			$captured_url
+		);
 	}
 
 	/**
-	 * Test that consent loader is enqueued when consent is enabled.
+	 * Provide all loader selection paths.
+	 *
+	 * @return array[] Test cases.
 	 */
-	public function test_consent_loader_when_consent_enabled() {
-		$captured_url = null;
-
-		Functions\expect( 'get_option' )
-			->with( 'basicrum_settings', array() )
-			->andReturn( $this->enabled_settings( array(
-				'consent_enabled' => '1',
-				'consent_mode'    => 'explicit',
-			) ) );
-
-		$this->stub_wp_parse_args();
-		$this->stub_apply_filters_passthrough();
-		Functions\when( 'is_user_logged_in' )->justReturn( false );
-		Functions\when( 'wp_register_script' )->justReturn();
-		Functions\when( 'wp_add_inline_script' )->justReturn();
-
-		// Capture the loader URL.
-		Functions\expect( 'wp_enqueue_script' )
-			->twice()
-			->andReturnUsing( function( $handle, $src = false ) use ( &$captured_url ) {
-				if ( $handle === 'basicrum-loader' ) {
-					$captured_url = $src;
-				}
-			});
-
-		$assets = new Assets();
-		$assets->maybe_enqueue();
-
-		$this->assertNotNull( $captured_url, 'Loader script should have been enqueued.' );
-		$this->assertStringContainsString( 'consent-boomerang-loader-v1-15.min.js', $captured_url );
+	public function loader_selection_provider() {
+		return array(
+			'immediate minified'          => array( '0', '0', 'boomerang-loader-v15.min.js' ),
+			'immediate unminified'        => array( '0', '1', 'boomerang-loader-v15.js' ),
+			'consent-controlled minified' => array( '1', '0', 'consent-boomerang-loader-v1-15.min.js' ),
+			'consent-controlled source'   => array( '1', '1', 'consent-boomerang-loader-v1-15.js' ),
+		);
 	}
 
 	// -------------------------------------------------------------------------

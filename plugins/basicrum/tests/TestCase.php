@@ -50,7 +50,7 @@ class TestCase extends BrainMonkeyTestCase {
 	}
 
 	/**
-	 * Enable consent mode.
+	 * Enable consent-controlled loading.
 	 *
 	 * @return void
 	 */
@@ -59,7 +59,7 @@ class TestCase extends BrainMonkeyTestCase {
 	}
 
 	/**
-	 * Disable consent mode.
+	 * Disable consent-controlled loading.
 	 *
 	 * @return void
 	 */

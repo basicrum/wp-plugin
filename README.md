@@ -35,7 +35,7 @@ make package-smoke
 
 `make up` installs Composer dependencies, starts the stack, provisions
 WordPress on a new database, and activates Basicrum. The development site is at
-`http://localhost:8080/wp-admin/`.
+`http://localhost:9080/wp-admin/`.
 
 Default local administrator credentials are `admin` /
 `basicrum-dev-password`. Copy `.env.example` to `.env` to override the
@@ -45,6 +45,46 @@ site data; `make clean` resets it.
 To use an HTTP beacon URL during local testing, enable **HTTP Strictness**
 under **Basicrum > Developer Settings**. Keep it disabled on production sites
 so HTTP beacon URLs are automatically upgraded to HTTPS.
+
+### Visitor Privacy
+
+Basicrum supports two observable loading policies under **Basicrum > Visitor
+Privacy**:
+
+- **Load immediately** loads Boomerang on every eligible page without waiting
+  for a consent signal.
+- **Wait for visitor consent** blocks Boomerang until the site's external
+  consent tool calls `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` on the current
+  page. The tool must call `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when
+  consent is rejected, expires, or is withdrawn.
+
+The callbacks are registered when the consent loader reaches its configured
+Script Position. The consent integration must run after those callbacks are
+available and call one of them on every page. Basicrum does not persist a
+separate consent choice across page loads; the external tool is authoritative
+on every page. If consent is withdrawn after Boomerang loading starts, reload
+the page before granting it again.
+
+Load the adapter after the Basicrum consent loader and use this shape:
+
+```js
+function reportBasicrumConsent(allowed) {
+  const callbackName = allowed
+    ? 'OPT_IN_BASICRUM_LOADER_WRAPPER'
+    : 'OPT_OUT_BASICRUM_LOADER_WRAPPER';
+
+  if (typeof window[callbackName] === 'function') {
+    window[callbackName]();
+  }
+}
+```
+
+A tested Borlabs Cookie v3 adapter is available under
+[`examples/integrations/`](examples/integrations/).
+
+Basicrum does not display a consent popup, select a legal basis, or make a site
+compliant by itself. The WordPress Privacy Policy Guide includes editable
+suggested disclosure text for the configured collector and loading policy.
 
 ## Plugin Source
 

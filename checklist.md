@@ -19,20 +19,33 @@ Acceptance criteria:
 
 ## 2. Resolve the unused consent mode setting
 
-- [ ] Define the intended behavior for `explicit`, `implicit`, and `cookie_popup`
+- [x] Define the intended behavior for `explicit`, `implicit`, and `cookie_popup`
   modes.
-- [ ] Decide whether each mode has distinct runtime behavior.
-- [ ] Implement the defined behavior, or remove modes that do not represent real
+- [x] Decide whether each mode has distinct runtime behavior.
+- [x] Implement the defined behavior, or remove modes that do not represent real
   behavior and keep a single consent-enabled switch.
-- [ ] Keep defaults, settings UI, validation, migrations, documentation, and
+- [x] Keep defaults, settings UI, validation, migrations, documentation, and
   translations synchronized.
-- [ ] Add PHP tests for every supported setting and loader selection path.
+- [x] Add PHP tests for every supported setting and loader selection path.
+
+Decision:
+
+- Immediate loading and consent-controlled loading are the only observable
+  policies. The retired `explicit`, `implicit`, and `cookie_popup` values all
+  selected the same loader and have been removed without changing existing
+  sites' consent gate.
+- Basicrum supplies an integration gate, not a consent popup, legal-basis
+  decision, or compliance guarantee.
+- In consent-controlled loading, the site's external consent tool is the source
+  of truth on every page. Its adapter loads after the consent loader and calls
+  exactly one of the two public callbacks. Basicrum does not persist consent
+  across page loads.
 
 Acceptance criteria:
 
-- [ ] Every consent option shown to an administrator has observable and documented
+- [x] Every consent option shown to an administrator has observable and documented
   runtime behavior.
-- [ ] No unused consent settings remain in stored options or the UI.
+- [x] No unused consent settings remain in stored options or the UI.
 
 ## 3. Add JavaScript consent and loader tests
 
@@ -41,10 +54,8 @@ Acceptance criteria:
 - [x] Test that opt-in loads Boomerang exactly once.
 - [x] Test that repeated opt-in calls do not load duplicate scripts.
 - [x] Test that opt-out disables Boomerang when it is already loaded.
-- [x] Test removal of Boomerang cookies during opt-out.
-- [x] Test consent cookie behavior on HTTP and HTTPS.
-- [x] Test consent cookie behavior for normal hostnames, localhost, and relevant
-  subdomain cases.
+- [x] Test removal of Boomerang RT and BA cookies during opt-out.
+- [x] Test measurement-cookie cleanup for the current host and parent domains.
 - [x] Run the same behavioral assertions against minified and unminified loaders.
 - [x] Add JavaScript tests to CI.
 

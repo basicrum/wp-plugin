@@ -44,6 +44,11 @@ class Upgrades {
 			$this->upgrade_to_101();
 		}
 
+		// Migration: remove the unused consent mode selector.
+		if ( version_compare( $stored_version, '1.0.2', '<' ) ) {
+			$this->upgrade_to_102();
+		}
+
 		// Store the new version after all migrations.
 		update_option( Helpers::VERSION_KEY, BASICRUM_VERSION );
 	}
@@ -88,10 +93,47 @@ class Upgrades {
 		// Enable the plugin since it was implicitly enabled in the PoC.
 		$new_options['enabled'] = '1';
 
+		// Preserve the PoC's immediate-loading behavior.
+		$new_options['consent_enabled'] = '0';
+
 		// Save the new options.
 		update_option( Helpers::OPTION_KEY, $new_options );
 
 		// Remove the old option.
 		delete_option( 'basicrum_options' );
+	}
+
+	/**
+	 * Remove the unused consent mode while preserving the working consent gate.
+	 *
+	 * All legacy mode values selected the same runtime loader, so changing or
+	 * interpreting them during migration could unexpectedly start monitoring.
+	 *
+	 * @return void
+	 */
+	private function upgrade_to_102() {
+		$settings = get_option( Helpers::OPTION_KEY, false );
+
+		if ( ! is_array( $settings ) ) {
+			return;
+		}
+
+		$needs_update = false;
+
+		if ( array_key_exists( 'consent_mode', $settings ) ) {
+			unset( $settings['consent_mode'] );
+			$needs_update = true;
+		}
+
+		// Older installations without the gate setting loaded immediately. Keep
+		// that behavior while new installations use the privacy-safe default.
+		if ( ! array_key_exists( 'consent_enabled', $settings ) ) {
+			$settings['consent_enabled'] = '0';
+			$needs_update                = true;
+		}
+
+		if ( $needs_update ) {
+			update_option( Helpers::OPTION_KEY, $settings );
+		}
 	}
 }

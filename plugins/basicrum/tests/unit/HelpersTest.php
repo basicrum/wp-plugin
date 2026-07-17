@@ -29,7 +29,6 @@ class HelpersTest extends TestCase {
 			'brum_site_id',
 			'track_admins',
 			'consent_enabled',
-			'consent_mode',
 			'wait_after_onload',
 			'delay_ms',
 			'script_position',
@@ -39,6 +38,8 @@ class HelpersTest extends TestCase {
 		foreach ( $expected_keys as $key ) {
 			$this->assertArrayHasKey( $key, $defaults, "Missing default key: $key" );
 		}
+
+		$this->assertSame( '1', $defaults['consent_enabled'], 'New installations should wait for consent by default.' );
 	}
 
 	/**
@@ -88,12 +89,17 @@ class HelpersTest extends TestCase {
 	}
 
 	/**
-	 * Test get_settings maps the legacy Cookie Banner mode to Cookie Popup.
+	 * Test get_settings discards the retired consent mode setting.
 	 */
-	public function test_get_settings_maps_legacy_cookie_banner_mode() {
+	public function test_get_settings_discards_retired_consent_mode() {
 		Functions\expect( 'get_option' )
 			->with( 'basicrum_settings', array() )
-			->andReturn( array( 'consent_mode' => 'cookie_banner' ) );
+			->andReturn(
+				array(
+					'consent_enabled' => '1',
+					'consent_mode'    => 'cookie_popup',
+				)
+			);
 
 		Functions\when( 'wp_parse_args' )->alias( function( $args, $defaults ) {
 			return array_merge( $defaults, $args );
@@ -101,24 +107,40 @@ class HelpersTest extends TestCase {
 
 		$settings = Helpers::get_settings();
 
-		$this->assertSame( 'cookie_popup', $settings['consent_mode'] );
+		$this->assertSame( '1', $settings['consent_enabled'] );
+		$this->assertArrayNotHasKey( 'consent_mode', $settings );
 	}
 
 	/**
-	 * Test unsupported stored consent modes fall back to explicit consent.
+	 * Test consent-controlled loading status.
+	 *
+	 * @dataProvider consent_enabled_provider
+	 *
+	 * @param string $stored_value Stored consent gate value.
+	 * @param bool   $expected     Expected enabled state.
 	 */
-	public function test_get_settings_rejects_unsupported_consent_mode() {
+	public function test_is_consent_enabled( $stored_value, $expected ) {
 		Functions\expect( 'get_option' )
 			->with( 'basicrum_settings', array() )
-			->andReturn( array( 'consent_mode' => 'retired_mode' ) );
+			->andReturn( array( 'consent_enabled' => $stored_value ) );
 
 		Functions\when( 'wp_parse_args' )->alias( function( $args, $defaults ) {
 			return array_merge( $defaults, $args );
 		});
 
-		$settings = Helpers::get_settings();
+		$this->assertSame( $expected, Helpers::is_consent_enabled() );
+	}
 
-		$this->assertSame( 'explicit', $settings['consent_mode'] );
+	/**
+	 * Provide consent-controlled loading states.
+	 *
+	 * @return array[] Test cases.
+	 */
+	public function consent_enabled_provider() {
+		return array(
+			'immediate loading'          => array( '0', false ),
+			'consent-controlled loading' => array( '1', true ),
+		);
 	}
 
 	/**

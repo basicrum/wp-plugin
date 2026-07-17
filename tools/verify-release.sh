@@ -47,6 +47,11 @@ require_entry 'basicrum/assets/js/loaders/boomerang-loader-v15.min.js'
 require_entry 'basicrum/assets/js/loaders/consent-boomerang-loader-v1-15.min.js'
 require_entry 'basicrum/languages/basicrum.pot'
 
+if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Fqx 'basicrum/assets/js/loaders/consent-api.js'; then
+	printf '%s\n' 'Release archive contains the retired consent API bridge.' >&2
+	exit 1
+fi
+
 if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Ev '^basicrum(/|$)' | grep -q .; then
 	printf '%s\n' 'Release archive contains files outside the basicrum directory.' >&2
 	exit 1

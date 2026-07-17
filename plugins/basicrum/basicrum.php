@@ -3,7 +3,7 @@
  * Plugin Name:       Basicrum - Real User Monitoring
  * Plugin URI:        https://www.basicrum.com/
  * Description:       Budget, open source, Real User Monitoring powered by Boomerang.js. Track page load performance, page types, and Web Vitals.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Tsvetan Stoychev
  * Author URI:        https://www.basicrum.com/contact/
  * License:           MIT
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants.
-define( 'BASICRUM_VERSION', '1.0.1' );
+define( 'BASICRUM_VERSION', '1.0.2' );
 define( 'BASICRUM_PLUGIN_FILE', __FILE__ );
 define( 'BASICRUM_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 

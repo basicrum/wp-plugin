@@ -227,7 +227,7 @@ class Assets {
 	 * @return string Modified tag.
 	 */
 	public function add_cfasync_attribute( $tag, $handle ) {
-		if ( self::HANDLE_LOADER === $handle || self::HANDLE_CONFIG === $handle ) {
+		if ( in_array( $handle, array( self::HANDLE_LOADER, self::HANDLE_CONFIG ), true ) ) {
 			$tag = str_replace( '<script ', '<script data-cfasync="false" ', $tag );
 		}
 

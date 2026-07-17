@@ -57,16 +57,8 @@ class Validate {
 		// Track admins (checkbox).
 		$output['track_admins'] = $this->sanitize_checkbox( $input, 'track_admins' );
 
-		// Consent enabled (checkbox).
-		$output['consent_enabled'] = $this->sanitize_checkbox( $input, 'consent_enabled' );
-
-		// Consent mode (select).
-		$output['consent_mode'] = $this->sanitize_select(
-			$input,
-			'consent_mode',
-			Helpers::CONSENT_MODES,
-			$defaults['consent_mode']
-		);
+		// Monitoring start policy.
+		$output['consent_enabled'] = $this->sanitize_monitoring_start( $input );
 
 		// Wait after onload (checkbox).
 		$output['wait_after_onload'] = $this->sanitize_checkbox( $input, 'wait_after_onload' );
@@ -190,6 +182,30 @@ class Validate {
 		}
 
 		return $delay;
+	}
+
+	/**
+	 * Sanitize the monitoring start policy without failing open.
+	 *
+	 * Invalid or missing values select consent-controlled loading so malformed
+	 * input cannot silently start monitoring before a consent signal.
+	 *
+	 * @param array $input Raw input.
+	 * @return string '0' for immediate or '1' for consent-controlled loading.
+	 */
+	private function sanitize_monitoring_start( $input ) {
+		if ( isset( $input['consent_enabled'] ) && in_array( $input['consent_enabled'], array( '0', '1' ), true ) ) {
+			return sanitize_text_field( $input['consent_enabled'] );
+		}
+
+		add_settings_error(
+			'basicrum_settings',
+			'consent_enabled_invalid',
+			esc_html__( 'Invalid monitoring start value. Basicrum will wait for visitor consent.', 'basicrum' ),
+			'warning'
+		);
+
+		return '1';
 	}
 
 	/**

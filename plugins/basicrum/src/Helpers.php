@@ -31,13 +31,6 @@ class Helpers {
 	const VERSION_KEY = 'basicrum_version';
 
 	/**
-	 * Supported consent mode values.
-	 *
-	 * @var array
-	 */
-	const CONSENT_MODES = array( 'explicit', 'implicit', 'cookie_popup' );
-
-	/**
 	 * Settings required before monitoring can run.
 	 *
 	 * @var array
@@ -58,30 +51,9 @@ class Helpers {
 		}
 
 		unset( $settings['site_id'] );
-
-		if ( isset( $settings['consent_mode'] ) ) {
-			$settings['consent_mode'] = self::normalize_consent_mode( $settings['consent_mode'] );
-		}
+		unset( $settings['consent_mode'] );
 
 		return wp_parse_args( $settings, self::get_defaults() );
-	}
-
-	/**
-	 * Normalize current and legacy consent mode values.
-	 *
-	 * @param string $consent_mode Stored consent mode.
-	 * @return string Supported consent mode.
-	 */
-	public static function normalize_consent_mode( $consent_mode ) {
-		if ( 'cookie_banner' === $consent_mode ) {
-			return 'cookie_popup';
-		}
-
-		if ( ! in_array( $consent_mode, self::CONSENT_MODES, true ) ) {
-			return 'explicit';
-		}
-
-		return $consent_mode;
 	}
 
 	/**
@@ -96,8 +68,7 @@ class Helpers {
 			'beacon_url'             => '',
 			'brum_site_id'           => '',
 			'track_admins'           => '0',
-			'consent_enabled'        => '0',
-			'consent_mode'           => 'explicit',
+			'consent_enabled'        => '1',
 			'wait_after_onload'      => '0',
 			'delay_ms'               => 0,
 			'script_position'        => 'footer',
@@ -154,7 +125,7 @@ class Helpers {
 	}
 
 	/**
-	 * Check if consent mode is enabled.
+	 * Check if consent-controlled loading is enabled.
 	 *
 	 * @return bool
 	 */

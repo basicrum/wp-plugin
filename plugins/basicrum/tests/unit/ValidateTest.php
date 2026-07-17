@@ -132,30 +132,47 @@ class ValidateTest extends TestCase {
 	}
 
 	/**
-	 * Test consent mode whitelist.
+	 * Test invalid monitoring start values fail closed.
 	 */
-	public function test_invalid_consent_mode_falls_back_to_default() {
-		$input  = array( 'consent_mode' => 'invalid_mode' );
+	public function test_invalid_monitoring_start_falls_back_to_default() {
+		$input  = array( 'consent_enabled' => 'invalid' );
 		$result = $this->validate->sanitize( $this->full_input( $input ) );
-		$this->assertSame( 'explicit', $result['consent_mode'] );
+		$this->assertSame( '1', $result['consent_enabled'] );
 	}
 
 	/**
-	 * Test valid consent mode is accepted.
+	 * Test both supported monitoring start values are accepted.
+	 *
+	 * @dataProvider monitoring_start_provider
+	 *
+	 * @param string $value Monitoring start value.
 	 */
-	public function test_valid_consent_mode_is_accepted() {
+	public function test_valid_monitoring_start_is_accepted( $value ) {
+		$input  = array( 'consent_enabled' => $value );
+		$result = $this->validate->sanitize( $this->full_input( $input ) );
+		$this->assertSame( $value, $result['consent_enabled'] );
+	}
+
+	/**
+	 * Provide supported monitoring start values.
+	 *
+	 * @return array[] Test cases.
+	 */
+	public function monitoring_start_provider() {
+		return array(
+			'immediate loading'          => array( '0' ),
+			'consent-controlled loading' => array( '1' ),
+		);
+	}
+
+	/**
+	 * Test the retired consent mode cannot be saved again.
+	 */
+	public function test_retired_consent_mode_is_not_saved() {
 		$input  = array( 'consent_mode' => 'cookie_popup' );
 		$result = $this->validate->sanitize( $this->full_input( $input ) );
-		$this->assertSame( 'cookie_popup', $result['consent_mode'] );
-	}
 
-	/**
-	 * Test the retired Cookie Banner mode cannot be saved again.
-	 */
-	public function test_legacy_cookie_banner_mode_falls_back_to_default() {
-		$input  = array( 'consent_mode' => 'cookie_banner' );
-		$result = $this->validate->sanitize( $this->full_input( $input ) );
-		$this->assertSame( 'explicit', $result['consent_mode'] );
+		$this->assertArrayNotHasKey( 'consent_mode', $result );
 	}
 
 	/**
@@ -198,7 +215,6 @@ class ValidateTest extends TestCase {
 			'beacon_url'             => '',
 			'brum_site_id'           => '',
 			'consent_enabled'        => '0',
-			'consent_mode'           => 'explicit',
 			'wait_after_onload'      => '0',
 			'delay_ms'               => '0',
 			'script_position'        => 'footer',

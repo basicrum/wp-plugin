@@ -22,3 +22,23 @@
 	color: #d63638;
 	font-weight: 600;
 }
+
+.basicrum-radio-option {
+	margin-bottom: 12px;
+	max-width: 760px;
+}
+
+.basicrum-radio-option p.description {
+	margin: 4px 0 0 24px;
+}
+
+.basicrum-consent-info {
+	max-width: 760px;
+}
+
+.basicrum-consent-info pre {
+	background: #fff;
+	border: 1px solid #ddd;
+	overflow-x: auto;
+	padding: 8px;
+}

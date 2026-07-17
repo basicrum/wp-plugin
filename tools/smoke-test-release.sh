@@ -77,13 +77,27 @@ compose run --rm wpcli wp core install \
 	--skip-email
 
 compose run --rm wpcli wp plugin install /artifacts/basicrum.zip --activate
-compose run --rm wpcli wp option update basicrum_settings '{"enabled":"1","development_mode":"0","beacon_url":"https://example.test/beacon","brum_site_id":"550e8400-e29b-41d4-a716-446655440000","track_admins":"0","consent_enabled":"0","consent_mode":"explicit","wait_after_onload":"0","delay_ms":0,"script_position":"footer","use_unminified_loaders":"0"}' --format=json
+compose run --rm wpcli wp option update basicrum_settings '{"enabled":"1","development_mode":"0","beacon_url":"https://example.test/beacon","brum_site_id":"550e8400-e29b-41d4-a716-446655440000","track_admins":"0","consent_enabled":"0","wait_after_onload":"0","delay_ms":0,"script_position":"footer","use_unminified_loaders":"0"}' --format=json
 
 curl -fsS "$SITE_URL/" -o "$FRONTEND_RESPONSE"
 assert_clean_response "$FRONTEND_RESPONSE" frontend
 
 if ! grep -Fq 'basicrum-loader-js' "$FRONTEND_RESPONSE"; then
 	printf '%s\n' 'The enabled plugin did not render the Basicrum loader on the frontend.' >&2
+	exit 1
+fi
+
+compose run --rm wpcli wp option update basicrum_settings '{"enabled":"1","development_mode":"0","beacon_url":"https://example.test/beacon","brum_site_id":"550e8400-e29b-41d4-a716-446655440000","track_admins":"0","consent_enabled":"1","wait_after_onload":"0","delay_ms":0,"script_position":"footer","use_unminified_loaders":"0"}' --format=json
+curl -fsS "$SITE_URL/" -o "$FRONTEND_RESPONSE"
+assert_clean_response "$FRONTEND_RESPONSE" 'consent-controlled frontend'
+
+if grep -Fq 'basicrum-consent-api-js' "$FRONTEND_RESPONSE"; then
+	printf '%s\n' 'Consent-controlled loading unexpectedly rendered the retired consent API.' >&2
+	exit 1
+fi
+
+if ! grep -Fq 'consent-boomerang-loader-v1-15.min.js' "$FRONTEND_RESPONSE"; then
+	printf '%s\n' 'Consent-controlled loading did not render the consent loader.' >&2
 	exit 1
 fi
 

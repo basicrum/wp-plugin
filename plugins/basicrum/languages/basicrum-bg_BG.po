@@ -17,6 +17,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: basicrum.php
+#: src/Admin/Privacy.php:71
 msgid "Basicrum - Real User Monitoring"
 msgstr ""
 
@@ -41,7 +42,7 @@ msgid "https://www.basicrum.com/contact/"
 msgstr "https://www.basicrum.com/contact/"
 
 #: src/Admin/Settings/Page.php:93
-#: src/Admin/Settings/Page.php:454
+#: src/Admin/Settings/Page.php:459
 msgid "Basicrum Settings"
 msgstr ""
 
@@ -81,127 +82,83 @@ msgstr ""
 msgid "Boomerang Version"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:265
-msgid "Privacy / GDPR"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:272
-msgid "Require Consent"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:278
-msgid "When enabled, Boomerang only loads after user gives consent."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:284
-msgid "Consent Mode"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:290
-msgid "How consent is obtained from the user."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:292
-msgid "Explicit Consent"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:293
-msgid "Implicit Consent"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:316
+#: src/Admin/Settings/Page.php:321
 msgid "Performance"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:323
+#: src/Admin/Settings/Page.php:328
 msgid "Wait After Onload"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:329
+#: src/Admin/Settings/Page.php:334
 msgid "Delay beacon sending until after page load completes."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:335
+#: src/Admin/Settings/Page.php:340
 msgid "Delay (milliseconds)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:341
+#: src/Admin/Settings/Page.php:346
 msgid "Milliseconds to delay the beacon after onload. Leave 0 to disable the delay."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:372
+#: src/Admin/Settings/Page.php:377
 msgid "Developer Settings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:349
+#: src/Admin/Settings/Page.php:354
 msgid "Script Position"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:355
+#: src/Admin/Settings/Page.php:360
 msgid "Where to insert the monitoring script."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:357
+#: src/Admin/Settings/Page.php:362
 msgid "Header (wp_head)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:358
+#: src/Admin/Settings/Page.php:363
 msgid "Footer (wp_footer)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:391
+#: src/Admin/Settings/Page.php:396
 msgid "Use Unminified Loaders"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:397
+#: src/Admin/Settings/Page.php:402
 msgid "Load unminified JavaScript loaders for debugging."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:703
+#: src/Admin/Settings/Page.php:681
 msgid "~30 KB gzipped"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:717
-msgid "Consent JavaScript API"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:718
-msgid "When consent mode is enabled, Boomerang will not load until the user gives consent. Use the following JavaScript API in your consent banner or cookie notice:"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:719
-msgid "Call this to grant consent and start monitoring. Sets a BRUM_CONSENT cookie (1 year, Strict, Secure)."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:720
-msgid "Call this to revoke consent. Disables Boomerang and removes tracking cookies."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:721
+#: src/Admin/Settings/Page.php:713
 msgid "Example:"
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:124
+#: src/Admin/Settings/Validate.php:116
 msgid "Beacon URL was automatically upgraded to HTTPS."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:133
+#: src/Admin/Settings/Validate.php:125
 msgid "Invalid Beacon URL. The default URL has been restored."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:159
+#: src/Admin/Settings/Validate.php:151
 msgid "Invalid Brum Site ID. Copy it from the Basicrum backoffice and try again."
 msgstr "Невалиден Brum Site ID. Копирайте го от административния панел на Basicrum и опитайте отново."
 
-#: src/Admin/Settings/Validate.php:186
+#: src/Admin/Settings/Validate.php:178
 msgid "Delay cannot exceed 30000 milliseconds. It has been capped at 30000."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:385
+#: src/Admin/Settings/Page.php:390
 msgid "Allow HTTP beacon URLs for local testing. Do not enable this on production sites."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:379
+#: src/Admin/Settings/Page.php:384
 msgid "HTTP Strictness"
 msgstr ""
 
@@ -209,24 +166,20 @@ msgstr ""
 msgid "Basicrum could not start because its Composer dependencies are missing. Reinstall the plugin from an official release ZIP."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:294
-msgid "Cookie Popup"
-msgstr ""
-
 #. translators: %s: Link to the Basicrum settings page.
-#: src/Admin/Settings/Page.php:459
+#: src/Admin/Settings/Page.php:464
 #, php-format
 msgid "Basicrum monitoring is enabled but inactive because the Beacon URL and Brum Site ID are missing. Configure them in %s."
 msgstr ""
 
 #. translators: %s: Link to the Basicrum settings page.
-#: src/Admin/Settings/Page.php:462
+#: src/Admin/Settings/Page.php:467
 #, php-format
 msgid "Basicrum monitoring is enabled but inactive because the Beacon URL is missing. Configure it in %s."
 msgstr ""
 
 #. translators: %s: Link to the Basicrum settings page.
-#: src/Admin/Settings/Page.php:465
+#: src/Admin/Settings/Page.php:470
 #, php-format
 msgid "Basicrum monitoring is enabled but inactive because the Brum Site ID is missing. Configure it in %s."
 msgstr ""
@@ -245,4 +198,94 @@ msgstr ""
 
 #: src/Admin/Settings/Page.php:180
 msgid "Brum Site ID is required when Basicrum is enabled."
+msgstr ""
+
+#: src/Admin/Privacy.php:39
+msgid "Review and edit this suggested text before publishing it. Confirm the configured collector, purposes, legal basis, recipients, and retention period for your site."
+msgstr ""
+
+#: src/Admin/Privacy.php:46
+msgid "Suggested text:"
+msgstr ""
+
+#: src/Admin/Privacy.php:64
+msgid "Monitoring is configured to start immediately on eligible pages without waiting for a consent signal."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:265
+msgid "Visitor Privacy"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:272
+msgid "Monitoring Start"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:285
+msgid "Load immediately"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:281
+msgid "Wait for visitor consent"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:309
+msgid "Choose when monitoring starts. Basicrum does not display a consent popup, determine your legal basis, or make a site compliant by itself."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:707
+msgid "Consent Tool Integration"
+msgstr ""
+
+#: src/Admin/Privacy.php:42
+msgid "Basicrum monitoring is currently inactive. Use the suggested text only if monitoring is enabled and fully configured."
+msgstr ""
+
+#: src/Admin/Privacy.php:48
+msgid "This site uses Basicrum to measure real-user performance. When monitoring runs, a visitor's browser sends page and resource URLs, performance and interaction timing metrics, page type, the configured site identifier, and technical browser, device, and network information to a performance collector. The collector also receives request information such as the IP address and user agent. Boomerang may use first-party cookies to maintain measurement state."
+msgstr ""
+
+#. translators: %s: Configured Basicrum beacon URL.
+#: src/Admin/Privacy.php:54
+#, php-format
+msgid "When monitoring runs, performance data is sent to the collector configured at %s."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:278
+msgid "Select when Boomerang may load on an eligible page."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:286
+msgid "Boomerang loads on eligible pages without waiting for a consent signal. This may set cookies and send performance data. Use this only when your site is permitted to monitor without prior consent."
+msgstr ""
+
+#: src/Admin/Settings/Validate.php:204
+msgid "Invalid monitoring start value. Basicrum will wait for visitor consent."
+msgstr ""
+
+#: src/Admin/Privacy.php:62
+msgid "Monitoring is configured to wait for the site's consent tool on every page. Basicrum does not persist consent across page loads or in its own cookie or server-side record. Signaling rejection, expiry, or withdrawal stops future browser collection but does not retract data already sent."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:712
+msgid "Basicrum does not persist consent across page loads or in its own cookie or server-side record, and it does not display a consent popup. Your consent tool remains the source of truth. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:282
+msgid "Boomerang remains blocked until your consent or cookie tool calls the opt-in callback on each page."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:708
+msgid "When \"Wait for visitor consent\" is selected, connect the example below to your consent or cookie tool. Call one of the two callbacks on every page after the Basicrum consent loader is available."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:709
+msgid "Call when the visitor allows performance monitoring. This executes the standard Boomerang loader."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:710
+msgid "Call when consent is rejected, expires, or is withdrawn. Basicrum disables loaded collection and attempts to remove the Boomerang RT and BA cookies, but it cannot retract data already sent."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:711
+msgid "The callbacks are registered at the configured Script Position. Load the consent integration after that point; calls made before registration are not replayed."
 msgstr ""

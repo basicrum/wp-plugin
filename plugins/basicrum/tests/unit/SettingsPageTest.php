@@ -26,6 +26,8 @@ class SettingsPageTest extends TestCase {
 		$this->assertStringContainsString( '.basicrum-field-error-icon[hidden]', $css );
 		$this->assertMatchesRegularExpression( '/\.basicrum-field-error-icon\[hidden\]\s*\{[^}]*display:\s*none;/s', $css );
 		$this->assertMatchesRegularExpression( '/\.basicrum-field-error-message\s*\{[^}]*color:\s*#d63638;[^}]*font-weight:\s*600;/s', $css );
+		$this->assertStringContainsString( '.basicrum-radio-option', $css );
+		$this->assertStringContainsString( '.basicrum-consent-info', $css );
 	}
 
 	/**
@@ -44,7 +46,17 @@ class SettingsPageTest extends TestCase {
 		Functions\when( 'esc_attr' )->returnArg();
 		Functions\when( 'esc_html' )->returnArg();
 		Functions\when( 'esc_html__' )->returnArg();
+		Functions\when( 'esc_html_e' )->alias(
+			function( $text ) {
+				echo $text;
+			}
+		);
 		Functions\when( 'esc_url' )->returnArg();
+		Functions\when( 'sanitize_html_class' )->alias(
+			function( $value ) {
+				return preg_replace( '/[^A-Za-z0-9_-]/', '', $value );
+			}
+		);
 		Functions\when( 'absint' )->alias(
 			function( $value ) {
 				return abs( (int) $value );
@@ -125,6 +137,57 @@ class SettingsPageTest extends TestCase {
 	}
 
 	/**
+	 * Test the privacy section exposes only the two real loading behaviors.
+	 */
+	public function test_privacy_settings_expose_only_real_loading_behaviors() {
+		$fields = array();
+
+		Functions\when( 'get_option' )->justReturn( \Basicrum\WP\Helpers::get_defaults() );
+		Functions\when( 'register_setting' )->justReturn();
+		Functions\when( 'add_settings_section' )->justReturn();
+		Functions\when( 'add_settings_field' )->alias(
+			function() use ( &$fields ) {
+				$args               = func_get_args();
+				$fields[ $args[0] ] = $args;
+			}
+		);
+
+		$page = new Page();
+		$page->register_settings();
+
+		$this->assertArrayHasKey( 'consent_enabled', $fields );
+		$this->assertArrayNotHasKey( 'consent_mode', $fields );
+		$this->assertSame( 'Monitoring Start', $fields['consent_enabled'][1] );
+		$this->assertSame( array( $page, 'render_radio_field' ), $fields['consent_enabled'][2] );
+		$this->assertSame( 'consent_enabled', $fields['consent_enabled'][5]['id'] );
+		$this->assertSame( array( 1, 0 ), array_keys( $fields['consent_enabled'][5]['options'] ) );
+		$this->assertSame( 'Load immediately', $fields['consent_enabled'][5]['options']['0']['label'] );
+		$this->assertSame( 'Wait for visitor consent', $fields['consent_enabled'][5]['options']['1']['label'] );
+	}
+
+	/**
+	 * Test consent help accurately describes the integration boundary.
+	 */
+	public function test_consent_help_describes_external_tool_responsibilities() {
+		$page = new Page();
+
+		ob_start();
+		$page->render_consent_info();
+		$html = ob_get_clean();
+
+		$this->assertStringContainsString( 'does not display a consent popup', $html );
+		$this->assertStringContainsString( 'source of truth', $html );
+		$this->assertStringContainsString( 'consent is rejected, expires, or is withdrawn', $html );
+		$this->assertStringContainsString( 'OPT_IN_BASICRUM_LOADER_WRAPPER', $html );
+		$this->assertStringContainsString( 'OPT_OUT_BASICRUM_LOADER_WRAPPER', $html );
+		$this->assertStringContainsString( 'calls made before registration are not replayed', $html );
+		$this->assertStringNotContainsString( 'basicrum:consent-ready', $html );
+		$this->assertStringContainsString( 'cannot retract data already sent', $html );
+		$this->assertStringContainsString( 'does not persist consent across page loads', $html );
+		$this->assertStringContainsString( 'after Boomerang loading starts', $html );
+	}
+
+	/**
 	 * Test every operational control type is disabled while monitoring is off.
 	 */
 	public function test_operational_controls_are_disabled_when_monitoring_is_off() {
@@ -135,7 +198,7 @@ class SettingsPageTest extends TestCase {
 				'track_admins'    => '1',
 				'delay_ms'       => 500,
 				'script_position' => 'footer',
-				'consent_mode'    => 'explicit',
+				'consent_enabled' => '1',
 			)
 		);
 
@@ -155,16 +218,19 @@ class SettingsPageTest extends TestCase {
 				),
 			)
 		);
-		$page->render_select_field(
+		$page->render_radio_field(
 			array(
-				'id'      => 'consent_mode',
-				'options' => array( 'explicit' => 'Explicit' ),
+				'id'      => 'consent_enabled',
+				'options' => array(
+					'0' => 'Immediate',
+					'1' => 'Wait',
+				),
 			)
 		);
 		$html = ob_get_clean();
 
-		$this->assertSame( 5, substr_count( $html, 'disabled="disabled"' ) );
-		$this->assertSame( 5, substr_count( $html, 'aria-disabled="true"' ) );
+		$this->assertSame( 6, substr_count( $html, 'disabled="disabled"' ) );
+		$this->assertSame( 6, substr_count( $html, 'aria-disabled="true"' ) );
 		$this->assertSame( 4, substr_count( $html, 'basicrum-disabled-setting-value' ) );
 	}
 
