@@ -26,6 +26,7 @@ make analyse
 make composer-validate
 make composer-audit
 make translations
+make js-test
 make package
 make package-smoke
 ```
@@ -72,6 +73,18 @@ both files to the GitHub release.
 
 ## Automated Quality Controls
 
+`make js-test` installs the locked root-level Node dependencies and runs the
+standard and consent loader behavior suites in Chromium. The tests execute the
+actual minified and unminified files from `plugins/basicrum/assets/js/loaders/`,
+intercept the synthetic Boomerang request, and block every unexpected network
+request. They cover consent gating, repeated opt-in, opt-out cleanup, and cookie
+behavior on HTTP, HTTPS, localhost, and subdomains.
+
+The JavaScript package, Playwright configuration, and browser tests live at the
+repository root. The release builder copies only `plugins/basicrum/`, and the
+release verifier also rejects Node or Playwright development files if they ever
+appear in the plugin ZIP.
+
 `make analyse` runs PHPStan level 5 with WordPress-aware stubs. The enforced
 configuration is stored in `plugins/basicrum/phpstan.neon.dist`.
 
@@ -79,6 +92,6 @@ configuration is stored in `plugins/basicrum/phpstan.neon.dist`.
 strict mode. `make composer-audit` checks the complete lock file against current
 security advisories. CI runs all three checks on every push and pull request.
 
-Dependabot checks Composer dependencies and GitHub Actions weekly. CI workflows
-use a read-only `GITHUB_TOKEN`; release and pre-release workflows receive only
-the `contents: write` permission required to attach release assets.
+Dependabot checks npm, Composer dependencies, and GitHub Actions weekly. CI
+workflows use a read-only `GITHUB_TOKEN`; release and pre-release workflows
+receive only the `contents: write` permission required to attach release assets.

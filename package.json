@@ -1,0 +1,16 @@
+{
+  "name": "basicrum-wordpress-workspace",
+  "private": true,
+  "description": "Development and browser-test tooling for the Basicrum WordPress plugin.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "npm run test:js",
+    "test:js": "playwright test",
+    "test:js:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1"
+  }
+}

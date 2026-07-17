@@ -64,6 +64,31 @@ jobs:
       - name: Check for stale translation artifacts
         run: git diff --exit-code -- plugins/basicrum/languages
 
+  javascript:
+    name: JavaScript loader behavior
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Test JavaScript loaders
+        run: npm run test:js
+
   unit:
     name: Unit (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
@@ -164,6 +189,7 @@ jobs:
     needs:
       - quality
       - translations
+      - javascript
       - unit
       - integration
 

@@ -40,6 +40,7 @@ make analyse
 make composer-validate
 make composer-audit
 make unit
+make js-test
 make integration-setup
 make integration
 make translations

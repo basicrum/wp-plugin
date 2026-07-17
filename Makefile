@@ -3,6 +3,7 @@ PHP_SERVICE = php
 WP_SERVICE = wordpress
 DB_SERVICE = db
 WPCLI_SERVICE = wpcli
+JS_SERVICE = javascript
 WPCLI_PLUGIN_WORKDIR = /var/www/html/wp-content/plugins/basicrum
 PLUGIN_DIR = plugins/basicrum
 PLUGIN_WORKDIR = /workspace
@@ -12,7 +13,7 @@ TEST_DB_PASS = root
 TEST_DB_HOST = db
 WP_TEST_VERSION ?= latest
 
-.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php analyse composer-validate composer-audit translations integration-setup integration test package package-verify package-smoke clean
+.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php analyse composer-validate composer-audit translations js-install js-test integration-setup integration test package package-verify package-smoke clean
 
 help:
 	@echo "Targets:"
@@ -31,6 +32,8 @@ help:
 	@echo "  composer-validate  Validate Composer metadata and lock file"
 	@echo "  composer-audit     Audit locked Composer dependencies"
 	@echo "  translations       Update POT, PO, and MO translation catalogs"
+	@echo "  js-install         Install locked JavaScript test dependencies"
+	@echo "  js-test            Run loader behavior tests in Chromium"
 	@echo "  unit               Run unit tests"
 	@echo "  integration-setup  Install WordPress test suite inside containers"
 	@echo "  integration        Run integration tests"
@@ -85,6 +88,12 @@ composer-audit:
 translations:
 	$(COMPOSE) run --rm --no-deps --user "$$(id -u):$$(id -g)" -e HOME=/tmp -w $(WPCLI_PLUGIN_WORKDIR) $(WPCLI_SERVICE) sh /tools/update-translations.sh .
 
+js-install:
+	$(COMPOSE) run --rm --no-deps --user "$$(id -u):$$(id -g)" -e HOME=/tmp $(JS_SERVICE) npm ci --no-audit --no-fund
+
+js-test: js-install
+	$(COMPOSE) run --rm --no-deps --user "$$(id -u):$$(id -g)" -e HOME=/tmp $(JS_SERVICE) npm run test:js
+
 unit:
 	$(COMPOSE) run --rm -w $(PLUGIN_WORKDIR) $(PHP_SERVICE) composer unit
 
@@ -95,7 +104,7 @@ integration-setup:
 integration:
 	$(COMPOSE) run --rm -w $(PLUGIN_WORKDIR) $(PHP_SERVICE) composer integration
 
-test: unit integration
+test: unit integration js-test
 
 package:
 	$(COMPOSE) run --rm --no-deps -w /repo $(PHP_SERVICE) sh /tools/build-release.sh /repo/$(PLUGIN_DIR) /repo/release

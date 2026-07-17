@@ -72,7 +72,7 @@ if ! unzip -p "$ARCHIVE_PATH" basicrum/vendor/composer/autoload_classmap.php | g
 	exit 1
 fi
 
-if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Eq '^basicrum/(\.distignore|composer\.(json|lock)|patchwork\.json|phpcs\.ruleset\.xml|phpunit[^/]*\.xml|README\.md|coverage\.xml|\.phpunit\.result\.cache)$'; then
+if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Eq '^basicrum/(\.distignore|composer\.(json|lock)|package(-lock)?\.json|playwright\.config\.(js|cjs|mjs|ts)|patchwork\.json|phpcs\.ruleset\.xml|phpunit[^/]*\.xml|README\.md|coverage\.xml|\.phpunit\.result\.cache)$'; then
 	printf '%s\n' 'Release archive contains a development file.' >&2
 	exit 1
 fi

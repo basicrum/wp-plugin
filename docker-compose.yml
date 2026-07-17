@@ -77,6 +77,15 @@ services:
       - wp_core:/tmp/wordpress
     tty: true
 
+  javascript:
+    image: mcr.microsoft.com/playwright:v1.61.1-noble
+    working_dir: /workspace
+    environment:
+      HOME: /tmp
+    volumes:
+      - ./:/workspace
+    ipc: host
+
 volumes:
   db_data:
   wordpress_data:

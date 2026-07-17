@@ -36,22 +36,22 @@ Acceptance criteria:
 
 ## 3. Add JavaScript consent and loader tests
 
-- [ ] Add a JavaScript test runner and a documented test command.
-- [ ] Test that Boomerang does not load before consent is granted.
-- [ ] Test that opt-in loads Boomerang exactly once.
-- [ ] Test that repeated opt-in calls do not load duplicate scripts.
-- [ ] Test that opt-out disables Boomerang when it is already loaded.
-- [ ] Test removal of Boomerang cookies during opt-out.
-- [ ] Test consent cookie behavior on HTTP and HTTPS.
-- [ ] Test consent cookie behavior for normal hostnames, localhost, and relevant
+- [x] Add a JavaScript test runner and a documented test command.
+- [x] Test that Boomerang does not load before consent is granted.
+- [x] Test that opt-in loads Boomerang exactly once.
+- [x] Test that repeated opt-in calls do not load duplicate scripts.
+- [x] Test that opt-out disables Boomerang when it is already loaded.
+- [x] Test removal of Boomerang cookies during opt-out.
+- [x] Test consent cookie behavior on HTTP and HTTPS.
+- [x] Test consent cookie behavior for normal hostnames, localhost, and relevant
   subdomain cases.
-- [ ] Run the same behavioral assertions against minified and unminified loaders.
-- [ ] Add JavaScript tests to CI.
+- [x] Run the same behavioral assertions against minified and unminified loaders.
+- [x] Add JavaScript tests to CI.
 
 Acceptance criteria:
 
-- [ ] Privacy-critical loader behavior is covered independently of PHP tests.
-- [ ] Minified and unminified loaders pass the same behavior suite.
+- [x] Privacy-critical loader behavior is covered independently of PHP tests.
+- [x] Minified and unminified loaders pass the same behavior suite.
 
 ## 4. Make installation and release artifacts resilient
 
@@ -152,7 +152,7 @@ Acceptance criteria:
 - [ ] PHPCS passes.
 - [ ] PHP unit tests pass across the supported PHP matrix.
 - [ ] WordPress integration tests pass across the supported WordPress matrix.
-- [ ] JavaScript tests pass.
+- [x] JavaScript tests pass.
 - [x] Static analysis passes.
 - [x] Composer validation and audit pass.
 - [ ] Generated asset checks pass.
