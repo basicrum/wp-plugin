@@ -8,7 +8,7 @@ Stable tag: 1.0.2
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
-Budget, open source, Real User Monitoring powered by Boomerang.js. Track page load performance, page types, and Web Vitals.
+Open source Real User Monitoring powered by Boomerang.js. Track page load performance, page types, and Web Vitals.
 
 == Description ==
 

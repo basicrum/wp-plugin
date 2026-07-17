@@ -1,6 +1,6 @@
 {
     "name": "basicrum/basicrum-wordpress",
-    "description": "Basicrum - Budget, Open Source, Real User Monitoring for WordPress",
+    "description": "Basicrum - Open Source Real User Monitoring for WordPress",
     "type": "wordpress-plugin",
     "license": "MIT",
     "authors": [

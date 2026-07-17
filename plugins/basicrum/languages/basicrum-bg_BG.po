@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Basic Rum Wordpress Plugin\n"
+"Project-Id-Version: Basicrum WordPress Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
@@ -25,11 +25,6 @@ msgstr ""
 #: basicrum.php
 msgid "https://www.basicrum.com/"
 msgstr "https://www.basicrum.com/"
-
-#. Description of the plugin
-#: basicrum.php
-msgid "Budget, open source, Real User Monitoring powered by Boomerang.js. Track page load performance, page types, and Web Vitals."
-msgstr ""
 
 #. Author of the plugin
 #: basicrum.php
@@ -288,4 +283,9 @@ msgstr ""
 
 #: src/Admin/Settings/Page.php:711
 msgid "The callbacks are registered at the configured Script Position. Load the consent integration after that point; calls made before registration are not replayed."
+msgstr ""
+
+#. Description of the plugin
+#: basicrum.php
+msgid "Open source Real User Monitoring powered by Boomerang.js. Track page load performance, page types, and Web Vitals."
 msgstr ""
