@@ -135,3 +135,14 @@ security advisories. CI runs all three checks on every push and pull request.
 Dependabot checks npm, Composer dependencies, and GitHub Actions weekly. CI
 workflows use a read-only `GITHUB_TOKEN`; release and pre-release workflows
 receive only the `contents: write` permission required to attach release assets.
+
+### GitHub Actions supply-chain policy
+
+Every third-party GitHub Action is pinned to a full 40-character commit SHA.
+The comment beside each pin identifies the reviewed upstream release tag.
+Dependabot opens weekly GitHub Actions update pull requests. Before merging one,
+verify that the proposed SHA belongs to the expected upstream release, review the
+upstream changes and permissions, keep the SHA and release-tag comment in sync,
+and require CI to pass. Exercise an update used only by a release workflow with
+a prerelease before using it for a production release. Apply the same review when
+making a manual action update; never replace a pin with a mutable tag.

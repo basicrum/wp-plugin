@@ -30,6 +30,9 @@ namespace, PSR-4 Composer autoloading, PHP 7.4+, and WordPress 6.0+.
   hard-coded script handles.
 - Boomerang lives in `assets/js/boomr/`; standard and consent loaders live in
   `assets/js/loaders/`.
+- Pin third-party GitHub Actions to full 40-character commit SHAs. Keep the
+  reviewed release tag in the adjacent comment and update pins through reviewed
+  Dependabot pull requests.
 
 ## Checks
 

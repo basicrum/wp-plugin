@@ -119,8 +119,8 @@ Acceptance criteria:
 - [x] Set explicit minimal `GITHUB_TOKEN` permissions in every workflow.
 - [x] Give release workflows only the additional permissions required to upload
   assets.
-- [ ] Pin third-party GitHub Actions to immutable commit SHAs.
-- [ ] Document how pinned actions are reviewed and updated.
+- [x] Pin third-party GitHub Actions to immutable commit SHAs.
+- [x] Document how pinned actions are reviewed and updated.
 
 Acceptance criteria:
 
