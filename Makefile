@@ -12,7 +12,7 @@ TEST_DB_PASS = root
 TEST_DB_HOST = db
 WP_TEST_VERSION ?= latest
 
-.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php translations integration-setup integration test package clean
+.PHONY: help build up down restart logs shell composer-install wp-install lint lint-fix lint-php translations integration-setup integration test package package-verify package-smoke clean
 
 help:
 	@echo "Targets:"
@@ -32,7 +32,9 @@ help:
 	@echo "  integration-setup  Install WordPress test suite inside containers"
 	@echo "  integration        Run integration tests"
 	@echo "  test               Run unit and integration tests"
-	@echo "  package            Build release zip via prerelease workflow logic"
+	@echo "  package            Build and inspect the release ZIP and checksum"
+	@echo "  package-verify     Inspect the existing release ZIP and checksum"
+	@echo "  package-smoke      Install and test the release ZIP in clean WordPress"
 
 build:
 	$(COMPOSE) build $(PHP_SERVICE)
@@ -84,9 +86,14 @@ integration:
 test: unit integration
 
 package:
-	$(COMPOSE) run --rm $(PHP_SERVICE) bash -lc 'mkdir -p /tmp/release/basicrum && rsync -rc --exclude-from=/workspace/.distignore /workspace/ /tmp/release/basicrum/ --delete --delete-excluded && cd /tmp/release && zip -r /workspace/basicrum.zip basicrum'
+	$(COMPOSE) run --rm --no-deps -w /repo $(PHP_SERVICE) sh /tools/build-release.sh /repo/$(PLUGIN_DIR) /repo/release
+
+package-verify:
+	$(COMPOSE) run --rm --no-deps -w /repo $(PHP_SERVICE) sh /tools/verify-release.sh /repo/release/basicrum.zip
+
+package-smoke: package
+	sh tools/smoke-test-release.sh release/basicrum.zip
 
 clean:
 	$(COMPOSE) down -v
-	rm -f basicrum.zip
 	rm -rf release

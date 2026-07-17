@@ -219,3 +219,7 @@ msgstr ""
 #: src/Admin/Settings/Page.php:276
 msgid "HTTP Strictness"
 msgstr ""
+
+#: basicrum.php:37
+msgid "Basicrum could not start because its Composer dependencies are missing. Reinstall the plugin from an official release ZIP."
+msgstr ""

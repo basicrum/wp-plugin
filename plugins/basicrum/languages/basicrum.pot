@@ -39,6 +39,10 @@ msgstr ""
 msgid "https://www.basicrum.com/contact/"
 msgstr ""
 
+#: basicrum.php:37
+msgid "Basicrum could not start because its Composer dependencies are missing. Reinstall the plugin from an official release ZIP."
+msgstr ""
+
 #: src/Admin/Settings/Page.php:51
 msgid "Basicrum Settings"
 msgstr ""

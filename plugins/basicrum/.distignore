@@ -4,6 +4,8 @@
 /.vscode
 /tests
 /vendor/bin
+/vendor/**/.github
+/.distignore
 
 .phpunit.result.cache
 composer.json

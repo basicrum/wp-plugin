@@ -55,21 +55,21 @@ Acceptance criteria:
 
 ## 4. Make installation and release artifacts resilient
 
-- [ ] Handle a missing `vendor/autoload.php` without an uncaught PHP fatal error.
-- [ ] Provide a clear administrator-facing error or use a plugin-owned autoloading
+- [x] Handle a missing `vendor/autoload.php` without an uncaught PHP fatal error.
+- [x] Provide a clear administrator-facing error or use a plugin-owned autoloading
   strategy that does not require a generated `vendor` directory.
-- [ ] Move release packaging into one reusable script used by local builds and CI.
-- [ ] Build the exact release ZIP during CI.
-- [ ] Inspect the ZIP for required runtime files and excluded development files.
-- [ ] Install the ZIP into a clean WordPress instance.
-- [ ] Activate the packaged plugin through WP-CLI.
-- [ ] Render an admin request and a frontend request after activation.
-- [ ] Verify the frontend contains the expected loader when the plugin is enabled.
-- [ ] Generate and publish a SHA-256 checksum for release artifacts.
+- [x] Move release packaging into one reusable script used by local builds and CI.
+- [x] Build the exact release ZIP during CI.
+- [x] Inspect the ZIP for required runtime files and excluded development files.
+- [x] Install the ZIP into a clean WordPress instance.
+- [x] Activate the packaged plugin through WP-CLI.
+- [x] Render an admin request and a frontend request after activation.
+- [x] Verify the frontend contains the expected loader when the plugin is enabled.
+- [x] Generate and publish a SHA-256 checksum for release artifacts.
 
 Acceptance criteria:
 
-- [ ] The generated ZIP, rather than the source checkout, installs, activates, and
+- [x] The generated ZIP, rather than the source checkout, installs, activates, and
   serves requests without warnings or fatal errors.
 
 ## 5. Expand the compatibility matrix
@@ -156,5 +156,5 @@ Acceptance criteria:
 - [ ] Static analysis passes.
 - [ ] Composer validation and audit pass.
 - [ ] Generated asset checks pass.
-- [ ] The packaged ZIP smoke test passes.
+- [x] The packaged ZIP smoke test passes.
 - [ ] Version and repository convention checks pass.

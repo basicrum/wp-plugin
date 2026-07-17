@@ -71,6 +71,7 @@ services:
     working_dir: /workspace
     volumes:
       - ./plugins/basicrum:/workspace
+      - ./:/repo
       - ./tools:/tools:ro
       - wp_tests_lib:/tmp/wordpress-tests-lib
       - wp_core:/tmp/wordpress
