@@ -124,6 +124,11 @@ class PageTypeDetector {
 			return 'page';
 		}
 
+		// Other CPTs.
+		if ( is_singular() ) {
+			return 'custom_post';
+		}
+
 		if ( is_category() ) {
 			return 'category_archive';
 		}
