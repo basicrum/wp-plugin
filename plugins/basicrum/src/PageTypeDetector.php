@@ -116,7 +116,7 @@ class PageTypeDetector {
 			return 'home';
 		}
 
-		if ( is_single() ) {
+		if ( is_singular( 'post' ) ) {
 			return 'post';
 		}
 
