@@ -253,11 +253,6 @@ msgstr ""
 msgid "The callbacks are registered at the configured Script Position. Load the consent integration after that point; calls made before registration are not replayed."
 msgstr ""
 
-#. Description of the plugin
-#: basicrum.php
-msgid "Open source Real User Monitoring powered by Boomerang.js. Track page load performance, page types, and Web Vitals."
-msgstr ""
-
 #: src/Admin/Settings/Page.php:281
 msgid "Follow external consent tool"
 msgstr ""
@@ -288,4 +283,9 @@ msgstr ""
 
 #: src/Admin/Settings/Page.php:719
 msgid "Call when the external tool reports that monitoring is denied or that permission has expired or been withdrawn. Basicrum disables loaded collection and attempts to remove the Boomerang RT and BA cookies, but it cannot retract data already sent."
+msgstr ""
+
+#. Description of the plugin
+#: basicrum.php
+msgid "Privacy-first Real User Monitoring with consent-controlled loading, page types, and Web Vitals."
 msgstr ""
