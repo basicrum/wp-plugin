@@ -75,6 +75,11 @@ class SettingsPageTest extends TestCase {
 		);
 		Functions\when( '__' )->returnArg();
 		Functions\when( 'esc_attr' )->returnArg();
+		Functions\when( 'esc_attr_e' )->alias(
+			function( $text ) {
+				echo $text;
+			}
+		);
 		Functions\when( 'esc_html' )->returnArg();
 		Functions\when( 'esc_html__' )->returnArg();
 		Functions\when( 'esc_html_e' )->alias(
@@ -83,6 +88,7 @@ class SettingsPageTest extends TestCase {
 			}
 		);
 		Functions\when( 'esc_url' )->returnArg();
+		Functions\when( 'esc_textarea' )->returnArg();
 		Functions\when( 'sanitize_html_class' )->alias(
 			function( $value ) {
 				return preg_replace( '/[^A-Za-z0-9_-]/', '', $value );
@@ -264,6 +270,19 @@ class SettingsPageTest extends TestCase {
 		$this->assertStringContainsString( 'does not persist consent across page loads', $html );
 		$this->assertStringContainsString( 'opt-out region', $html );
 		$this->assertStringContainsString( 'after Boomerang loading starts', $html );
+		$this->assertStringContainsString( 'role="tablist"', $html );
+		$this->assertSame( 4, substr_count( $html, 'role="tab"' ) );
+		$this->assertSame( 4, substr_count( $html, 'role="tabpanel"' ) );
+		$this->assertSame( 5, substr_count( $html, 'class="large-text code"' ) );
+		$this->assertSame( 5, substr_count( $html, 'class="button basicrum-copy-consent-snippet"' ) );
+		$this->assertStringContainsString( 'Borlabs Cookie v3', $html );
+		$this->assertStringContainsString( 'WP Consent API', $html );
+		$this->assertStringContainsString( 'CookieYes', $html );
+		$this->assertStringContainsString( 'Generic', $html );
+		$this->assertStringContainsString( 'Using the wrong category can silently result in no Basicrum data.', $html );
+		$this->assertStringContainsString( 'Generic Basicrum opt-in callback snippet.', $html );
+		$this->assertStringContainsString( 'Generic Basicrum opt-out callback snippet.', $html );
+		$this->assertStringNotContainsString( 'integration snippet is unavailable', $html );
 	}
 
 	/**

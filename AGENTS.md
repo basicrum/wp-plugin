@@ -57,6 +57,9 @@ in the matching skill.
   hard-coded script handles.
 - Boomerang lives in `assets/js/boomr/`; standard and consent loaders live in
   `assets/js/loaders/`.
+- Consent-tool adapters live in `assets/js/integrations/`. The settings page
+  displays those exact files as escaped copyable text; never enqueue or execute
+  them automatically. Browser tests must execute the same packaged files.
 - WooCommerce browser E2E tests are root-level test tooling. Keep the pinned
   WooCommerce version and checksum synchronized in `tools/setup-woocommerce-e2e.sh`.
   The setup disables WooCommerce Coming soon mode so anonymous storefront tests

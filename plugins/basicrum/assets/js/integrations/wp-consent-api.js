@@ -1,3 +1,11 @@
+/*
+ * Basicrum consent adapter for WP Consent API.
+ *
+ * Configure the site's consent tool to publish its statistics decision through
+ * WP Consent API. Paste this adapter as unblocked site code that runs on every
+ * page after the Basicrum consent loader. If the tool does not publish the
+ * "statistics" category, Basicrum will not receive the intended decision.
+ */
 ( function( window, document ) {
 	'use strict';
 

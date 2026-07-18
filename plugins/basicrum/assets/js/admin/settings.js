@@ -2,6 +2,7 @@
 	'use strict';
 
 	document.addEventListener( 'DOMContentLoaded', function() {
+		var consentTabs = document.querySelectorAll( '.basicrum-consent-tabs' );
 		var enabled = document.getElementById( 'basicrum_enabled' );
 		var waitAfterOnload = document.getElementById( 'basicrum_wait_after_onload' );
 		var delay = document.getElementById( 'basicrum_delay_ms' );
@@ -14,6 +15,123 @@
 			return field !== enabled && 'hidden' !== field.type && 0 === field.name.indexOf( 'basicrum_settings[' );
 		} ) : [];
 		var preservedValues = form ? Array.from( form.querySelectorAll( '.basicrum-disabled-setting-value' ) ) : [];
+
+		/**
+		 * Activate one consent integration tab.
+		 *
+		 * @param {HTMLElement} tabContainer Tab container.
+		 * @param {HTMLButtonElement} activeTab Tab to activate.
+		 * @return {void}
+		 */
+		function activateConsentTab( tabContainer, activeTab ) {
+			var tabs = Array.from( tabContainer.querySelectorAll( '[role="tab"]' ) );
+			var panels = Array.from( tabContainer.querySelectorAll( '[role="tabpanel"]' ) );
+
+			tabs.forEach( function( tab ) {
+				var isActive = tab === activeTab;
+
+				tab.classList.toggle( 'nav-tab-active', isActive );
+				tab.setAttribute( 'aria-selected', isActive ? 'true' : 'false' );
+				tab.tabIndex = isActive ? 0 : -1;
+			} );
+
+			panels.forEach( function( panel ) {
+				var isActive = panel.id === activeTab.getAttribute( 'aria-controls' );
+
+				panel.hidden = ! isActive;
+				panel.classList.toggle( 'is-active', isActive );
+			} );
+		}
+
+		/**
+		 * Initialize accessible tabs and copy buttons for consent snippets.
+		 *
+		 * @param {HTMLElement} tabContainer Tab container.
+		 * @return {void}
+		 */
+		function initializeConsentTabs( tabContainer ) {
+			var tabs = Array.from( tabContainer.querySelectorAll( '[role="tab"]' ) );
+
+			if ( ! tabs.length ) {
+				return;
+			}
+
+			tabs.forEach( function( tab, tabIndex ) {
+				tab.addEventListener( 'click', function() {
+					activateConsentTab( tabContainer, tab );
+				} );
+
+				tab.addEventListener( 'keydown', function( event ) {
+					var targetIndex = tabIndex;
+
+					if ( 'ArrowLeft' === event.key ) {
+						targetIndex = 0 === tabIndex ? tabs.length - 1 : tabIndex - 1;
+					} else if ( 'ArrowRight' === event.key ) {
+						targetIndex = tabIndex === tabs.length - 1 ? 0 : tabIndex + 1;
+					} else if ( 'Home' === event.key ) {
+						targetIndex = 0;
+					} else if ( 'End' === event.key ) {
+						targetIndex = tabs.length - 1;
+					} else {
+						return;
+					}
+
+					event.preventDefault();
+					activateConsentTab( tabContainer, tabs[ targetIndex ] );
+					tabs[ targetIndex ].focus();
+				} );
+			} );
+
+			tabContainer.querySelectorAll( '.basicrum-copy-consent-snippet' ).forEach( function( button ) {
+				button.addEventListener( 'click', function() {
+					var target = document.getElementById( button.dataset.copyTarget );
+					var status = button.parentElement.querySelector( '.basicrum-copy-status' );
+
+					if ( ! target ) {
+						return;
+					}
+
+					function reportCopied() {
+						if ( status ) {
+							status.textContent = button.dataset.copiedLabel;
+						}
+					}
+
+					function reportCopyFallback() {
+						if ( status ) {
+							status.textContent = button.dataset.copyFallbackLabel;
+						}
+					}
+
+					function copyWithSelection() {
+						target.focus();
+						target.select();
+
+						if ( 'function' === typeof document.execCommand && document.execCommand( 'copy' ) ) {
+							reportCopied();
+							return;
+						}
+
+						reportCopyFallback();
+					}
+
+					if ( navigator.clipboard && 'function' === typeof navigator.clipboard.writeText ) {
+						navigator.clipboard.writeText( target.value ).then( reportCopied, copyWithSelection );
+						return;
+					}
+
+					copyWithSelection();
+				} );
+			} );
+
+			tabContainer.classList.add( 'is-initialized' );
+			activateConsentTab(
+				tabContainer,
+				tabContainer.querySelector( '[role="tab"][aria-selected="true"]' ) || tabs[0]
+			);
+		}
+
+		consentTabs.forEach( initializeConsentTabs );
 
 		if ( ! enabled || ! form || ! requiredFields.length ) {
 			return;

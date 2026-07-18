@@ -97,8 +97,11 @@ function reportBasicrumConsent(allowed) {
 ```
 
 Tested adapters for Borlabs Cookie 3.0.6+, WP Consent API with Complianz or
-CookieYes, and connected CookieYes without WP Consent API are available under
-[`examples/integrations/`](examples/integrations/).
+CookieYes, and connected CookieYes without WP Consent API are shipped under
+[`plugins/basicrum/assets/js/integrations/`](plugins/basicrum/assets/js/integrations/).
+The Basicrum settings page displays the exact packaged files in provider tabs so
+webmasters can copy them into their consent tool. A Generic tab provides
+separate allow and deny snippets for other consent tools.
 
 Basicrum does not display a consent popup, select a legal basis, or make a site
 compliant by itself. The WordPress Privacy Policy Guide includes editable

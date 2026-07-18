@@ -8,7 +8,7 @@ const {
 const REPOSITORY_ROOT = path.resolve( __dirname, '../..' );
 const WP_CONSENT_API_ADAPTER = path.join(
 	REPOSITORY_ROOT,
-	'examples/integrations/wp-consent-api.js'
+	'plugins/basicrum/assets/js/integrations/wp-consent-api.js'
 );
 const WP_CONSENT_API_TEST_DOUBLE = path.join(
 	__dirname,

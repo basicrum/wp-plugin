@@ -8,7 +8,7 @@ const {
 const REPOSITORY_ROOT = path.resolve( __dirname, '../..' );
 const BORLABS_ADAPTER = path.join(
 	REPOSITORY_ROOT,
-	'examples/integrations/borlabs-cookie-v3.js'
+	'plugins/basicrum/assets/js/integrations/borlabs-cookie-v3.js'
 );
 const BORLABS_TEST_DOUBLE = path.join(
 	__dirname,

@@ -34,14 +34,17 @@ authoritative decision.
 - Keep opt-in loading idempotent. Keep opt-out idempotent, disable collection,
   and remove the documented Boomerang cookies for the current host and parent
   domains.
-- Put webmaster adapters in `examples/integrations/`, outside the installable
-  plugin. Do not modify a production loader merely to accommodate a test.
+- Put canonical webmaster adapters in
+  `plugins/basicrum/assets/js/integrations/`. Display the exact packaged files
+  as escaped, copyable text in the settings page; never enqueue or execute them
+  automatically. Do not modify a production loader merely to accommodate a
+  test.
 - Document script ordering and cache/minification exclusions. Do not claim that
   an adapter replaces legal review or consent-tool configuration.
 
 ## Test the real boundary
 
-- Execute the exact example adapter against a thin test double that models only
+- Execute the exact packaged adapter against a thin test double that models only
   the provider's documented public API, defaults, events, and payloads.
 - Cover adapter-before-provider and provider-before-adapter initialization,
   saved grant, saved denial, new grant, withdrawal, duplicate events, and
@@ -59,4 +62,5 @@ git diff --check
 ```
 
 Update `examples/integrations/README.md`, the main README, plugin readme, privacy
-guidance, and translations when the administrator-visible contract changes.
+guidance, release required-file checks, and translations when the
+administrator-visible contract changes.

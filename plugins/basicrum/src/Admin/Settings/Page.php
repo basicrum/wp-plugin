@@ -738,30 +738,146 @@ class Page {
 	 * @return void
 	 */
 	public function render_consent_info() {
-		$example_code = implode(
-			"\n",
-			array(
-				'function reportBasicrumConsent(allowed) {',
-				'  var callbackName = allowed',
-				"    ? 'OPT_IN_BASICRUM_LOADER_WRAPPER'",
-				"    : 'OPT_OUT_BASICRUM_LOADER_WRAPPER';",
-				'',
-				"  if (typeof window[callbackName] === 'function') {",
-				'    window[callbackName]();',
-				'  }',
-				'}',
-			)
+		$integrations = array(
+			'borlabs-cookie-v3' => array(
+				'label'       => __( 'Borlabs Cookie v3', 'basicrum' ),
+				'description' => __( 'Create and enable a Borlabs service with the ID basicrum, normally in the Statistics service group. Add this adapter as unblocked site code that runs on every page.', 'basicrum' ),
+				'snippets'    => array(
+					array(
+						'label' => __( 'Borlabs Cookie adapter', 'basicrum' ),
+						'path'  => 'js/integrations/borlabs-cookie-v3.js',
+						'rows'  => 18,
+					),
+				),
+			),
+			'wp-consent-api'    => array(
+				'label'       => __( 'WP Consent API', 'basicrum' ),
+				'description' => __( 'Use this shared adapter with a consent tool such as Complianz or CookieYes that publishes its Statistics decision through WP Consent API.', 'basicrum' ),
+				'snippets'    => array(
+					array(
+						'label' => __( 'WP Consent API adapter', 'basicrum' ),
+						'path'  => 'js/integrations/wp-consent-api.js',
+						'rows'  => 18,
+					),
+				),
+			),
+			'cookieyes'         => array(
+				'label'       => __( 'CookieYes', 'basicrum' ),
+				'description' => __( 'Use this direct adapter only for a connected CookieYes installation when WP Consent API is not active. It must follow the Analytics category; another category can silently result in no Basicrum data.', 'basicrum' ),
+				'snippets'    => array(
+					array(
+						'label' => __( 'CookieYes adapter', 'basicrum' ),
+						'path'  => 'js/integrations/cookieyes.js',
+						'rows'  => 18,
+					),
+				),
+			),
+			'generic'           => array(
+				'label'       => __( 'Generic', 'basicrum' ),
+				'description' => __( 'Use these separate snippets when your consent tool provides custom callbacks for an allow decision and a deny, expiry, or withdrawal decision.', 'basicrum' ),
+				'snippets'    => array(
+					array(
+						'label' => __( 'Allow or grant callback', 'basicrum' ),
+						'path'  => 'js/integrations/generic-opt-in.js',
+						'rows'  => 9,
+					),
+					array(
+						'label' => __( 'Deny, expiry, or withdrawal callback', 'basicrum' ),
+						'path'  => 'js/integrations/generic-opt-out.js',
+						'rows'  => 9,
+					),
+				),
+			),
 		);
 		?>
 		<div class="basicrum-consent-info notice notice-info inline">
 			<p><strong><?php esc_html_e( 'Consent Tool Integration', 'basicrum' ); ?></strong></p>
-			<p><?php esc_html_e( 'When "Follow external consent tool" is selected, connect the example below to your consent or cookie tool. Call one of the two callbacks on every page after the Basicrum consent loader is available.', 'basicrum' ); ?></p>
+			<p><?php esc_html_e( 'When "Follow external consent tool" is selected, copy the matching integration below into your consent or cookie tool. The integration must run on every page after the Basicrum consent loader is available.', 'basicrum' ); ?></p>
 			<p><code>window.OPT_IN_BASICRUM_LOADER_WRAPPER()</code> - <?php esc_html_e( 'Call when the external tool reports that performance monitoring is allowed. This executes the standard Boomerang loader.', 'basicrum' ); ?></p>
 			<p><code>window.OPT_OUT_BASICRUM_LOADER_WRAPPER()</code> - <?php esc_html_e( 'Call when the external tool reports that monitoring is denied or that permission has expired or been withdrawn. Basicrum disables loaded collection and attempts to remove the Boomerang RT and BA cookies, but it cannot retract data already sent.', 'basicrum' ); ?></p>
 			<p><?php esc_html_e( 'The callbacks are registered at the configured Script Position. Load the consent integration after that point; calls made before registration are not replayed.', 'basicrum' ); ?></p>
 			<p><?php esc_html_e( 'Basicrum does not persist consent across page loads or in its own cookie or server-side record, and it does not display a consent popup. Your consent tool remains the source of truth. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.', 'basicrum' ); ?></p>
-			<p><strong><?php esc_html_e( 'Example:', 'basicrum' ); ?></strong></p>
-			<pre><?php echo esc_html( $example_code ); ?></pre>
+			<p><?php esc_html_e( 'These snippets help connect the tools, but they do not configure your consent categories or replace legal review.', 'basicrum' ); ?></p>
+
+			<div class="basicrum-consent-tabs">
+				<div class="nav-tab-wrapper" role="tablist" aria-label="<?php esc_attr_e( 'Consent tool integrations', 'basicrum' ); ?>">
+					<?php $is_first_tab = true; ?>
+					<?php foreach ( $integrations as $integration_id => $integration ) : ?>
+						<?php $tab_id = 'basicrum-consent-tab-' . $integration_id; ?>
+						<button
+							type="button"
+							id="<?php echo esc_attr( $tab_id ); ?>"
+							class="nav-tab<?php echo $is_first_tab ? ' nav-tab-active' : ''; ?>"
+							role="tab"
+							aria-selected="<?php echo $is_first_tab ? 'true' : 'false'; ?>"
+							aria-controls="<?php echo esc_attr( 'basicrum-consent-panel-' . $integration_id ); ?>"
+							tabindex="<?php echo $is_first_tab ? '0' : '-1'; ?>"
+						>
+							<?php echo esc_html( $integration['label'] ); ?>
+						</button>
+						<?php $is_first_tab = false; ?>
+					<?php endforeach; ?>
+				</div>
+
+				<?php $is_first_panel = true; ?>
+				<?php foreach ( $integrations as $integration_id => $integration ) : ?>
+					<section
+						id="<?php echo esc_attr( 'basicrum-consent-panel-' . $integration_id ); ?>"
+						class="basicrum-consent-panel<?php echo $is_first_panel ? ' is-active' : ''; ?>"
+						role="tabpanel"
+						aria-labelledby="<?php echo esc_attr( 'basicrum-consent-tab-' . $integration_id ); ?>"
+					>
+						<p><?php echo esc_html( $integration['description'] ); ?></p>
+						<?php foreach ( $integration['snippets'] as $snippet_index => $snippet ) : ?>
+							<?php $this->render_consent_snippet( $integration_id, $snippet_index, $snippet ); ?>
+						<?php endforeach; ?>
+					</section>
+					<?php $is_first_panel = false; ?>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Render one copyable consent integration snippet.
+	 *
+	 * @param string $integration_id Integration identifier.
+	 * @param int    $snippet_index  Zero-based snippet index.
+	 * @param array  $snippet        Snippet label, asset path, and row count.
+	 * @return void
+	 */
+	private function render_consent_snippet( $integration_id, $snippet_index, $snippet ) {
+		$snippet_id   = 'basicrum-consent-snippet-' . $integration_id . '-' . $snippet_index;
+		$snippet_path = Helpers::get_asset_path( $snippet['path'] );
+		$snippet_code = is_readable( $snippet_path ) ? file_get_contents( $snippet_path ) : false;
+		?>
+		<div class="basicrum-consent-snippet">
+			<label for="<?php echo esc_attr( $snippet_id ); ?>"><strong><?php echo esc_html( $snippet['label'] ); ?></strong></label>
+			<?php if ( false === $snippet_code ) : ?>
+				<p class="notice notice-error inline"><?php esc_html_e( 'This integration snippet is unavailable. Reinstall Basicrum from a complete release package.', 'basicrum' ); ?></p>
+			<?php else : ?>
+				<textarea
+					id="<?php echo esc_attr( $snippet_id ); ?>"
+					class="large-text code"
+					rows="<?php echo esc_attr( $snippet['rows'] ); ?>"
+					readonly="readonly"
+					spellcheck="false"
+					wrap="off"
+				><?php echo esc_textarea( $snippet_code ); ?></textarea>
+				<p class="basicrum-consent-snippet-actions">
+					<button
+						type="button"
+						class="button basicrum-copy-consent-snippet"
+						data-copy-target="<?php echo esc_attr( $snippet_id ); ?>"
+						data-copied-label="<?php esc_attr_e( 'Copied', 'basicrum' ); ?>"
+						data-copy-fallback-label="<?php esc_attr_e( 'Press Ctrl+C or Command+C to copy.', 'basicrum' ); ?>"
+					>
+						<?php esc_html_e( 'Copy snippet', 'basicrum' ); ?>
+					</button>
+					<span class="basicrum-copy-status" aria-live="polite"></span>
+				</p>
+			<?php endif; ?>
 		</div>
 		<?php
 	}

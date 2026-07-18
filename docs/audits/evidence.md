@@ -14,6 +14,13 @@ and a deterministic race reproduction in an isolated worktree.
 Confidence: high = upheld by 3 adversarial refuters and/or direct runtime
 observation; medium = static evidence with 2-refuter verification.
 
+Post-audit update: CI-01/BR-DOC-12 and CI-05 are resolved by the current
+consent-adapter distribution work. The canonical adapters now live under
+`plugins/basicrum/assets/js/integrations/`, the settings page displays the
+exact packaged files, and the release verifier requires them. Reproduction
+commands below that reference `examples/integrations/*.js` describe the
+audited `0ec392e` tree and must be run against that ref, not current HEAD.
+
 ## Corrections to the original reports (capability vs transmission)
 
 The lab distinguished code bundled in Boomerang from features enabled by
@@ -69,7 +76,7 @@ to the original privacy report:
 | DISC-09 (privacy 7) | low | `plugins/basicrum/README.md` | static | `sed -n '4p;14p;51p;86p' plugins/basicrum/README.md` | Stock template stub with placeholder text and fake security-fix changelog; excluded from ZIP by verify-release.sh | high |
 | BR-WP-14 (privacy 8) | low | `uninstall.php:13-20` | static | `grep -rn is_multisite plugins/basicrum/uninstall.php plugins/basicrum/src; echo exit=$?` | Exit 1 (no match): no multisite iteration; per-site options persist on other subsites | medium |
 | BR-WP-06 (privacy 10, OVERTURNED to PASS) | minor hardening | `Validate.php:110`; bundle `beacon_url_force_https:!0` | static | `grep -o 'beacon_url_force_https..' plugins/basicrum/assets/js/boomr/*.min.js` | Protocol-relative input evades the storage-layer upgrade, but the runtime force-https default prevents plaintext beacons; input hardening optional | medium |
-| CI-01/BR-DOC-12 (UX 1) | blocker | `examples/integrations/` outside plugin; readme/Page.php silent | static | `grep -rni 'borlabs\|complianz\|cookieyes\|consent api' plugins/basicrum/readme.txt plugins/basicrum/src; echo exit=$?` | Exit 1: the three tested adapters are unreachable from every operator surface and absent from the ZIP (build-release.sh packages plugins/basicrum only) | medium |
+| CI-01/BR-DOC-12 (UX 1, RESOLVED AFTER AUDIT) | blocker | `examples/integrations/` outside plugin; readme/Page.php silent | static | `grep -rni 'borlabs\|complianz\|cookieyes\|consent api' plugins/basicrum/readme.txt plugins/basicrum/src; echo exit=$?` | At audited ref: exit 1; the three tested adapters were unreachable from every operator surface and absent from the ZIP. Current tree packages and displays the canonical adapters. | medium |
 | BR-DOC-07/walkthrough-07 (UX 1) | major (verifier-corrected from blocker) | `Helpers.php:38`; `Page.php:457-488` | both | `make woocommerce-e2e-up`; set consent mode; `curl -s http://localhost:9081/ \| grep -o 'consent-boomerang[^\"]*'` then observe zero collector requests in an anonymous browser | Only the consent loader is fetched; Boomerang never loads; no beacon, no cookie, no console output; wp-admin shows only "Settings saved." | high |
 | walkthrough-05 (UX 6) | major | `Page.php:176`; single internal href on the page | both | On the settings page run `document.querySelectorAll('#wpbody a[href^="http"]')` | Zero external links; "Basicrum backoffice" named but never linked; account requirement stated only in readme FAQ | high |
 | walkthrough-06/BR-DOC-09 (UX 3) | major | `Assets.php:80-83`; `Page.php:192` | both | `curl -s http://localhost:9081/ \| grep -c basicrum` (nonzero anonymously) vs view-source in a logged-in admin session (zero) | Admin's own pages contain no Basicrum markup with default track_admins='0'; no copy anywhere explains it | high |
@@ -77,7 +84,7 @@ to the original privacy report:
 | BR-DOC-10/CI-03 (UX 4) | major | `Validate.php:26,140-158`; zero console statements | static | `grep -rn 'console\.' plugins/basicrum/assets/js/loaders examples/integrations; echo exit=$?` | Exit 1: all integration failure modes silent; Site ID validated by regex shape only | medium |
 | CI-02 (UX 2) | major | `Page.php:699-726` | static | `sed -n '699,726p' plugins/basicrum/src/Admin/Settings/Page.php` | Inert `reportBasicrumConsent()` skeleton; no placement instructions, no event wiring | medium |
 | CI-04 (UX 2) | major | `Page.php:720`; `readme.txt:66` | static | `sed -n '720p' plugins/basicrum/src/Admin/Settings/Page.php` | Abstract load-order rule with no concrete recipe | medium |
-| CI-05 (UX 2) | major | `examples/integrations/cookieyes.js:4` | static | `sed -n '1,6p' examples/integrations/cookieyes.js` | `consentCategory='analytics'` hard-coded with no warning in the file; wrong-category symptom (silent no-data) documented only in the non-shipped README | medium |
+| CI-05 (UX 2, RESOLVED AFTER AUDIT) | major | `examples/integrations/cookieyes.js:4` | static | At audited ref: `sed -n '1,6p' examples/integrations/cookieyes.js` | At audited ref: `consentCategory='analytics'` was hard-coded with no warning in the file. Current packaged adapter includes the wrong-category warning. | medium |
 | BR-DOC-13 (UX 8) | major | no purge caveat on any shipped surface | static | `grep -ni 'purge\|cached' plugins/basicrum/readme.txt; echo exit=$?` | Exit 1; the non-shipped examples README does warn about cache clearing, the shipped surfaces do not | medium |
 | issue-http-strictness-inverted (UX 5, verifier-downgraded to minor) | minor | `Page.php:384,390`; `readme.txt:72-74` | static | `sed -n '384p;390p' plugins/basicrum/src/Admin/Settings/Page.php` | Label "HTTP Strictness" on a checkbox that relaxes strictness; readme FAQ repeats the inversion | medium |
 | BR-DOC-11 (UX 7, verifier-downgraded to minor) | minor | `readme.txt:76-81`; `wordpress-org-assets/` | static | `sed -n '76,81p' plugins/basicrum/readme.txt; ls wordpress-org-assets/` | Four screenshot captions, zero screenshot files in the repo | high |

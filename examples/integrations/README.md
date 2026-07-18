@@ -1,8 +1,9 @@
 # Consent Tool Integration Examples
 
-These examples are copy-and-paste adapters for webmasters. They are development
-and documentation files outside the installable Basicrum plugin. Select
-**Follow external consent tool** in Basicrum before using an adapter.
+These examples document the copy-and-paste adapters shipped with the installable
+Basicrum plugin. Select **Follow external consent tool** in Basicrum, then use
+the matching tab under **Basicrum > Visitor Privacy > Consent Tool
+Integration** to copy the packaged adapter.
 
 Load the Basicrum consent loader before the selected adapter. Load the adapter
 as unblocked site code on every frontend page and call only one adapter. The
@@ -11,7 +12,7 @@ consent decision.
 
 ## Borlabs Cookie 3.0.6+
 
-The [`borlabs-cookie-v3.js`](borlabs-cookie-v3.js) adapter follows the public
+The [`borlabs-cookie-v3.js`](../../plugins/basicrum/assets/js/integrations/borlabs-cookie-v3.js) adapter follows the public
 Borlabs Cookie JavaScript contract:
 
 - It reads `BorlabsCookie.Consents.hasConsent('basicrum')`.
@@ -51,7 +52,7 @@ References:
 
 ## WP Consent API with Complianz or CookieYes
 
-The [`wp-consent-api.js`](wp-consent-api.js) adapter uses WordPress's shared
+The [`wp-consent-api.js`](../../plugins/basicrum/assets/js/integrations/wp-consent-api.js) adapter uses WordPress's shared
 consent contract. Install and activate the separate WP Consent API plugin plus a
 supported consent-management plugin. The adapter was reviewed against Complianz
 7.5.0, CookieYes 3.5.3, and WP Consent API 2.0.1; both consent tools publish
@@ -94,7 +95,7 @@ References:
 
 ## Connected CookieYes fallback
 
-Use [`cookieyes.js`](cookieyes.js) only when the CookieYes WordPress plugin is
+Use [`cookieyes.js`](../../plugins/basicrum/assets/js/integrations/cookieyes.js) only when the CookieYes WordPress plugin is
 connected to the CookieYes web app and WP Consent API is not being used. The
 direct adapter follows only CookieYes's Analytics category; Performance or any
 other category cannot enable Basicrum.

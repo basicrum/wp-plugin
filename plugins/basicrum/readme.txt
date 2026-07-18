@@ -64,7 +64,7 @@ No plugin can guarantee legal compliance for a site. Basicrum provides immediate
 
 = How do I connect my consent or cookie tool? =
 
-Select **Follow external consent tool** under **Basicrum > Visitor Privacy**. Load the consent integration after the configured Script Position, then call `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` when the external tool allows monitoring or `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when it denies monitoring. Call one callback on every page. Basicrum does not persist a separate consent choice across page loads. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.
+Select **Follow external consent tool** under **Basicrum > Visitor Privacy**. The Consent Tool Integration panel provides copy-ready tabs for Borlabs Cookie v3, WP Consent API with Complianz or CookieYes, connected CookieYes, and generic consent callbacks. Load the selected integration after the configured Script Position. It must call `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` when monitoring is allowed or `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when monitoring is denied, expires, or is withdrawn. Call one callback on every page. Basicrum does not persist a separate consent choice across page loads. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.
 
 = Does Basicrum send URL query strings? =
 

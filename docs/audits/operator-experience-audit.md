@@ -23,11 +23,16 @@ surface tells the webmaster how to notice or fix that.
 New installs default to consent-controlled loading. Without a wired consent
 tool the consent loader waits forever: zero data, no warning, indefinitely.
 The enabled-but-inactive notice only checks Beacon URL and Brum Site ID. The
-three tested copy-paste adapters in `examples/integrations/` are outside the
-release ZIP and are never mentioned by readme.txt or the settings page, so the
-likely escape hatch for a stuck webmaster is switching to Load immediately,
+three tested copy-paste adapters in `examples/integrations/` were outside the
+release ZIP and were never mentioned by readme.txt or the settings page, so the
+likely escape hatch for a stuck webmaster was switching to Load immediately,
 which the plugin itself warns may be unlawful. (CI-01, BR-DOC-07, BR-DOC-12,
 walkthrough-07)
+
+Post-audit update: the current consent-adapter distribution work resolves the
+adapter-availability portion of this finding. The packaged adapters now appear
+as copyable settings tabs and are required in the release ZIP. Contextual
+detection and monitoring-start guidance remain separate open checklist items.
 
 - [ ] Add a plain-language consequence sentence to the consent panel: until
   the consent tool calls the opt-in callback, Basicrum will not load and no

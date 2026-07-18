@@ -8,7 +8,7 @@ const {
 const REPOSITORY_ROOT = path.resolve( __dirname, '../..' );
 const COOKIEYES_ADAPTER = path.join(
 	REPOSITORY_ROOT,
-	'examples/integrations/cookieyes.js'
+	'plugins/basicrum/assets/js/integrations/cookieyes.js'
 );
 const COOKIEYES_TEST_DOUBLE = path.join(
 	__dirname,

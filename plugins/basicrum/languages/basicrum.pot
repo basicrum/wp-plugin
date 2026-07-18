@@ -82,207 +82,279 @@ msgstr ""
 msgid "Monitoring is configured to start immediately on eligible pages without waiting for a consent signal."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:93
-#: src/Admin/Settings/Page.php:480
+#: src/Admin/Settings/Page.php:114
+#: src/Admin/Settings/Page.php:509
 msgid "Basicrum Settings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:94
+#: src/Admin/Settings/Page.php:115
 msgid "Basicrum"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:133
+#: src/Admin/Settings/Page.php:154
 msgid "General Settings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:140
+#: src/Admin/Settings/Page.php:161
 msgid "Enable Basicrum"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:146
+#: src/Admin/Settings/Page.php:167
 msgid "Enable real user monitoring on your site."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:152
+#: src/Admin/Settings/Page.php:173
 msgid "Beacon URL"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:159
+#: src/Admin/Settings/Page.php:180
 msgid "URL where Boomerang beacons are sent. Example: https://www.example.com/beacon/catcher. Required when Basicrum is enabled."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:163
+#: src/Admin/Settings/Page.php:184
 msgid "Beacon URL is required when Basicrum is enabled."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:169
+#: src/Admin/Settings/Page.php:190
 msgid "Brum Site ID"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:176
+#: src/Admin/Settings/Page.php:197
 msgid "Copy the Brum Site ID from the Basicrum backoffice. Required when Basicrum is enabled."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:180
+#: src/Admin/Settings/Page.php:201
 msgid "Brum Site ID is required when Basicrum is enabled."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:186
+#: src/Admin/Settings/Page.php:207
 msgid "Track Admin Users"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:192
+#: src/Admin/Settings/Page.php:213
 msgid "Track logged-in administrators (users with manage_options capability)."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:198
+#: src/Admin/Settings/Page.php:219
 msgid "Boomerang Version"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:265
+#: src/Admin/Settings/Page.php:294
 msgid "Visitor Privacy"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:272
+#: src/Admin/Settings/Page.php:301
 msgid "Strip Query Strings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:278
+#: src/Admin/Settings/Page.php:307
 msgid "When enabled, replace complete query strings in page, navigation, referrer, and resource URLs with ?qs-redacted before sending beacons. URL paths are still collected."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:284
+#: src/Admin/Settings/Page.php:313
 msgid "Monitoring Start"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:290
+#: src/Admin/Settings/Page.php:319
 msgid "Select when Boomerang may load on an eligible page."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:293
+#: src/Admin/Settings/Page.php:322
 msgid "Follow external consent tool"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:294
+#: src/Admin/Settings/Page.php:323
 msgid "Boomerang follows the current allow or deny decision reported by your consent or cookie tool on each page."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:297
+#: src/Admin/Settings/Page.php:326
 msgid "Load immediately"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:298
+#: src/Admin/Settings/Page.php:327
 msgid "Boomerang loads on eligible pages without waiting for a consent signal. This may set cookies and send performance data. Use this only when your site is permitted to monitor without prior consent."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:321
+#: src/Admin/Settings/Page.php:350
 msgid "Control URL query-string handling and choose when monitoring starts. Basicrum does not display a consent popup, determine your legal basis, or make a site compliant by itself."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:333
+#: src/Admin/Settings/Page.php:362
 msgid "Performance"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:340
+#: src/Admin/Settings/Page.php:369
 msgid "Wait After Onload"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:346
+#: src/Admin/Settings/Page.php:375
 msgid "Delay beacon sending until after page load completes."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:352
+#: src/Admin/Settings/Page.php:381
 msgid "Delay (milliseconds)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:358
+#: src/Admin/Settings/Page.php:387
 msgid "Milliseconds to delay the beacon after onload. Leave 0 to disable the delay."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:366
+#: src/Admin/Settings/Page.php:395
 msgid "Script Position"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:372
+#: src/Admin/Settings/Page.php:401
 msgid "Where to insert the monitoring script."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:374
+#: src/Admin/Settings/Page.php:403
 msgid "Header (wp_head)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:375
+#: src/Admin/Settings/Page.php:404
 msgid "Footer (wp_footer)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:389
+#: src/Admin/Settings/Page.php:418
 msgid "Developer Settings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:396
+#: src/Admin/Settings/Page.php:425
 msgid "HTTP Strictness"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:402
+#: src/Admin/Settings/Page.php:431
 msgid "Allow HTTP beacon URLs for local testing. Do not enable this on production sites."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:408
+#: src/Admin/Settings/Page.php:437
 msgid "Use Unminified Loaders"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:414
+#: src/Admin/Settings/Page.php:443
 msgid "Load unminified JavaScript loaders for debugging."
 msgstr ""
 
 #. translators: %s: Link to the Basicrum settings page.
-#: src/Admin/Settings/Page.php:485
+#: src/Admin/Settings/Page.php:514
 #, php-format
 msgid "Basicrum monitoring is enabled but inactive because the Beacon URL and Brum Site ID are missing. Configure them in %s."
 msgstr ""
 
 #. translators: %s: Link to the Basicrum settings page.
-#: src/Admin/Settings/Page.php:488
+#: src/Admin/Settings/Page.php:517
 #, php-format
 msgid "Basicrum monitoring is enabled but inactive because the Beacon URL is missing. Configure it in %s."
 msgstr ""
 
 #. translators: %s: Link to the Basicrum settings page.
-#: src/Admin/Settings/Page.php:491
+#: src/Admin/Settings/Page.php:520
 #, php-format
 msgid "Basicrum monitoring is enabled but inactive because the Brum Site ID is missing. Configure it in %s."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:702
+#: src/Admin/Settings/Page.php:731
 msgid "~30 KB gzipped"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:728
+#: src/Admin/Settings/Page.php:743
+msgid "Borlabs Cookie v3"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:744
+msgid "Create and enable a Borlabs service with the ID basicrum, normally in the Statistics service group. Add this adapter as unblocked site code that runs on every page."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:747
+msgid "Borlabs Cookie adapter"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:754
+msgid "WP Consent API"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:755
+msgid "Use this shared adapter with a consent tool such as Complianz or CookieYes that publishes its Statistics decision through WP Consent API."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:758
+msgid "WP Consent API adapter"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:765
+msgid "CookieYes"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:766
+msgid "Use this direct adapter only for a connected CookieYes installation when WP Consent API is not active. It must follow the Analytics category; another category can silently result in no Basicrum data."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:769
+msgid "CookieYes adapter"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:776
+msgid "Generic"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:777
+msgid "Use these separate snippets when your consent tool provides custom callbacks for an allow decision and a deny, expiry, or withdrawal decision."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:780
+msgid "Allow or grant callback"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:785
+msgid "Deny, expiry, or withdrawal callback"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:794
 msgid "Consent Tool Integration"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:729
-msgid "When \"Follow external consent tool\" is selected, connect the example below to your consent or cookie tool. Call one of the two callbacks on every page after the Basicrum consent loader is available."
+#: src/Admin/Settings/Page.php:795
+msgid "When \"Follow external consent tool\" is selected, copy the matching integration below into your consent or cookie tool. The integration must run on every page after the Basicrum consent loader is available."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:730
+#: src/Admin/Settings/Page.php:796
 msgid "Call when the external tool reports that performance monitoring is allowed. This executes the standard Boomerang loader."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:731
+#: src/Admin/Settings/Page.php:797
 msgid "Call when the external tool reports that monitoring is denied or that permission has expired or been withdrawn. Basicrum disables loaded collection and attempts to remove the Boomerang RT and BA cookies, but it cannot retract data already sent."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:732
+#: src/Admin/Settings/Page.php:798
 msgid "The callbacks are registered at the configured Script Position. Load the consent integration after that point; calls made before registration are not replayed."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:733
+#: src/Admin/Settings/Page.php:799
 msgid "Basicrum does not persist consent across page loads or in its own cookie or server-side record, and it does not display a consent popup. Your consent tool remains the source of truth. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:734
-msgid "Example:"
+#: src/Admin/Settings/Page.php:800
+msgid "These snippets help connect the tools, but they do not configure your consent categories or replace legal review."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:803
+msgid "Consent tool integrations"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:858
+msgid "This integration snippet is unavailable. Reinstall Basicrum from a complete release package."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:873
+msgid "Copied"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:874
+msgid "Press Ctrl+C or Command+C to copy."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:876
+msgid "Copy snippet"
 msgstr ""
 
 #: src/Admin/Settings/Validate.php:119

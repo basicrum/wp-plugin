@@ -48,7 +48,7 @@ operator-journey defect, P3 = minor/polish.
   plugins_loaded). CDN/edge, host Varnish, static exports, and visitors'
   browser cache of HTML cannot be purged by the plugin - document as
   operator responsibility (see C). (privacy 3 / BR-WP-15)
-- [ ] P2 Ship the consent adapters inside the plugin (distribution model C):
+- [x] P2 Ship the consent adapters inside the plugin (distribution model C):
   move `examples/integrations/*.js` to
   `plugins/basicrum/assets/js/integrations/`, render each as copyable text
   in `render_consent_info()` (webmasters paste TEXT into their consent
@@ -58,6 +58,9 @@ operator-journey defect, P3 = minor/polish.
   entries. Add the required-category warning header to `cookieyes.js`
   (wrong category = silent no-data; tested distinction) and equivalents to
   the other adapters. (UX 1+2 / CI-01, CI-05, BR-DOC-12)
+  Completed with four accessible settings tabs, including separate generic
+  opt-in and opt-out snippets, copy fallback guidance, exact packaged-adapter
+  browser coverage, and release ZIP required-file checks.
 - [ ] P2 Replace the proposed "persistent consent warning" with contextual
   detection hints (design analysis): in `render_consent_info()` only -
   never a site-wide notice - detect Borlabs / Complianz / CookieYes / WP

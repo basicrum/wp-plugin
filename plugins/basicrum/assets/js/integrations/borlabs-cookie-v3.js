@@ -1,3 +1,11 @@
+/*
+ * Basicrum consent adapter for Borlabs Cookie v3.0.6 or newer.
+ *
+ * Create an enabled Borlabs service with the ID "basicrum", normally in the
+ * Statistics service group. Paste this adapter as unblocked site code that runs
+ * on every page after the Basicrum consent loader. A different service ID will
+ * silently prevent Basicrum from receiving the intended consent decision.
+ */
 ( function( window ) {
 	'use strict';
 

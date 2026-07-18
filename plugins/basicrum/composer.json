@@ -33,7 +33,7 @@
         }
     },
     "scripts": {
-        "analyse": "phpstan analyse --configuration=phpstan.neon.dist --no-progress --memory-limit=512M",
+        "analyse": "phpstan analyse --configuration=phpstan.neon.dist --no-progress --memory-limit=1G",
         "lint": "phpcs --standard=phpcs.ruleset.xml",
         "lint:fix": "phpcbf --standard=phpcs.ruleset.xml",
         "lint:php": "parallel-lint --exclude vendor --exclude node_modules .",
