@@ -1,0 +1,4 @@
+interface:
+  display_name: "Integrate Basicrum Consent"
+  short_description: "Integrate and test external consent tools"
+  default_prompt: "Use $integrate-basicrum-consent to add or review a Basicrum consent-tool adapter and its contract tests."

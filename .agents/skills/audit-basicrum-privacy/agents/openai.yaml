@@ -1,0 +1,4 @@
+interface:
+  display_name: "Audit Basicrum Privacy"
+  short_description: "Audit privacy, cookies, consent, and disclosures"
+  default_prompt: "Use $audit-basicrum-privacy to audit Basicrum's data flows, cookies, consent behavior, and public privacy disclosures."

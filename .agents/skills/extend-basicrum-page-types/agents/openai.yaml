@@ -1,0 +1,4 @@
+interface:
+  display_name: "Extend Basicrum Page Types"
+  short_description: "Add and test WordPress page classifications"
+  default_prompt: "Use $extend-basicrum-page-types to add and verify a Basicrum page type."

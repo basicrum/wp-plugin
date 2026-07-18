@@ -1,0 +1,4 @@
+interface:
+  display_name: "Release Basicrum Plugin"
+  short_description: "Build and verify installable Basicrum releases"
+  default_prompt: "Use $release-basicrum-plugin to prepare and verify an installable Basicrum WordPress release."

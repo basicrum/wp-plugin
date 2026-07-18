@@ -20,6 +20,31 @@ namespace, PSR-4 Composer autoloading, PHP 7.4+, and WordPress 6.0+.
 - Add version-gated migrations to `Admin\Upgrades`; use the option/version
   constants from `Helpers`.
 
+## Project Skills
+
+Repository-owned workflows live in `.agents/skills/`. Claude discovers the
+same canonical files through links in `.claude/skills/`.
+
+- `change-basicrum-settings` - options, validation, dependencies, migrations,
+  and runtime gates.
+- `update-basicrum-copy` - naming, administrator copy, branding, and gettext
+  catalogs.
+- `integrate-basicrum-consent` - external consent adapters, callback contracts,
+  and privacy-critical browser tests.
+- `audit-basicrum-privacy` - data flows, cookies, consent, disclosures, and
+  privacy compliance-readiness reviews.
+- `extend-basicrum-page-types` - WordPress and WooCommerce `p_type` detection
+  and beacon verification.
+- `run-basicrum-test-environments` - local WordPress and inspectable
+  WooCommerce stacks.
+- `repair-basicrum-ci` - GitHub Actions and PHP/WordPress matrix failures.
+- `release-basicrum-plugin` - packaging, compatibility metadata, checksums, and
+  release gates.
+
+Use the narrowest matching skill, and combine skills when a change crosses
+boundaries. Keep permanent repository invariants here; put repeatable procedures
+in the matching skill.
+
 ## Conventions
 
 - Follow WordPress-Core/WPCS. The text domain is `basicrum`.

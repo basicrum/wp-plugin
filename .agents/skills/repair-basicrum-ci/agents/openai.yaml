@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repair Basicrum CI"
+  short_description: "Diagnose failures across the Basicrum CI matrix"
+  default_prompt: "Use $repair-basicrum-ci to diagnose a failing Basicrum GitHub Actions job and verify the fix."

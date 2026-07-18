@@ -8,11 +8,13 @@ Stable tag: 1.0.2
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
-Open source Real User Monitoring powered by Boomerang.js. Track page load performance, page types, and Web Vitals.
+Privacy-first Real User Monitoring with consent-controlled loading, page types, and Web Vitals.
 
 == Description ==
 
 Basicrum is a free, open source Real User Monitoring (RUM) system. This plugin integrates [Boomerang.js](https://github.com/akamai/boomerang) into your WordPress site to collect real performance data from your visitors.
+
+Basicrum is privacy-first by design: new installations wait for an external consent decision by default, and the plugin contributes editable disclosure text to the WordPress Privacy Policy Guide. Site owners remain responsible for selecting an appropriate legal basis, configuring consent where required, and publishing an accurate privacy notice.
 
 **Features:**
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Run Basicrum Test Environments"
+  short_description: "Run local WordPress and WooCommerce stacks"
+  default_prompt: "Use $run-basicrum-test-environments to start and inspect the appropriate local Basicrum test stack."

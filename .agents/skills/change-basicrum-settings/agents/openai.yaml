@@ -1,0 +1,4 @@
+interface:
+  display_name: "Change Basicrum Settings"
+  short_description: "Change and verify Basicrum administrator settings"
+  default_prompt: "Use $change-basicrum-settings to implement and verify a Basicrum administrator setting change."
