@@ -125,15 +125,15 @@ class PageTypeDetector {
 		}
 
 		if ( is_category() ) {
-			return 'category';
+			return 'category_archive';
 		}
 
 		if ( is_tag() ) {
-			return 'tag';
+			return 'tag_archive';
 		}
 
 		if ( is_author() ) {
-			return 'author';
+			return 'author_archive';
 		}
 
 		if ( is_date() ) {
