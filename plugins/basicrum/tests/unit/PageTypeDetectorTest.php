@@ -39,10 +39,10 @@ class PageTypeDetectorTest extends TestCase {
 	private function stub_conditionals( $true_conditionals = array() ) {
 		$wp_conditionals = array(
 			'is_front_page',
-			'is_single',
 			'is_page',
 			'is_category',
 			'is_tag',
+			'is_tax',
 			'is_author',
 			'is_date',
 			'is_archive',
@@ -54,6 +54,16 @@ class PageTypeDetectorTest extends TestCase {
 			$return = in_array( $func, $true_conditionals, true );
 			Functions\when( $func )->justReturn( $return );
 		}
+
+		Functions\when( 'is_singular' )->alias(
+			function( $post_types = '' ) use ( $true_conditionals ) {
+				if ( 'post' === $post_types ) {
+					return in_array( 'is_singular_post', $true_conditionals, true );
+				}
+
+				return in_array( 'is_singular', $true_conditionals, true );
+			}
+		);
 
 		Functions\when( 'apply_filters' )->alias( function() {
 			$args = func_get_args();
@@ -73,7 +83,7 @@ class PageTypeDetectorTest extends TestCase {
 	 * Test detection of single post.
 	 */
 	public function test_detects_single_post() {
-		$this->stub_conditionals( array( 'is_single' ) );
+		$this->stub_conditionals( array( 'is_singular_post', 'is_singular' ) );
 		$this->assertSame( 'post', $this->detector->detect() );
 	}
 
@@ -81,8 +91,16 @@ class PageTypeDetectorTest extends TestCase {
 	 * Test detection of page.
 	 */
 	public function test_detects_page() {
-		$this->stub_conditionals( array( 'is_page' ) );
+		$this->stub_conditionals( array( 'is_page', 'is_singular' ) );
 		$this->assertSame( 'page', $this->detector->detect() );
+	}
+
+	/**
+	 * Test detection of a custom post type.
+	 */
+	public function test_detects_custom_post() {
+		$this->stub_conditionals( array( 'is_singular' ) );
+		$this->assertSame( 'custom_post', $this->detector->detect() );
 	}
 
 	/**
@@ -90,7 +108,7 @@ class PageTypeDetectorTest extends TestCase {
 	 */
 	public function test_detects_category() {
 		$this->stub_conditionals( array( 'is_category' ) );
-		$this->assertSame( 'category', $this->detector->detect() );
+		$this->assertSame( 'category_archive', $this->detector->detect() );
 	}
 
 	/**
@@ -98,7 +116,15 @@ class PageTypeDetectorTest extends TestCase {
 	 */
 	public function test_detects_tag() {
 		$this->stub_conditionals( array( 'is_tag' ) );
-		$this->assertSame( 'tag', $this->detector->detect() );
+		$this->assertSame( 'tag_archive', $this->detector->detect() );
+	}
+
+	/**
+	 * Test detection of a custom taxonomy archive.
+	 */
+	public function test_detects_taxonomy_archive() {
+		$this->stub_conditionals( array( 'is_tax' ) );
+		$this->assertSame( 'taxonomy_archive', $this->detector->detect() );
 	}
 
 	/**
@@ -106,7 +132,7 @@ class PageTypeDetectorTest extends TestCase {
 	 */
 	public function test_detects_author() {
 		$this->stub_conditionals( array( 'is_author' ) );
-		$this->assertSame( 'author', $this->detector->detect() );
+		$this->assertSame( 'author_archive', $this->detector->detect() );
 	}
 
 	/**
@@ -170,8 +196,8 @@ class PageTypeDetectorTest extends TestCase {
 	 */
 	public function test_page_type_filter_is_applied() {
 		$wp_conditionals = array(
-			'is_front_page', 'is_single', 'is_page', 'is_category',
-			'is_tag', 'is_author', 'is_date', 'is_archive', 'is_search', 'is_404',
+			'is_front_page', 'is_singular', 'is_page', 'is_category',
+			'is_tag', 'is_tax', 'is_author', 'is_date', 'is_archive', 'is_search', 'is_404',
 		);
 		foreach ( $wp_conditionals as $func ) {
 			Functions\when( $func )->justReturn( false );
@@ -197,8 +223,8 @@ class PageTypeDetectorTest extends TestCase {
 	private function stub_woocommerce_conditionals( $true_conditionals = array() ) {
 		// Standard WP conditionals - all false.
 		$wp_conditionals = array(
-			'is_front_page', 'is_single', 'is_page', 'is_category',
-			'is_tag', 'is_author', 'is_date', 'is_archive', 'is_search', 'is_404',
+			'is_front_page', 'is_singular', 'is_page', 'is_category',
+			'is_tag', 'is_tax', 'is_author', 'is_date', 'is_archive', 'is_search', 'is_404',
 		);
 		foreach ( $wp_conditionals as $func ) {
 			Functions\when( $func )->justReturn( false );
@@ -293,9 +319,9 @@ class PageTypeDetectorTest extends TestCase {
 	 * Test WooCommerce types take priority over WP types.
 	 */
 	public function test_woocommerce_takes_priority_over_wordpress() {
-		$this->stub_woocommerce_conditionals( array( 'is_product', 'is_single' ) );
-		// is_single would normally return 'post', but WooCommerce product should win.
-		Functions\when( 'is_single' )->justReturn( true );
+		$this->stub_woocommerce_conditionals( array( 'is_product' ) );
+		// A singular post would normally return 'post', but WooCommerce should win.
+		Functions\when( 'is_singular' )->justReturn( true );
 		$this->assertSame( 'product', $this->detector->detect() );
 	}
 }

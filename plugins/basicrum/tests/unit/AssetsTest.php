@@ -46,8 +46,8 @@ class AssetsTest extends TestCase {
 
 		// Stub page type conditionals (default: unknown).
 		$conditionals = array(
-			'is_front_page', 'is_single', 'is_page', 'is_category',
-			'is_tag', 'is_author', 'is_date', 'is_archive', 'is_search', 'is_404',
+			'is_front_page', 'is_singular', 'is_page', 'is_category',
+			'is_tag', 'is_tax', 'is_author', 'is_date', 'is_archive', 'is_search', 'is_404',
 		);
 		foreach ( $conditionals as $func ) {
 			Functions\when( $func )->justReturn( false );
