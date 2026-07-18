@@ -85,24 +85,27 @@ Acceptance criteria:
 
 ## 5. Expand the compatibility matrix
 
-- [ ] Keep the minimum combination: PHP 7.4 and WordPress 6.0.
-- [ ] Add the latest stable WordPress release as an explicit integration target.
-- [ ] Keep WordPress trunk as an allowed early-warning target.
-- [ ] Add PHP 8.0 so the declared `>=7.4` range has no untested gap.
-- [ ] Add PHP 8.4 and PHP 8.5 unit coverage.
-- [ ] Test the latest stable WordPress release with a currently supported PHP
+- [x] Keep the minimum combination: PHP 7.4 and WordPress 6.0.
+- [x] Add the latest stable WordPress release as an explicit integration target.
+- [x] Keep WordPress trunk as an allowed early-warning target.
+- [x] Add PHP 8.0 so the declared `>=7.4` range has no untested gap.
+- [x] Add PHP 8.4 and PHP 8.5 unit coverage.
+- [x] Test the latest stable WordPress release with a currently supported PHP
   version.
-- [ ] Test WordPress trunk with the newest compatible PHP version.
+- [ ] Test WordPress trunk with the newest compatible PHP version in the first
+  CI run of the expanded matrix.
 - [x] Add an isolated WooCommerce E2E suite covering shop, product, cart,
   checkout, order-pay, and order-received page types through actual Basicrum
   beacons.
-- [ ] Update `Tested up to` only after the stable integration test passes.
-- [ ] Document how compatibility metadata is updated for each release.
+- [x] Update `Tested up to` only after the stable integration test passes.
+- [x] Document how compatibility metadata is updated for each release.
 
-Current reference when this checklist was created:
+Current compatibility reference:
 
-- WordPress latest stable: 7.0.1.
-- Plugin `Tested up to`: 6.7.
+- WordPress latest stable tested: 7.0.2.
+- Plugin `Tested up to`: 7.0.
+- Expanded PHP and WordPress matrix: configured locally, pending its first CI
+  run.
 - Official references:
   - https://en-gb.wordpress.org/download/releases/
   - https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/
@@ -110,7 +113,7 @@ Current reference when this checklist was created:
 
 Acceptance criteria:
 
-- [ ] CI covers the minimum, latest stable, and forward-looking runtime boundaries
+- [ ] CI passes the minimum, latest stable, and forward-looking runtime boundaries
   represented by the plugin metadata.
 
 ## 6. Add stronger automated analysis and dependency controls

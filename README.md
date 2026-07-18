@@ -123,6 +123,36 @@ intercept the synthetic Boomerang request, and block every unexpected network
 request. They cover consent gating, repeated opt-in, opt-out cleanup, and cookie
 behavior on HTTP, HTTPS, localhost, and subdomains.
 
+### WordPress and PHP compatibility policy
+
+CI runs the unit suite on PHP 7.4, 8.0, 8.1, 8.2, 8.3, 8.4, and 8.5. PHP 7.4
+and 8.0 remain in the matrix because the plugin declares PHP 7.4 as its minimum;
+they are compatibility targets, not recommended runtimes for new production
+sites.
+
+The integration suite uses supported boundary combinations instead of a full
+WordPress and PHP cross-product:
+
+- PHP 7.4 and PHP 8.0 with the minimum supported WordPress 6.0 release train.
+- PHP 8.4 and PHP 8.5 with the explicitly tested current stable WordPress
+  release train.
+- PHP 8.5 with WordPress trunk as a non-blocking early-warning target.
+
+An explicit stable value such as `7.0` resolves through the official WordPress
+version API to the latest patch in that release train.
+
+When WordPress publishes a new stable release train:
+
+1. Confirm its PHP compatibility in the official
+   [WordPress compatibility table](https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/).
+2. Update the explicit stable WordPress value in `.github/workflows/ci.yml`.
+3. Run the required unit and integration matrix and resolve any failures.
+4. Only after the stable integration rows pass, update `Tested up to` in
+   `plugins/basicrum/readme.txt` using the WordPress major and minor version.
+5. Never advance `Tested up to` from a beta, nightly, or trunk result. Keep
+   `Requires at least` and `Requires PHP` unchanged unless support for those
+   boundaries is deliberately dropped.
+
 `make woocommerce-e2e` starts an isolated WordPress 6.9 and WooCommerce 10.9.4
 stack, seeds a product, payable order, and completed order, then uses Playwright
 to visit the shop, product, cart, checkout, order-pay, and order-received pages.

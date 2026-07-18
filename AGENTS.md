@@ -41,6 +41,12 @@ namespace, PSR-4 Composer autoloading, PHP 7.4+, and WordPress 6.0+.
 - Pin third-party GitHub Actions to full 40-character commit SHAs. Keep the
   reviewed release tag in the adjacent comment and update pins through reviewed
   Dependabot pull requests.
+- Keep the PHP unit matrix continuous from the declared minimum through the
+  newest supported PHP release. Use only WordPress/PHP combinations supported
+  by WordPress core; treat WordPress trunk as a non-blocking early-warning job.
+- Change `Tested up to` only after the blocking integration rows for that stable
+  WordPress release train pass. Use its major and minor version, never a beta,
+  nightly, trunk, or patch version.
 
 ## Checks
 

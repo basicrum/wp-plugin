@@ -71,19 +71,17 @@ install_wp() {
 	else
 		if [ "$WP_VERSION" = 'latest' ]; then
 			ARCHIVE_NAME='latest'
-		elif [[ $WP_VERSION =~ [0-9]+\.[0-9]+ ]]; then
+		elif [[ $WP_VERSION =~ ^[0-9]+\.[0-9]+$ ]]; then
 			download https://api.wordpress.org/core/version-check/1.7/ "$TMPDIR/wp-latest.json"
-			if [[ $WP_VERSION =~ [0-9]+\.[0-9]+\.[0] ]]; then
-				LATEST_VERSION=${WP_VERSION%??}
-			else
-				VERSION_ESCAPED=$(echo "$WP_VERSION" | sed 's/\./\\\\./g')
-				LATEST_VERSION=$(grep -o '"version":"'"$VERSION_ESCAPED"'[^"]*' "$TMPDIR/wp-latest.json" | sed 's/"version":"//' | head -1)
-			fi
+			VERSION_ESCAPED=$(echo "$WP_VERSION" | sed 's/\./\\./g')
+			LATEST_VERSION=$(grep -o '"version":"'"$VERSION_ESCAPED"'[^"]*' "$TMPDIR/wp-latest.json" | sed 's/"version":"//' | head -1)
 			if [[ -z "$LATEST_VERSION" ]]; then
-				ARCHIVE_NAME="wordpress-$WP_VERSION"
-			else
-				ARCHIVE_NAME="wordpress-$LATEST_VERSION"
+				echo "Could not resolve the latest WordPress $WP_VERSION patch release." >&2
+				exit 1
 			fi
+			ARCHIVE_NAME="wordpress-$LATEST_VERSION"
+		elif [[ $WP_VERSION =~ ^[0-9]+\.[0-9]+\.0$ ]]; then
+			ARCHIVE_NAME="wordpress-${WP_VERSION%??}"
 		else
 			ARCHIVE_NAME="wordpress-$WP_VERSION"
 		fi
