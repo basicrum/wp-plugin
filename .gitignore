@@ -7,6 +7,9 @@
 # Local Docker configuration
 /.env
 
+# Agent worktrees
+/.claude/worktrees/
+
 # Composer
 /plugins/basicrum/vendor/
 
