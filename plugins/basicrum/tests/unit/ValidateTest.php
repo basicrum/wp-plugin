@@ -154,6 +154,33 @@ class ValidateTest extends TestCase {
 	}
 
 	/**
+	 * Test query-string stripping can be enabled or disabled.
+	 *
+	 * @dataProvider query_string_privacy_provider
+	 *
+	 * @param string $value    Submitted checkbox value.
+	 * @param string $expected Sanitized setting value.
+	 */
+	public function test_query_string_privacy_setting_is_sanitized( $value, $expected ) {
+		$input  = array( 'strip_query_string' => $value );
+		$result = $this->validate->sanitize( $this->full_input( $input ) );
+
+		$this->assertSame( $expected, $result['strip_query_string'] );
+	}
+
+	/**
+	 * Provide query-string privacy checkbox states.
+	 *
+	 * @return array[] Test cases.
+	 */
+	public function query_string_privacy_provider() {
+		return array(
+			'enabled'  => array( '1', '1' ),
+			'disabled' => array( '0', '0' ),
+		);
+	}
+
+	/**
 	 * Provide supported monitoring start values.
 	 *
 	 * @return array[] Test cases.
@@ -215,6 +242,7 @@ class ValidateTest extends TestCase {
 			'beacon_url'             => '',
 			'brum_site_id'           => '',
 			'consent_enabled'        => '0',
+			'strip_query_string'     => '0',
 			'wait_after_onload'      => '0',
 			'delay_ms'               => '0',
 			'script_position'        => 'footer',

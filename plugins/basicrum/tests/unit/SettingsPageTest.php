@@ -168,9 +168,9 @@ class SettingsPageTest extends TestCase {
 	}
 
 	/**
-	 * Test the privacy section exposes only the two real loading behaviors.
+	 * Test the privacy section exposes query protection and real loading behaviors.
 	 */
-	public function test_privacy_settings_expose_only_real_loading_behaviors() {
+	public function test_privacy_settings_expose_query_protection_and_real_loading_behaviors() {
 		$fields = array();
 
 		Functions\when( 'get_option' )->justReturn( \Basicrum\WP\Helpers::get_defaults() );
@@ -186,6 +186,11 @@ class SettingsPageTest extends TestCase {
 		$page = new Page();
 		$page->register_settings();
 
+		$this->assertArrayHasKey( 'strip_query_string', $fields );
+		$this->assertSame( 'Strip Query Strings', $fields['strip_query_string'][1] );
+		$this->assertSame( array( $page, 'render_checkbox_field' ), $fields['strip_query_string'][2] );
+		$this->assertSame( 'strip_query_string', $fields['strip_query_string'][5]['id'] );
+		$this->assertStringContainsString( 'URL paths are still collected', $fields['strip_query_string'][5]['label'] );
 		$this->assertArrayHasKey( 'consent_enabled', $fields );
 		$this->assertArrayNotHasKey( 'consent_mode', $fields );
 		$this->assertSame( 'Monitoring Start', $fields['consent_enabled'][1] );
@@ -231,6 +236,7 @@ class SettingsPageTest extends TestCase {
 				'delay_ms'       => 500,
 				'script_position' => 'footer',
 				'consent_enabled' => '1',
+				'strip_query_string' => '1',
 			)
 		);
 
@@ -241,6 +247,7 @@ class SettingsPageTest extends TestCase {
 		ob_start();
 		$page->render_number_field( array( 'id' => 'delay_ms' ) );
 		$page->render_checkbox_field( array( 'id' => 'track_admins' ) );
+		$page->render_checkbox_field( array( 'id' => 'strip_query_string' ) );
 		$page->render_radio_field(
 			array(
 				'id'      => 'script_position',
@@ -261,9 +268,9 @@ class SettingsPageTest extends TestCase {
 		);
 		$html = ob_get_clean();
 
-		$this->assertSame( 6, substr_count( $html, 'disabled="disabled"' ) );
-		$this->assertSame( 6, substr_count( $html, 'aria-disabled="true"' ) );
-		$this->assertSame( 4, substr_count( $html, 'basicrum-disabled-setting-value' ) );
+		$this->assertSame( 7, substr_count( $html, 'disabled="disabled"' ) );
+		$this->assertSame( 7, substr_count( $html, 'aria-disabled="true"' ) );
+		$this->assertSame( 5, substr_count( $html, 'basicrum-disabled-setting-value' ) );
 	}
 
 	/**

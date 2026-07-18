@@ -51,6 +51,12 @@ so HTTP beacon URLs are automatically upgraded to HTTPS.
 
 ### Visitor Privacy
 
+**Strip Query Strings** is disabled by default. When enabled, it replaces
+complete query strings in page, navigation, referrer, and resource URLs with
+`?qs-redacted` before beacons are sent. URL paths remain visible. With this
+setting disabled, beacons can include complete query strings, so review whether
+site URLs contain personal or sensitive information.
+
 Basicrum supports two observable loading policies under **Basicrum > Visitor
 Privacy**:
 

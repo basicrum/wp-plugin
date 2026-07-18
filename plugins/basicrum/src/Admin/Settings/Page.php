@@ -268,6 +268,18 @@ class Page {
 		);
 
 		add_settings_field(
+			'strip_query_string',
+			esc_html__( 'Strip Query Strings', 'basicrum' ),
+			array( $this, 'render_checkbox_field' ),
+			self::SLUG,
+			'basicrum_section_privacy',
+			array(
+				'id'    => 'strip_query_string',
+				'label' => __( 'When enabled, replace complete query strings in page, navigation, referrer, and resource URLs with ?qs-redacted before sending beacons. URL paths are still collected.', 'basicrum' ),
+			)
+		);
+
+		add_settings_field(
 			'consent_enabled',
 			esc_html__( 'Monitoring Start', 'basicrum' ),
 			array( $this, 'render_radio_field' ),
@@ -306,7 +318,7 @@ class Page {
 	public function render_privacy_section_intro() {
 		printf(
 			'<p>%s</p>',
-			esc_html__( 'Choose when monitoring starts. Basicrum does not display a consent popup, determine your legal basis, or make a site compliant by itself.', 'basicrum' )
+			esc_html__( 'Control URL query-string handling and choose when monitoring starts. Basicrum does not display a consent popup, determine your legal basis, or make a site compliant by itself.', 'basicrum' )
 		);
 	}
 

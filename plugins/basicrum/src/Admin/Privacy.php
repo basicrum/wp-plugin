@@ -47,6 +47,13 @@ class Privacy {
 		$content .= '<p>';
 		$content .= esc_html__( 'This site uses Basicrum to measure real-user performance. When monitoring runs, a visitor\'s browser sends page and resource URLs, performance and interaction timing metrics, page type, the configured site identifier, and technical browser, device, and network information to a performance collector. The collector also receives request information such as the IP address and user agent. Boomerang may use first-party cookies to maintain measurement state.', 'basicrum' );
 		$content .= '</p>';
+		$content .= '<p>';
+		if ( '1' === $settings['strip_query_string'] ) {
+			$content .= esc_html__( 'Basicrum is configured to replace complete query strings in page, navigation, referrer, and resource URLs with the marker ?qs-redacted before sending beacons. URL paths are still collected.', 'basicrum' );
+		} else {
+			$content .= esc_html__( 'Query-string stripping is disabled, so page, navigation, referrer, and resource URLs may include complete query strings. Review whether your URLs can contain personal or sensitive information before using this configuration.', 'basicrum' );
+		}
+		$content .= '</p>';
 
 		if ( $beacon_url ) {
 			$content .= '<p>';

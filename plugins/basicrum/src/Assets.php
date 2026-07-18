@@ -157,6 +157,7 @@ class Assets {
 		$boomerang_url      = esc_url( Helpers::get_asset_url( 'js/boomr/boomerang-' . $boomerang_version . '.cutting-edge.min.js' ) );
 		$delay_ms           = absint( $settings['delay_ms'] );
 		$wait_enabled       = ! empty( $settings['wait_after_onload'] ) && '1' === $settings['wait_after_onload'];
+		$strip_query_string = ! empty( $settings['strip_query_string'] ) && '1' === $settings['strip_query_string'];
 
 		$boomr_mq = array(
 			array( 'addVar', array( 'p_type' => $page_type ) ),
@@ -201,15 +202,16 @@ class Assets {
 
 		// Boomerang configuration object.
 		$config = array(
-			'beacon_url'       => $beacon_url,
-			'instrument_xhr'   => false,
-			'Continuity'       => array( 'enabled' => true ),
-			'ResourceTiming'   => array(
+			'beacon_url'         => $beacon_url,
+			'instrument_xhr'     => false,
+			'strip_query_string' => $strip_query_string,
+			'Continuity'         => array( 'enabled' => true ),
+			'ResourceTiming'     => array(
 				'enabled'     => true,
 				'splitAtPath' => true,
 			),
-			'secure_cookie'    => true,
-			'same_site_cookie' => 'Strict',
+			'secure_cookie'      => true,
+			'same_site_cookie'   => 'Strict',
 		);
 
 		$js .= "\n";

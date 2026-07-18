@@ -51,6 +51,8 @@ class SetupTest extends TestCase {
 					function( $settings ) {
 						return isset( $settings['consent_enabled'] )
 							&& '1' === $settings['consent_enabled']
+							&& isset( $settings['strip_query_string'] )
+							&& '0' === $settings['strip_query_string']
 							&& ! array_key_exists( 'consent_mode', $settings );
 					}
 				)

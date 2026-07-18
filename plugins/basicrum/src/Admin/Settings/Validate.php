@@ -60,6 +60,9 @@ class Validate {
 		// Monitoring start policy.
 		$output['consent_enabled'] = $this->sanitize_monitoring_start( $input );
 
+		// Query-string privacy (checkbox).
+		$output['strip_query_string'] = $this->sanitize_checkbox( $input, 'strip_query_string' );
+
 		// Wait after onload (checkbox).
 		$output['wait_after_onload'] = $this->sanitize_checkbox( $input, 'wait_after_onload' );
 

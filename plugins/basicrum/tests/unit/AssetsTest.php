@@ -91,6 +91,7 @@ class AssetsTest extends TestCase {
 			'track_admins'           => '0',
 			'script_position'        => 'footer',
 			'consent_enabled'        => '0',
+			'strip_query_string'     => '0',
 			'wait_after_onload'      => '0',
 			'delay_ms'               => 0,
 			'use_unminified_loaders' => '0',
@@ -243,6 +244,61 @@ class AssetsTest extends TestCase {
 		$this->assertStringContainsString( 'beacon.example.com/catcher', $captured_js );
 		$this->assertStringContainsString( 'basicRumBoomerangConfig', $captured_js );
 		$this->assertStringContainsString( '"instrument_xhr": false', $captured_js );
+		$this->assertStringContainsString( '"strip_query_string": false', $captured_js );
+	}
+
+	/**
+	 * Test the privacy setting controls Boomerang query-string stripping.
+	 *
+	 * @dataProvider query_string_privacy_provider
+	 *
+	 * @param string|null $stored_value Stored setting value, or null when absent.
+	 * @param string      $json_value   Expected JavaScript boolean.
+	 */
+	public function test_query_string_privacy_setting_controls_boomerang_config( $stored_value, $json_value ) {
+		$captured_js = null;
+		$settings    = $this->enabled_settings();
+
+		if ( null === $stored_value ) {
+			unset( $settings['strip_query_string'] );
+		} else {
+			$settings['strip_query_string'] = $stored_value;
+		}
+
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn( $settings );
+
+		$this->stub_wp_parse_args();
+		$this->stub_apply_filters_passthrough();
+		Functions\when( 'is_user_logged_in' )->justReturn( false );
+		Functions\when( 'wp_register_script' )->justReturn();
+		Functions\when( 'wp_enqueue_script' )->justReturn();
+		Functions\expect( 'wp_add_inline_script' )
+			->once()
+			->andReturnUsing(
+				function( $handle, $js, $position ) use ( &$captured_js ) {
+					$captured_js = $js;
+				}
+			);
+
+		$assets = new Assets();
+		$assets->maybe_enqueue();
+
+		$this->assertStringContainsString( '"strip_query_string": ' . $json_value, $captured_js );
+	}
+
+	/**
+	 * Provide query-string privacy states.
+	 *
+	 * @return array[] Test cases.
+	 */
+	public function query_string_privacy_provider() {
+		return array(
+			'enabled'        => array( '1', 'true' ),
+			'disabled'       => array( '0', 'false' ),
+			'missing setting' => array( null, 'false' ),
+		);
 	}
 
 	/**

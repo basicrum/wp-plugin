@@ -69,6 +69,7 @@ class Helpers {
 			'brum_site_id'           => '',
 			'track_admins'           => '0',
 			'consent_enabled'        => '1',
+			'strip_query_string'     => '0',
 			'wait_after_onload'      => '0',
 			'delay_ms'               => 0,
 			'script_position'        => 'footer',

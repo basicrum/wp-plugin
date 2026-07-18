@@ -22,6 +22,7 @@ Basicrum is privacy-first by design: new installations wait for an external cons
 * **Page Type Detection** - Automatically tags beacons with the WordPress page type (home, post, page, category, archive, search, 404) and WooCommerce types (product, cart, checkout).
 * **Brum Site ID** - Connect this WordPress site to the matching site in your Basicrum backoffice.
 * **Consent-Controlled Loading** - Follow an external consent tool's allow or deny decision, with `OPT_IN_BASICRUM_LOADER_WRAPPER()` and `OPT_OUT_BASICRUM_LOADER_WRAPPER()` integration callbacks.
+* **Query String Protection** - Optionally replace URL query strings with a redaction marker before beacons are sent.
 * **3-Tier Script Loading** - Preload, iframe, and direct script loading strategy for optimal performance.
 * **Configurable Beacon Delay** - Wait after onload before sending the beacon for more complete data collection.
 * **Cache Plugin Compatibility** - Automatically excluded from optimization by WP Rocket, Autoptimize, LiteSpeed Cache, SG Optimizer, W3 Total Cache, and WP Optimize.
@@ -65,6 +66,10 @@ No plugin can guarantee legal compliance for a site. Basicrum provides immediate
 
 Select **Follow external consent tool** under **Basicrum > Visitor Privacy**. Load the consent integration after the configured Script Position, then call `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` when the external tool allows monitoring or `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when it denies monitoring. Call one callback on every page. Basicrum does not persist a separate consent choice across page loads. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.
 
+= Does Basicrum send URL query strings? =
+
+By default, Basicrum may send complete query strings in page, navigation, referrer, and resource URLs. Enable **Basicrum > Visitor Privacy > Strip Query Strings** to replace them with `?qs-redacted` before sending beacons. URL paths are still collected. Review whether your URLs can contain personal or sensitive information before deciding whether to enable this setting.
+
 = Does it work with WooCommerce? =
 
 Yes. When WooCommerce is active, the plugin automatically detects shop, product, cart, checkout, and order confirmation page types.
@@ -76,7 +81,7 @@ Yes. Enable HTTP Strictness under Basicrum's Developer Settings to preserve HTTP
 == Screenshots ==
 
 1. Admin settings page - General settings with beacon URL and Brum Site ID.
-2. Visitor privacy settings - Immediate or consent-controlled loading with JavaScript API documentation.
+2. Visitor privacy settings - Query-string protection and immediate or consent-controlled loading.
 3. Performance settings - Beacon timing and script position options.
 4. Developer settings - HTTP strictness and loader debugging options.
 
@@ -86,6 +91,7 @@ Yes. Enable HTTP Strictness under Basicrum's Developer Settings to preserve HTTP
 * Replaced the unused consent-mode selector with clear immediate and consent-controlled loading choices.
 * Made external consent tools authoritative on every page through two explicit callbacks.
 * Added a privacy-safe default, transparent integration guidance, and WordPress Privacy Policy Guide content.
+* Added first-class query-string protection under Visitor Privacy, disabled by default.
 
 = 1.0.1 =
 * Complete rewrite with OOP architecture and PSR-4 autoloading.

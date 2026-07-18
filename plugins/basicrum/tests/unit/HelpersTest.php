@@ -29,6 +29,7 @@ class HelpersTest extends TestCase {
 			'brum_site_id',
 			'track_admins',
 			'consent_enabled',
+			'strip_query_string',
 			'wait_after_onload',
 			'delay_ms',
 			'script_position',
@@ -40,6 +41,7 @@ class HelpersTest extends TestCase {
 		}
 
 		$this->assertSame( '1', $defaults['consent_enabled'], 'New installations should wait for consent by default.' );
+		$this->assertSame( '0', $defaults['strip_query_string'], 'Query strings should be collected by default.' );
 	}
 
 	/**
@@ -68,6 +70,7 @@ class HelpersTest extends TestCase {
 		$this->assertSame( 'https://custom.example.com/beacon', $settings['beacon_url'] );
 		// Defaults filled in.
 		$this->assertSame( 0, $settings['delay_ms'] );
+		$this->assertSame( '0', $settings['strip_query_string'] );
 	}
 
 	/**

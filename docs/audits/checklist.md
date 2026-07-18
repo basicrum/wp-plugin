@@ -9,19 +9,19 @@ operator-journey defect, P3 = minor/polish.
 
 ## A. Plugin engineering
 
-- [ ] P0 Regenerate translation catalogs and commit (`make translations`).
-  The stale POT is COMMITTED at `0ec392e`: the CI translations job fails on
-  main and blocks the `package` job (`needs: translations`). Everything else
-  in this backlog that touches strings should regenerate catalogs in the
-  same change. (privacy 5 / DISC-10, lab-elevated)
-- [ ] P1 Set `strip_query_string: true` in `Assets::build_config_js()`.
-  Lab-verified: this single flag redacts `u`, `nu`, `r`, AND `restiming`
+- [x] P0 Regenerate translation catalogs and commit (`make translations`).
+  Completed in `784b2bf`. Two consecutive generations produced identical
+  catalogs, and the translation CI gate passed after push. (privacy 5 /
+  DISC-10, lab-elevated)
+- [ ] P1 Make `strip_query_string` a first-class Visitor Privacy setting,
+  disabled by default by product decision and emitted as a Boomerang boolean.
+  When enabled, this flag redacts `u`, `nu`, `r`, and `restiming`
   (`?qs-redacted`) - no separate ResourceTiming measure is needed for query
-  strings. Optionally expose `ResourceTiming.trimUrls` for PATH-level
-  redaction (order IDs in `/checkout/order-received/11/` survive
-  query-stripping). Add a negative beacon test with a planted token
-  (`?s=SECRET`) asserting the token appears in no beacon field. (privacy 1 /
-  DF-07)
+  strings. URL paths remain and may need a future `ResourceTiming.trimUrls`
+  policy. Add a real-bundle negative beacon test with planted document and
+  resource tokens, asserting the token appears in no beacon field.
+  Implementation and verification are complete in the working tree; keep this
+  item open until the change is committed. (privacy 1 / DF-07)
 - [ ] P1 Apply the opt-out race fix. Port the deterministic test from the
   temporary worktree before cleaning it up. The minimum fix should null
   `basicRumBoomerangConfig`; do not add the proposed `optedOut` marker or any
