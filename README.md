@@ -233,3 +233,10 @@ upstream changes and permissions, keep the SHA and release-tag comment in sync,
 and require CI to pass. Exercise an update used only by a release workflow with
 a prerelease before using it for a production release. Apply the same review when
 making a manual action update; never replace a pin with a mutable tag.
+
+## Contributors
+
+Thank you to everyone who contributes to Basicrum. This grid is generated from
+GitHub's automatically maintained contributor data.
+
+[![Basicrum contributors](https://contrib.rocks/image?repo=basicrum/wp-plugin)](https://github.com/basicrum/wp-plugin/graphs/contributors)
