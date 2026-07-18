@@ -132,6 +132,10 @@ class PageTypeDetector {
 			return 'tag_archive';
 		}
 
+		if ( is_tax() ) {
+			return 'taxonomy_archive';
+		}
+
 		if ( is_author() ) {
 			return 'author_archive';
 		}
