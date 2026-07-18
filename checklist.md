@@ -57,6 +57,9 @@ Acceptance criteria:
 - [x] Test removal of Boomerang RT and BA cookies during opt-out.
 - [x] Test measurement-cookie cleanup for the current host and parent domains.
 - [x] Run the same behavioral assertions against minified and unminified loaders.
+- [x] Test the Borlabs Cookie 3.0.6+ adapter contract.
+- [x] Test the shared WP Consent API adapter for opt-in and opt-out regions.
+- [x] Test the connected CookieYes fallback with its documented update payload.
 - [x] Add JavaScript tests to CI.
 
 Acceptance criteria:

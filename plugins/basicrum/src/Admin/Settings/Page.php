@@ -278,8 +278,8 @@ class Page {
 				'label'   => __( 'Select when Boomerang may load on an eligible page.', 'basicrum' ),
 				'options' => array(
 					'1' => array(
-						'label'       => __( 'Wait for visitor consent', 'basicrum' ),
-						'description' => __( 'Boomerang remains blocked until your consent or cookie tool calls the opt-in callback on each page.', 'basicrum' ),
+						'label'       => __( 'Follow external consent tool', 'basicrum' ),
+						'description' => __( 'Boomerang follows the current allow or deny decision reported by your consent or cookie tool on each page.', 'basicrum' ),
 					),
 					'0' => array(
 						'label'       => __( 'Load immediately', 'basicrum' ),
@@ -714,11 +714,11 @@ class Page {
 		?>
 		<div class="basicrum-consent-info notice notice-info inline">
 			<p><strong><?php esc_html_e( 'Consent Tool Integration', 'basicrum' ); ?></strong></p>
-			<p><?php esc_html_e( 'When "Wait for visitor consent" is selected, connect the example below to your consent or cookie tool. Call one of the two callbacks on every page after the Basicrum consent loader is available.', 'basicrum' ); ?></p>
-			<p><code>window.OPT_IN_BASICRUM_LOADER_WRAPPER()</code> - <?php esc_html_e( 'Call when the visitor allows performance monitoring. This executes the standard Boomerang loader.', 'basicrum' ); ?></p>
-			<p><code>window.OPT_OUT_BASICRUM_LOADER_WRAPPER()</code> - <?php esc_html_e( 'Call when consent is rejected, expires, or is withdrawn. Basicrum disables loaded collection and attempts to remove the Boomerang RT and BA cookies, but it cannot retract data already sent.', 'basicrum' ); ?></p>
+			<p><?php esc_html_e( 'When "Follow external consent tool" is selected, connect the example below to your consent or cookie tool. Call one of the two callbacks on every page after the Basicrum consent loader is available.', 'basicrum' ); ?></p>
+			<p><code>window.OPT_IN_BASICRUM_LOADER_WRAPPER()</code> - <?php esc_html_e( 'Call when the external tool reports that performance monitoring is allowed. This executes the standard Boomerang loader.', 'basicrum' ); ?></p>
+			<p><code>window.OPT_OUT_BASICRUM_LOADER_WRAPPER()</code> - <?php esc_html_e( 'Call when the external tool reports that monitoring is denied or that permission has expired or been withdrawn. Basicrum disables loaded collection and attempts to remove the Boomerang RT and BA cookies, but it cannot retract data already sent.', 'basicrum' ); ?></p>
 			<p><?php esc_html_e( 'The callbacks are registered at the configured Script Position. Load the consent integration after that point; calls made before registration are not replayed.', 'basicrum' ); ?></p>
-			<p><?php esc_html_e( 'Basicrum does not persist consent across page loads or in its own cookie or server-side record, and it does not display a consent popup. Your consent tool remains the source of truth. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.', 'basicrum' ); ?></p>
+			<p><?php esc_html_e( 'Basicrum does not persist consent across page loads or in its own cookie or server-side record, and it does not display a consent popup. Your consent tool remains the source of truth. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.', 'basicrum' ); ?></p>
 			<p><strong><?php esc_html_e( 'Example:', 'basicrum' ); ?></strong></p>
 			<pre><?php echo esc_html( $example_code ); ?></pre>
 		</div>

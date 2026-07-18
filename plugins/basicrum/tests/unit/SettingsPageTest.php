@@ -193,7 +193,7 @@ class SettingsPageTest extends TestCase {
 		$this->assertSame( 'consent_enabled', $fields['consent_enabled'][5]['id'] );
 		$this->assertSame( array( 1, 0 ), array_keys( $fields['consent_enabled'][5]['options'] ) );
 		$this->assertSame( 'Load immediately', $fields['consent_enabled'][5]['options']['0']['label'] );
-		$this->assertSame( 'Wait for visitor consent', $fields['consent_enabled'][5]['options']['1']['label'] );
+		$this->assertSame( 'Follow external consent tool', $fields['consent_enabled'][5]['options']['1']['label'] );
 	}
 
 	/**
@@ -208,13 +208,14 @@ class SettingsPageTest extends TestCase {
 
 		$this->assertStringContainsString( 'does not display a consent popup', $html );
 		$this->assertStringContainsString( 'source of truth', $html );
-		$this->assertStringContainsString( 'consent is rejected, expires, or is withdrawn', $html );
+		$this->assertStringContainsString( 'permission has expired or been withdrawn', $html );
 		$this->assertStringContainsString( 'OPT_IN_BASICRUM_LOADER_WRAPPER', $html );
 		$this->assertStringContainsString( 'OPT_OUT_BASICRUM_LOADER_WRAPPER', $html );
 		$this->assertStringContainsString( 'calls made before registration are not replayed', $html );
 		$this->assertStringNotContainsString( 'basicrum:consent-ready', $html );
 		$this->assertStringContainsString( 'cannot retract data already sent', $html );
 		$this->assertStringContainsString( 'does not persist consent across page loads', $html );
+		$this->assertStringContainsString( 'opt-out region', $html );
 		$this->assertStringContainsString( 'after Boomerang loading starts', $html );
 	}
 

@@ -67,7 +67,7 @@ msgid "When monitoring runs, performance data is sent to the collector configure
 msgstr ""
 
 #: src/Admin/Privacy.php:62
-msgid "Monitoring is configured to wait for the site's consent tool on every page. Basicrum does not persist consent across page loads or in its own cookie or server-side record. Signaling rejection, expiry, or withdrawal stops future browser collection but does not retract data already sent."
+msgid "Monitoring is configured to follow the site's consent tool on every page. Basicrum does not persist consent across page loads or in its own cookie or server-side record. The consent tool may report monitoring as allowed before visitor interaction where an opt-out policy applies. Signaling denial, expiry, or withdrawal stops future browser collection but does not retract data already sent."
 msgstr ""
 
 #: src/Admin/Privacy.php:64
@@ -144,11 +144,11 @@ msgid "Select when Boomerang may load on an eligible page."
 msgstr ""
 
 #: src/Admin/Settings/Page.php:281
-msgid "Wait for visitor consent"
+msgid "Follow external consent tool"
 msgstr ""
 
 #: src/Admin/Settings/Page.php:282
-msgid "Boomerang remains blocked until your consent or cookie tool calls the opt-in callback on each page."
+msgid "Boomerang follows the current allow or deny decision reported by your consent or cookie tool on each page."
 msgstr ""
 
 #: src/Admin/Settings/Page.php:285
@@ -246,15 +246,15 @@ msgid "Consent Tool Integration"
 msgstr ""
 
 #: src/Admin/Settings/Page.php:717
-msgid "When \"Wait for visitor consent\" is selected, connect the example below to your consent or cookie tool. Call one of the two callbacks on every page after the Basicrum consent loader is available."
+msgid "When \"Follow external consent tool\" is selected, connect the example below to your consent or cookie tool. Call one of the two callbacks on every page after the Basicrum consent loader is available."
 msgstr ""
 
 #: src/Admin/Settings/Page.php:718
-msgid "Call when the visitor allows performance monitoring. This executes the standard Boomerang loader."
+msgid "Call when the external tool reports that performance monitoring is allowed. This executes the standard Boomerang loader."
 msgstr ""
 
 #: src/Admin/Settings/Page.php:719
-msgid "Call when consent is rejected, expires, or is withdrawn. Basicrum disables loaded collection and attempts to remove the Boomerang RT and BA cookies, but it cannot retract data already sent."
+msgid "Call when the external tool reports that monitoring is denied or that permission has expired or been withdrawn. Basicrum disables loaded collection and attempts to remove the Boomerang RT and BA cookies, but it cannot retract data already sent."
 msgstr ""
 
 #: src/Admin/Settings/Page.php:720
@@ -262,7 +262,7 @@ msgid "The callbacks are registered at the configured Script Position. Load the 
 msgstr ""
 
 #: src/Admin/Settings/Page.php:721
-msgid "Basicrum does not persist consent across page loads or in its own cookie or server-side record, and it does not display a consent popup. Your consent tool remains the source of truth. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again."
+msgid "Basicrum does not persist consent across page loads or in its own cookie or server-side record, and it does not display a consent popup. Your consent tool remains the source of truth. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again."
 msgstr ""
 
 #: src/Admin/Settings/Page.php:722
@@ -286,5 +286,5 @@ msgid "Delay cannot exceed 30000 milliseconds. It has been capped at 30000."
 msgstr ""
 
 #: src/Admin/Settings/Validate.php:204
-msgid "Invalid monitoring start value. Basicrum will wait for visitor consent."
+msgid "Invalid monitoring start value. Basicrum will follow the external consent tool."
 msgstr ""

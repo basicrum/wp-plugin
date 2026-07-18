@@ -19,7 +19,7 @@ Basicrum is a free, open source Real User Monitoring (RUM) system. This plugin i
 * **Real User Monitoring** - Collect page load timing, resource timing, and continuity metrics from actual visitors.
 * **Page Type Detection** - Automatically tags beacons with the WordPress page type (home, post, page, category, archive, search, 404) and WooCommerce types (product, cart, checkout).
 * **Brum Site ID** - Connect this WordPress site to the matching site in your Basicrum backoffice.
-* **Consent-Controlled Loading** - Wait for an external consent tool before loading Boomerang, with `OPT_IN_BASICRUM_LOADER_WRAPPER()` and `OPT_OUT_BASICRUM_LOADER_WRAPPER()` integration callbacks.
+* **Consent-Controlled Loading** - Follow an external consent tool's allow or deny decision, with `OPT_IN_BASICRUM_LOADER_WRAPPER()` and `OPT_OUT_BASICRUM_LOADER_WRAPPER()` integration callbacks.
 * **3-Tier Script Loading** - Preload, iframe, and direct script loading strategy for optimal performance.
 * **Configurable Beacon Delay** - Wait after onload before sending the beacon for more complete data collection.
 * **Cache Plugin Compatibility** - Automatically excluded from optimization by WP Rocket, Autoptimize, LiteSpeed Cache, SG Optimizer, W3 Total Cache, and WP Optimize.
@@ -61,7 +61,7 @@ No plugin can guarantee legal compliance for a site. Basicrum provides immediate
 
 = How do I connect my consent or cookie tool? =
 
-Select **Wait for visitor consent** under **Basicrum > Visitor Privacy**. Load the consent integration after the configured Script Position, then call `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` or `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` on every page. Basicrum does not persist a separate consent choice across page loads. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.
+Select **Follow external consent tool** under **Basicrum > Visitor Privacy**. Load the consent integration after the configured Script Position, then call `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` when the external tool allows monitoring or `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when it denies monitoring. Call one callback on every page. Basicrum does not persist a separate consent choice across page loads. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.
 
 = Does it work with WooCommerce? =
 

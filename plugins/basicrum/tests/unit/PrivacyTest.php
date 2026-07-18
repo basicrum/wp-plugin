@@ -66,6 +66,7 @@ class PrivacyTest extends TestCase {
 		$this->assertStringContainsString( '<code>https://collector.example.test/beacon</code>', $content );
 		$this->assertStringContainsString( 'consent tool on every page', $content );
 		$this->assertStringContainsString( 'does not persist consent across page loads', $content );
+		$this->assertStringContainsString( 'opt-out policy applies', $content );
 		$this->assertStringContainsString( 'does not retract data already sent', $content );
 	}
 

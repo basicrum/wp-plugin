@@ -59,7 +59,7 @@ class Privacy {
 			$content .= '<p>';
 		}
 		if ( $is_configured && '1' === $settings['consent_enabled'] ) {
-			$content .= esc_html__( 'Monitoring is configured to wait for the site\'s consent tool on every page. Basicrum does not persist consent across page loads or in its own cookie or server-side record. Signaling rejection, expiry, or withdrawal stops future browser collection but does not retract data already sent.', 'basicrum' );
+			$content .= esc_html__( 'Monitoring is configured to follow the site\'s consent tool on every page. Basicrum does not persist consent across page loads or in its own cookie or server-side record. The consent tool may report monitoring as allowed before visitor interaction where an opt-out policy applies. Signaling denial, expiry, or withdrawal stops future browser collection but does not retract data already sent.', 'basicrum' );
 		} elseif ( $is_configured ) {
 			$content .= esc_html__( 'Monitoring is configured to start immediately on eligible pages without waiting for a consent signal.', 'basicrum' );
 		}

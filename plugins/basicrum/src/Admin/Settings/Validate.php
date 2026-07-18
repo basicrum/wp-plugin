@@ -201,7 +201,7 @@ class Validate {
 		add_settings_error(
 			'basicrum_settings',
 			'consent_enabled_invalid',
-			esc_html__( 'Invalid monitoring start value. Basicrum will wait for visitor consent.', 'basicrum' ),
+			esc_html__( 'Invalid monitoring start value. Basicrum will follow the external consent tool.', 'basicrum' ),
 			'warning'
 		);
 

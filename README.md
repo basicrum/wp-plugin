@@ -56,10 +56,11 @@ Privacy**:
 
 - **Load immediately** loads Boomerang on every eligible page without waiting
   for a consent signal.
-- **Wait for visitor consent** blocks Boomerang until the site's external
-  consent tool calls `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` on the current
-  page. The tool must call `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when
-  consent is rejected, expires, or is withdrawn.
+- **Follow external consent tool** blocks or loads Boomerang according to the
+  current allow or deny decision reported by the site's consent tool. The tool
+  calls `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` when monitoring is allowed and
+  `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when monitoring is denied, expires,
+  or is withdrawn.
 
 The callbacks are registered when the consent loader reaches its configured
 Script Position. The consent integration must run after those callbacks are
@@ -67,6 +68,13 @@ available and call one of them on every page. Basicrum does not persist a
 separate consent choice across page loads; the external tool is authoritative
 on every page. If consent is withdrawn after Boomerang loading starts, reload
 the page before granting it again.
+
+An allow decision does not always mean that the visitor clicked an accept
+button. Region-aware tools such as WP Consent API may allow a category before
+interaction in an opt-out region while denying it by default in an opt-in
+region. Basicrum follows the decision reported by the external tool; the site
+owner remains responsible for configuring that tool and the applicable legal
+basis.
 
 Load the adapter after the Basicrum consent loader and use this shape:
 
@@ -82,7 +90,8 @@ function reportBasicrumConsent(allowed) {
 }
 ```
 
-A tested Borlabs Cookie v3 adapter is available under
+Tested adapters for Borlabs Cookie 3.0.6+, WP Consent API with Complianz or
+CookieYes, and connected CookieYes without WP Consent API are available under
 [`examples/integrations/`](examples/integrations/).
 
 Basicrum does not display a consent popup, select a legal basis, or make a site
