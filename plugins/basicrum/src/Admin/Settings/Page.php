@@ -71,7 +71,7 @@ class Page {
 			self::HANDLE_SETTINGS,
 			Helpers::get_asset_url( 'js/admin/settings.js' ),
 			array(),
-			BASICRUM_VERSION,
+			$this->get_admin_asset_version( 'js/admin/settings.js' ),
 			true
 		);
 
@@ -79,8 +79,29 @@ class Page {
 			self::HANDLE_SETTINGS_STYLE,
 			Helpers::get_asset_url( 'css/admin/settings.css' ),
 			array(),
-			BASICRUM_VERSION
+			$this->get_admin_asset_version( 'css/admin/settings.css' )
 		);
+	}
+
+	/**
+	 * Get a cache-busting version for an admin asset.
+	 *
+	 * The plugin version changes for releases. The file modification time also
+	 * makes local and development changes take effect without a stale browser
+	 * cache continuing to run an earlier settings script.
+	 *
+	 * @param string $asset Relative asset path.
+	 * @return string Asset version.
+	 */
+	private function get_admin_asset_version( $asset ) {
+		$asset_path = Helpers::get_asset_path( $asset );
+		$modified   = is_readable( $asset_path ) ? filemtime( $asset_path ) : false;
+
+		if ( false === $modified ) {
+			return BASICRUM_VERSION;
+		}
+
+		return BASICRUM_VERSION . '.' . $modified;
 	}
 
 	/**
@@ -229,7 +250,15 @@ class Page {
 	 * @return bool Whether the control should be disabled.
 	 */
 	private function is_field_disabled( $setting_key, $settings ) {
-		return 'enabled' !== $setting_key && '1' !== $settings['enabled'];
+		if ( 'enabled' === $setting_key ) {
+			return false;
+		}
+
+		if ( '1' !== $settings['enabled'] ) {
+			return true;
+		}
+
+		return 'delay_ms' === $setting_key && '1' !== $settings['wait_after_onload'];
 	}
 
 	/**

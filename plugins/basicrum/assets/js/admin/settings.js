@@ -3,6 +3,8 @@
 
 	document.addEventListener( 'DOMContentLoaded', function() {
 		var enabled = document.getElementById( 'basicrum_enabled' );
+		var waitAfterOnload = document.getElementById( 'basicrum_wait_after_onload' );
+		var delay = document.getElementById( 'basicrum_delay_ms' );
 		var form = enabled ? enabled.closest( 'form' ) : null;
 		var fieldIds = [ 'basicrum_beacon_url', 'basicrum_brum_site_id' ];
 		var requiredFields = fieldIds.map( function( fieldId ) {
@@ -62,6 +64,19 @@
 			preservedValues.forEach( function( field ) {
 				field.disabled = isEnabled;
 			} );
+
+			syncDelayAvailability();
+		}
+
+		function syncDelayAvailability() {
+			if ( ! waitAfterOnload || ! delay ) {
+				return;
+			}
+
+			var isDelayEnabled = enabled.checked && waitAfterOnload.checked;
+
+			delay.disabled = ! isDelayEnabled;
+			delay.setAttribute( 'aria-disabled', isDelayEnabled ? 'false' : 'true' );
 		}
 
 		syncAvailability();
@@ -88,8 +103,16 @@
 			} );
 		} );
 
+		if ( waitAfterOnload ) {
+			waitAfterOnload.addEventListener( 'change', syncDelayAvailability );
+		}
+
 		form.addEventListener( 'submit', function() {
 			if ( enabled.checked ) {
+				if ( waitAfterOnload && delay && ! waitAfterOnload.checked ) {
+					delay.disabled = false;
+				}
+
 				return;
 			}
 

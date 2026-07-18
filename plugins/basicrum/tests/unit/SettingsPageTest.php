@@ -168,6 +168,48 @@ class SettingsPageTest extends TestCase {
 	}
 
 	/**
+	 * Test the delay field is available only when monitoring and Wait After Onload are active.
+	 *
+	 * @dataProvider delay_field_availability_provider
+	 *
+	 * @param string $enabled           Enabled setting value.
+	 * @param string $wait_after_onload Wait After Onload setting value.
+	 * @param bool   $expect_disabled   Whether the delay field should be disabled.
+	 */
+	public function test_delay_field_depends_on_wait_after_onload( $enabled, $wait_after_onload, $expect_disabled ) {
+		$this->set_settings(
+			array(
+				'enabled'           => $enabled,
+				'wait_after_onload' => $wait_after_onload,
+				'delay_ms'          => 500,
+			)
+		);
+
+		$page = new Page();
+
+		ob_start();
+		$page->render_number_field( array( 'id' => 'delay_ms' ) );
+		$html = ob_get_clean();
+
+		$this->assertStringContainsString( 'aria-disabled="' . ( $expect_disabled ? 'true' : 'false' ) . '"', $html );
+		$this->assertSame( $expect_disabled, false !== strpos( $html, 'disabled="disabled"' ) );
+		$this->assertSame( $expect_disabled, false !== strpos( $html, 'basicrum-disabled-setting-value' ) );
+	}
+
+	/**
+	 * Provide delay field availability states.
+	 *
+	 * @return array[] Test cases.
+	 */
+	public function delay_field_availability_provider() {
+		return array(
+			'monitoring disabled'       => array( '0', '1', true ),
+			'wait after onload disabled' => array( '1', '0', true ),
+			'both settings enabled'     => array( '1', '1', false ),
+		);
+	}
+
+	/**
 	 * Test the privacy section exposes query protection and real loading behaviors.
 	 */
 	public function test_privacy_settings_expose_query_protection_and_real_loading_behaviors() {
@@ -299,6 +341,9 @@ class SettingsPageTest extends TestCase {
 	 * Test the conditional settings behavior is loaded on the Basicrum page.
 	 */
 	public function test_settings_script_is_enqueued_on_basicrum_page() {
+		$script_version = BASICRUM_VERSION . '.' . filemtime( \Basicrum\WP\Helpers::get_asset_path( 'js/admin/settings.js' ) );
+		$style_version  = BASICRUM_VERSION . '.' . filemtime( \Basicrum\WP\Helpers::get_asset_path( 'css/admin/settings.css' ) );
+
 		Functions\when( 'plugins_url' )->alias(
 			function( $path ) {
 				return 'https://example.com/wp-content/plugins/basicrum/' . $path;
@@ -310,7 +355,7 @@ class SettingsPageTest extends TestCase {
 				'basicrum-admin-settings',
 				'https://example.com/wp-content/plugins/basicrum/assets/js/admin/settings.js',
 				array(),
-				BASICRUM_VERSION,
+				$script_version,
 				true
 			);
 		Functions\expect( 'wp_enqueue_style' )
@@ -319,7 +364,7 @@ class SettingsPageTest extends TestCase {
 				'basicrum-admin-settings-style',
 				'https://example.com/wp-content/plugins/basicrum/assets/css/admin/settings.css',
 				array(),
-				BASICRUM_VERSION
+				$style_version
 			);
 
 		$page = new Page();
