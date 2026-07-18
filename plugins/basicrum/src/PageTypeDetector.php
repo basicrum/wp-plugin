@@ -116,7 +116,7 @@ class PageTypeDetector {
 			return 'home';
 		}
 
-		if ( is_single() ) {
+		if ( is_singular( 'post' ) ) {
 			return 'post';
 		}
 
@@ -124,16 +124,25 @@ class PageTypeDetector {
 			return 'page';
 		}
 
+		// Other CPTs.
+		if ( is_singular() ) {
+			return 'custom_post';
+		}
+
 		if ( is_category() ) {
-			return 'category';
+			return 'category_archive';
 		}
 
 		if ( is_tag() ) {
-			return 'tag';
+			return 'tag_archive';
+		}
+
+		if ( is_tax() ) {
+			return 'taxonomy_archive';
 		}
 
 		if ( is_author() ) {
-			return 'author';
+			return 'author_archive';
 		}
 
 		if ( is_date() ) {
