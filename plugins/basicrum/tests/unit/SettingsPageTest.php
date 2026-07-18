@@ -26,8 +26,39 @@ class SettingsPageTest extends TestCase {
 		$this->assertStringContainsString( '.basicrum-field-error-icon[hidden]', $css );
 		$this->assertMatchesRegularExpression( '/\.basicrum-field-error-icon\[hidden\]\s*\{[^}]*display:\s*none;/s', $css );
 		$this->assertMatchesRegularExpression( '/\.basicrum-field-error-message\s*\{[^}]*color:\s*#d63638;[^}]*font-weight:\s*600;/s', $css );
+		$this->assertStringContainsString( '.basicrum-settings-header', $css );
+		$this->assertStringContainsString( '.basicrum-settings-logo', $css );
 		$this->assertStringContainsString( '.basicrum-radio-option', $css );
 		$this->assertStringContainsString( '.basicrum-consent-info', $css );
+	}
+
+	/**
+	 * Test the settings page renders the packaged Basicrum logo.
+	 */
+	public function test_settings_page_renders_brand_logo() {
+		Functions\when( 'plugins_url' )->alias(
+			function( $path ) {
+				return 'https://example.com/wp-content/plugins/basicrum/' . $path;
+			}
+		);
+		Functions\expect( 'current_user_can' )->once()->with( 'manage_options' )->andReturn( true );
+		Functions\when( 'get_admin_page_title' )->justReturn( 'Basicrum Settings' );
+		Functions\when( 'settings_fields' )->justReturn();
+		Functions\when( 'do_settings_sections' )->justReturn();
+		Functions\when( 'submit_button' )->justReturn();
+
+		$page = new Page();
+
+		ob_start();
+		$page->render_settings_page();
+		$html = ob_get_clean();
+
+		$this->assertStringContainsString( 'class="basicrum-settings-header"', $html );
+		$this->assertStringContainsString( 'class="basicrum-settings-logo"', $html );
+		$this->assertStringContainsString( 'src="https://example.com/wp-content/plugins/basicrum/assets/images/basicrum-logo.png"', $html );
+		$this->assertStringContainsString( 'alt=""', $html );
+		$this->assertStringContainsString( 'width="48"', $html );
+		$this->assertStringContainsString( 'height="48"', $html );
 	}
 
 	/**

@@ -45,6 +45,7 @@ require_entry 'basicrum/vendor/composer/installed.php'
 require_entry 'basicrum/assets/js/boomr/boomerang-1.815.60.cutting-edge.min.js'
 require_entry 'basicrum/assets/js/loaders/boomerang-loader-v15.min.js'
 require_entry 'basicrum/assets/js/loaders/consent-boomerang-loader-v1-15.min.js'
+require_entry 'basicrum/assets/images/basicrum-logo.png'
 require_entry 'basicrum/languages/basicrum.pot'
 
 if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Fqx 'basicrum/assets/js/loaders/consent-api.js'; then

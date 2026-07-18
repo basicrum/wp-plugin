@@ -415,7 +415,16 @@ class Page {
 		}
 		?>
 		<div class="wrap">
-			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<div class="basicrum-settings-header">
+				<img
+					class="basicrum-settings-logo"
+					src="<?php echo esc_url( Helpers::get_asset_url( 'images/basicrum-logo.png' ) ); ?>"
+					alt=""
+					width="48"
+					height="48"
+				/>
+				<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			</div>
 			<form action="options.php" method="post">
 				<?php
 				settings_fields( self::GROUP );

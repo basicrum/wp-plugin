@@ -1,3 +1,22 @@
+.basicrum-settings-header {
+	align-items: center;
+	display: flex;
+	gap: 12px;
+	margin: 20px 0;
+}
+
+.basicrum-settings-header h1 {
+	margin: 0;
+	padding: 0;
+}
+
+.basicrum-settings-logo {
+	display: block;
+	flex: 0 0 auto;
+	height: 48px;
+	width: 48px;
+}
+
 .basicrum-field-control {
 	display: inline-flex;
 	align-items: center;
