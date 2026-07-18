@@ -94,7 +94,8 @@ Acceptance criteria:
   version.
 - [ ] Test WordPress trunk with the newest compatible PHP version.
 - [x] Add an isolated WooCommerce E2E suite covering shop, product, cart,
-  checkout, and order-received page types through actual Basicrum beacons.
+  checkout, order-pay, and order-received page types through actual Basicrum
+  beacons.
 - [ ] Update `Tested up to` only after the stable integration test passes.
 - [ ] Document how compatibility metadata is updated for each release.
 

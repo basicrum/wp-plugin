@@ -124,9 +124,10 @@ request. They cover consent gating, repeated opt-in, opt-out cleanup, and cookie
 behavior on HTTP, HTTPS, localhost, and subdomains.
 
 `make woocommerce-e2e` starts an isolated WordPress 6.9 and WooCommerce 10.9.4
-stack, seeds a product and completed order, then uses Playwright to visit the
-shop, product, cart, checkout, and order-received pages. It intercepts the
-synthetic collector and verifies the actual Basicrum beacon `p_type` values.
+stack, seeds a product, payable order, and completed order, then uses Playwright
+to visit the shop, product, cart, checkout, order-pay, and order-received pages.
+It intercepts the synthetic collector and verifies the actual Basicrum beacon
+`p_type` values.
 WooCommerce Coming soon mode is disabled in this isolated stack, so the shop
 also proves that the seeded product is visible to anonymous visitors.
 The WooCommerce download is pinned and checksum-verified in
@@ -141,6 +142,15 @@ To inspect the same seeded WooCommerce storefront manually, run
 `WOOCOMMERCE_E2E_PORT` to use a different host port. The inspectable stack
 keeps its own data and plugin copy, so run `make woocommerce-e2e-down` and then
 `make woocommerce-e2e-up` after changing plugin source.
+
+### WooCommerce page-type acknowledgments
+
+The WooCommerce `p_type` taxonomy and its specificity order were informed by
+[WooCommerce Conditional Tags](https://developer.woocommerce.com/docs/theming/theme-development/conditional-tags),
+[WooCommerce core conditional functions](https://github.com/woocommerce/woocommerce/blob/trunk/plugins/woocommerce/includes/wc-conditional-functions.php),
+and the open-source [GTM4WP WooCommerce integration](https://github.com/duracelltomi/gtm4wp/blob/master/integration/woocommerce.php).
+They inspired the page-type ideas only; Basicrum has its own implementation and
+does not copy source code from those projects.
 
 The JavaScript package, Playwright configuration, and browser tests live at the
 repository root. The release builder copies only `plugins/basicrum/`, and the

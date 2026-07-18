@@ -206,7 +206,7 @@ class PageTypeDetectorTest extends TestCase {
 
 		// WooCommerce conditionals - define all, set matching ones to true.
 		$wc_conditionals = array(
-			'is_order_received_page', 'is_checkout', 'is_cart',
+			'is_order_received_page', 'is_checkout_pay_page', 'is_checkout', 'is_cart',
 			'is_product', 'is_product_category', 'is_shop', 'is_account_page',
 		);
 
@@ -231,6 +231,14 @@ class PageTypeDetectorTest extends TestCase {
 	public function test_detects_woocommerce_checkout_success() {
 		$this->stub_woocommerce_conditionals( array( 'is_order_received_page' ) );
 		$this->assertSame( 'checkout_success', $this->detector->detect() );
+	}
+
+	/**
+	 * Test detection of WooCommerce order payment page before generic checkout.
+	 */
+	public function test_detects_woocommerce_checkout_payment_before_checkout() {
+		$this->stub_woocommerce_conditionals( array( 'is_checkout_pay_page', 'is_checkout' ) );
+		$this->assertSame( 'checkout_payment', $this->detector->detect() );
 	}
 
 	/**

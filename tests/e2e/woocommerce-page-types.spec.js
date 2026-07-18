@@ -9,6 +9,7 @@ const expectedPageTypes = [
 	[ 'product', 'product' ],
 	[ 'cart', 'cart' ],
 	[ 'checkout', 'checkout' ],
+	[ 'order_pay', 'checkout_payment' ],
 	[ 'order_received', 'checkout_success' ],
 ];
 

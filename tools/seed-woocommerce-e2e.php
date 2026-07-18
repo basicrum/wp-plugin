@@ -52,12 +52,29 @@ $order->calculate_totals();
 $order->set_status( 'completed' );
 $order->save();
 
+$payment_order = wc_create_order();
+
+if ( ! $payment_order ) {
+	throw new RuntimeException( 'Could not create the WooCommerce E2E payment order.' );
+}
+
+$payment_order_item_id = $payment_order->add_product( $product, 1 );
+
+if ( ! $payment_order_item_id ) {
+	throw new RuntimeException( 'Could not add the product to the WooCommerce E2E payment order.' );
+}
+
+$payment_order->calculate_totals();
+$payment_order->set_status( 'pending' );
+$payment_order->save();
+
 $routes = array(
 	'shop'           => wc_get_page_permalink( 'shop' ),
 	'product'        => get_permalink( $product_id ),
 	'cart'           => wc_get_cart_url(),
 	'cart_add'       => add_query_arg( 'add-to-cart', $product_id, wc_get_cart_url() ),
 	'checkout'       => wc_get_checkout_url(),
+	'order_pay'      => $payment_order->get_checkout_payment_url(),
 	'order_received' => $order->get_checkout_order_received_url(),
 );
 

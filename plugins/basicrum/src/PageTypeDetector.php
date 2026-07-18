@@ -65,6 +65,10 @@ class PageTypeDetector {
 			return 'checkout_success';
 		}
 
+		if ( function_exists( 'is_checkout_pay_page' ) && is_checkout_pay_page() ) {
+			return 'checkout_payment';
+		}
+
 		if ( function_exists( 'is_checkout' ) && is_checkout() ) {
 			return 'checkout';
 		}
