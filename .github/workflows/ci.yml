@@ -54,27 +54,6 @@ jobs:
         working-directory: plugins/basicrum
         run: composer analyse
 
-  translations:
-    name: Translation catalogs
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-
-      - name: Setup PHP and WP-CLI
-        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
-        with:
-          php-version: '8.2'
-          tools: wp-cli:2.12.0
-          coverage: none
-
-      - name: Regenerate translation catalogs
-        run: sh tools/update-translations.sh plugins/basicrum
-
-      - name: Check for stale translation artifacts
-        run: git diff --exit-code -- plugins/basicrum/languages
-
   javascript:
     name: JavaScript loader behavior
     runs-on: ubuntu-latest
@@ -232,7 +211,6 @@ jobs:
     needs:
       - conventions
       - quality
-      - translations
       - javascript
       - woocommerce-e2e
       - unit

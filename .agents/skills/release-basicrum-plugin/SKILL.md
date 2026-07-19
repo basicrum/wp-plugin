@@ -15,7 +15,7 @@ Test the artifact users install, not only the source checkout.
   dependencies in a temporary tree with an optimized authoritative autoloader;
   do not replace normal Composer PSR-4 loading with a handwritten runtime
   autoloader.
-- Include referenced runtime PHP, JavaScript, CSS, images, translations, readme,
+- Include referenced runtime PHP, JavaScript, CSS, images, the POT template, readme,
   license, and production vendor files.
 - Exclude tests, Playwright and Node files, examples, Docker files, agent skills,
   local configuration, caches, and development dependencies.
@@ -40,7 +40,7 @@ explicit and use combinations supported by WordPress core.
   merging updates.
 - Keep default workflow permissions read-only. Grant `contents: write` only to
   release jobs that attach artifacts.
-- Run Composer validation, auditing, PHPStan, translation reproducibility,
+- Run Composer validation, auditing, PHPStan, POT-template reproducibility,
   repository conventions, and generated-asset checks.
 
 ## Exercise the artifact

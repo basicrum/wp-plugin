@@ -32,7 +32,7 @@ help:
 	@echo "  composer-validate  Validate Composer metadata and lock file"
 	@echo "  composer-audit     Audit locked Composer dependencies"
 	@echo "  conventions        Enforce ASCII hyphens and version consistency"
-	@echo "  translations       Update POT, PO, and MO translation catalogs"
+	@echo "  translations       Update the POT translation template"
 	@echo "  js-install         Install locked JavaScript test dependencies"
 	@echo "  js-test            Run loader behavior tests in Chromium"
 	@echo "  woocommerce-e2e    Run WooCommerce page-type browser tests"

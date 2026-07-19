@@ -72,6 +72,11 @@ if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Eq '^basicrum/(tests|\.git|\.github|
 	exit 1
 fi
 
+if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Eq '^basicrum/languages/.*\.(po|mo)$'; then
+	printf '%s\n' 'Release archive contains a bundled locale-specific translation.' >&2
+	exit 1
+fi
+
 if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Eq '^basicrum/(AGENTS\.md|CLAUDE\.md|CONTRIBUTING\.md|SECURITY\.md|checklist\.md|docs(/|$))'; then
 	printf '%s\n' 'Release archive contains repository-only documentation.' >&2
 	exit 1

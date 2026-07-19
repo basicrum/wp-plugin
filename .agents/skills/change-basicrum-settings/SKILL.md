@@ -6,7 +6,7 @@ description: Change Basicrum WordPress settings across defaults, admin UI, valid
 # Change Basicrum Settings
 
 Treat a setting as one behavior spanning storage, administration, validation,
-runtime use, upgrades, tests, documentation, and translations.
+runtime use, upgrades, tests, documentation, and the gettext template.
 
 ## Map the setting
 
@@ -23,7 +23,7 @@ runtime use, upgrades, tests, documentation, and translations.
 ## Implement the complete behavior
 
 - Keep the `basicrum_settings` schema synchronized across defaults, UI,
-  validation, runtime code, tests, docs, translations, and any post-release
+  validation, runtime code, tests, docs, the POT template, and any post-release
   migrations.
 - Make server-side validation authoritative. Client-side disabled states and
   invalid-field styling are usability aids, not security controls.
@@ -56,6 +56,6 @@ make unit
 make conventions
 ```
 
-Run `make translations` for changed strings and require a second generation to
-produce no diff. Manually verify enabled, disabled, invalid, and valid form
+Run `make translations` for changed strings and require a second POT generation
+to produce no diff. Manually verify enabled, disabled, invalid, and valid form
 states when layout or browser behavior changes.

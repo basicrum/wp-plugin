@@ -18,6 +18,8 @@ README.md
 package.json
 package-lock.json
 playwright*.config.js
+/languages/*.po
+/languages/*.mo
 
 coverage.xml
 basicrum.zip

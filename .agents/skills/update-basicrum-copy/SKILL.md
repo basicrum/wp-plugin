@@ -1,17 +1,17 @@
 ---
 name: update-basicrum-copy
-description: Update Basicrum branding, user-facing copy, documentation, and WordPress gettext catalogs. Use for naming changes, BasicRUM or Basic Rum cleanup, Brum Site ID help text, logos, POT/PO/MO files, or ASCII-hyphen checks.
+description: Update Basicrum branding, user-facing copy, documentation, and the WordPress gettext template. Use for naming changes, BasicRUM or Basic Rum cleanup, Brum Site ID help text, logos, POT files, or ASCII-hyphen checks.
 ---
 
 # Update Basicrum Copy
 
-Change source text and every generated or translated representation as one unit.
+Change source text and its generated gettext template as one unit.
 
 ## Find the full text surface
 
 1. Search case-insensitively across PHP, JavaScript, CSS, Markdown, WordPress
-   readme, tests, fixtures, examples, workflows, POT, and PO files.
-2. Distinguish source strings from generated catalogs and compiled MO files.
+   readme, tests, fixtures, examples, workflows, and POT files.
+2. Distinguish source strings from the generated POT template.
 3. Check identifiers separately from display text; do not casually rename stored
    option keys, hooks, handles, or public callbacks.
 
@@ -23,7 +23,8 @@ Change source text and every generated or translated representation as one unit.
 - Use ASCII hyphens only. Do not introduce en dashes or em dashes.
 - Keep statements about consent, privacy, and compliance precise. Basicrum
   follows the external tool's decision; it does not make a site compliant.
-- Keep WordPress gettext calls in PHP source. Do not hand-edit binary MO files.
+- Keep WordPress gettext calls in PHP source. Do not add locale-specific PO or
+  MO files unless bundled translations are deliberately restored.
 - Update tests that intentionally assert rendered copy without making tests less
   specific merely to avoid maintaining wording.
 
@@ -43,6 +44,5 @@ git diff --check
 ```
 
 The second translation run must be idempotent. Search again for every retired
-spelling after generation, inspect the POT and PO diff, and verify MO files were
-produced by the documented tool. Run relevant PHP or browser tests when rendered
-markup, selectors, or behavior changed.
+spelling after generation and inspect the POT diff. Run relevant PHP or browser
+tests when rendered markup, selectors, or behavior changed.

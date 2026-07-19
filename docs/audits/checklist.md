@@ -9,10 +9,11 @@ operator-journey defect, P3 = minor/polish.
 
 ## A. Plugin engineering
 
-- [x] P0 Regenerate translation catalogs and commit (`make translations`).
-  Completed in `784b2bf`. Two consecutive generations produced identical
-  catalogs, and the translation CI gate passed after push. (privacy 5 /
-  DISC-10, lab-elevated)
+- [x] P0 Remove the bundled Bulgarian PO/MO catalogs and the standalone
+  translation CI job by product decision. Keep the POT-only local generator for
+  future gettext work, exclude locale-specific catalogs from release ZIPs, and
+  remove the translation job from the release dependency chain. (privacy 5 /
+  DISC-10, superseded)
 - [x] P1 Make `strip_query_string` a first-class Visitor Privacy setting,
   disabled by default by product decision and emitted as a Boomerang boolean.
   When enabled, this flag redacts `u`, `nu`, `r`, and `restiming`

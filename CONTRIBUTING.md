@@ -26,7 +26,7 @@ The installable plugin is [`plugins/basicrum/`](plugins/basicrum/). Repository r
 
 Follow the permanent conventions in [AGENTS.md](AGENTS.md), including WordPress Coding Standards, PHP 7.4 compatibility, ASCII hyphens, synchronized version metadata, privacy-safe consent behavior, and immutable GitHub Actions pins.
 
-When changing user-facing text, regenerate WordPress translation catalogs. When changing settings, keep defaults, rendering, validation, runtime behavior, tests, and documentation synchronized.
+When changing user-facing text, regenerate the WordPress POT template. Locale-specific PO and MO files are not bundled. When changing settings, keep defaults, rendering, validation, runtime behavior, tests, and documentation synchronized.
 
 ## Verification
 

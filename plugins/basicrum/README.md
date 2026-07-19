@@ -1,6 +1,6 @@
 # Basicrum Plugin Source
 
-This directory contains the installable Basicrum WordPress plugin. Runtime PHP, JavaScript, CSS, images, translations, and production Composer dependencies in the release ZIP all come from this boundary.
+This directory contains the installable Basicrum WordPress plugin. Runtime PHP, JavaScript, CSS, images, the gettext template, and production Composer dependencies in the release ZIP all come from this boundary. Locale-specific PO and MO files are not bundled.
 
 ## Entry points
 

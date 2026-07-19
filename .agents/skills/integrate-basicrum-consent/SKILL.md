@@ -74,5 +74,5 @@ git diff --check
 ```
 
 Update `examples/integrations/README.md`, the main README, plugin readme, privacy
-guidance, release required-file checks, and translations when the
+guidance, release required-file checks, and POT template when the
 administrator-visible contract changes.

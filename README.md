@@ -19,7 +19,7 @@ The complete webmaster-facing behavior and consent instructions live in the [Wor
 | Path | Purpose |
 | --- | --- |
 | [`plugins/basicrum/`](plugins/basicrum/) | Installable plugin source |
-| [`tools/`](tools/) | Setup, test, translation, and release scripts |
+| [`tools/`](tools/) | Setup, test, and release scripts |
 | [`docker/`](docker/) | Local WordPress and WooCommerce environments |
 | [`tests/javascript/`](tests/javascript/) | Browser tests for loaders, consent adapters, and settings |
 | [`examples/integrations/`](examples/integrations/) | Consent-tool integration examples |

@@ -1,4 +1,4 @@
 interface:
   display_name: "Update Basicrum Copy"
-  short_description: "Update branding, copy, and translation catalogs"
-  default_prompt: "Use $update-basicrum-copy to update Basicrum wording and regenerate every translation artifact."
+  short_description: "Update branding, copy, and gettext template"
+  default_prompt: "Use $update-basicrum-copy to update Basicrum wording and regenerate the POT template."
