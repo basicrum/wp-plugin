@@ -153,9 +153,8 @@ class Assets {
 	/**
 	 * Enqueue one automatically selected consent-tool adapter.
 	 *
-	 * Existing installations stay in manual mode until an administrator opts
-	 * into this behavior. The consent loader remains inert when no unambiguous
-	 * supported integration can be selected.
+	 * The consent loader remains inert when no unambiguous supported integration
+	 * can be selected.
 	 *
 	 * @param array $settings  Plugin settings.
 	 * @param bool  $in_footer Whether to load in footer.

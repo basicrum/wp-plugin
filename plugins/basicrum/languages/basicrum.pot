@@ -2,7 +2,7 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Basicrum - Real User Monitoring 1.0.2\n"
+"Project-Id-Version: Basicrum - Real User Monitoring 0.0.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/basicrum\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"

@@ -24,16 +24,15 @@ Acceptance criteria:
 - [x] Decide whether each mode has distinct runtime behavior.
 - [x] Implement the defined behavior, or remove modes that do not represent real
   behavior and keep a single consent-enabled switch.
-- [x] Keep defaults, settings UI, validation, migrations, documentation, and
-  translations synchronized.
+- [x] Keep defaults, settings UI, validation, runtime behavior, documentation,
+  and translations synchronized.
 - [x] Add PHP tests for every supported setting and loader selection path.
 
 Decision:
 
 - Immediate loading and consent-controlled loading are the only observable
-  policies. The retired `explicit`, `implicit`, and `cookie_popup` values all
-  selected the same loader and have been removed without changing existing
-  sites' consent gate.
+  policies. The unused `explicit`, `implicit`, and `cookie_popup` development
+  values were removed before the first public release.
 - Basicrum supplies an integration gate, not a consent popup, legal-basis
   decision, or compliance guarantee.
 - In consent-controlled loading, the site's external consent tool is the source

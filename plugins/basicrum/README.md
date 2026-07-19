@@ -2,7 +2,7 @@
 Plugin Name:       Basicrum WordPress Plugin
 Plugin URI:        https://www.basicrum.com/
 Description:       Open source Real User Monitoring for WordPress.
-Version:           1.0.2
+Version:           0.0.8
 Author:            Tsvetan Stoychev
 Author URI:        https://www.basicrum.com/contact/
 License:           MIT

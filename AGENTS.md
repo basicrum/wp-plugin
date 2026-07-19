@@ -19,16 +19,17 @@ namespace, PSR-4 Composer autoloading, PHP 7.4+, and WordPress 6.0+.
 - Settings use the `basicrum_settings` option. Keep defaults, UI, and
   sanitization in sync in `Helpers`, `Admin\Settings\Page`, and
   `Admin\Settings\Validate`.
-- Add version-gated migrations to `Admin\Upgrades`; use the option/version
-  constants from `Helpers`.
+- Version `0.0.8` is the first public release and has no upgrade migrations.
+  After it is published, use version-gated, idempotent migrations only when a
+  stored schema change requires one.
 
 ## Project Skills
 
 Repository-owned workflows live in `.agents/skills/`. Claude discovers the
 same canonical files through links in `.claude/skills/`.
 
-- `change-basicrum-settings` - options, validation, dependencies, migrations,
-  and runtime gates.
+- `change-basicrum-settings` - options, validation, dependencies, future
+  migrations, and runtime gates.
 - `update-basicrum-copy` - naming, administrator copy, branding, and gettext
   catalogs.
 - `integrate-basicrum-consent` - external consent adapters, callback contracts,
@@ -63,9 +64,9 @@ in the matching skill.
   displays those exact files as escaped copyable text, and automatic handling
   may enqueue exactly one after the consent loader. Prefer WP Consent API; when
   it is unavailable, select a direct adapter only if exactly one supported
-  provider is detected. Ambiguous combinations fail closed. Existing sites
-  without the integration setting remain manual; new installations default to
-  automatic. Browser tests must execute the same packaged files.
+  provider is detected. Ambiguous combinations fail closed. Automatic handling
+  is the first-release default; manual callbacks remain an explicit choice.
+  Browser tests must execute the same packaged files.
 - Keep automatic and manual administrator guidance visually separate. Automatic
   handling shows a compact verdict, provider evidence, one next action, and
   copyable non-secret diagnostics. Reveal the callback contract, provider tabs,

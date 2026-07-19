@@ -310,7 +310,6 @@ class SettingsPageTest extends TestCase {
 		$this->assertSame( 'strip_query_string', $fields['strip_query_string'][5]['id'] );
 		$this->assertStringContainsString( 'URL paths are still collected', $fields['strip_query_string'][5]['label'] );
 		$this->assertArrayHasKey( 'consent_enabled', $fields );
-		$this->assertArrayNotHasKey( 'consent_mode', $fields );
 		$this->assertSame( 'Visitor Consent', $fields['consent_enabled'][1] );
 		$this->assertSame( array( $page, 'render_radio_field' ), $fields['consent_enabled'][2] );
 		$this->assertSame( 'consent_enabled', $fields['consent_enabled'][5]['id'] );

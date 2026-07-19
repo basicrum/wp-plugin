@@ -1,6 +1,6 @@
 # Basicrum WordPress Operator Experience Audit (2026-07-18)
 
-Webmaster operating-comfort audit of `plugins/basicrum/` at version 1.0.2:
+Webmaster operating-comfort audit of `plugins/basicrum/` at version 0.0.8:
 how comfortable, clear, and safe the plugin is for a WordPress-competent
 non-developer to install, configure, verify, operate, and maintain. Method:
 four tracers (settings UX and copy, live wp-admin walkthrough on the real
@@ -144,8 +144,6 @@ settings screen. (issue-backoffice-unlinked, walkthrough-05, BR-DOC-16)
   (documentation side of privacy audit item 3). (BR-DOC-13)
 - [ ] State what deactivation keeps (settings) and uninstall removes.
   (BR-DOC-17)
-- [ ] Surface a notice after silent upgrade migrations (e.g. legacy installs
-  kept on immediate loading). (BR-DOC-18)
 - [ ] Add multisite guidance; network activation leaves every subsite
   unconfigured. (BR-DOC-20)
 
@@ -204,7 +202,6 @@ settings screen. (issue-backoffice-unlinked, walkthrough-05, BR-DOC-16)
   admin sidebar" matches reality). (BR-DOC-01)
 - [x] A corrupt install aborts with an actionable notice instead of a white
   screen. (BR-DOC-03)
-- [x] Upgrade Notice sections truthfully describe migration behavior.
   (BR-DOC-04)
 - [x] The Privacy Policy Guide contribution reflects the live configuration.
   (BR-DOC-05)

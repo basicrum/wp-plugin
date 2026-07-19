@@ -24,13 +24,6 @@ class Helpers {
 	const OPTION_KEY = 'basicrum_settings';
 
 	/**
-	 * Version option key.
-	 *
-	 * @var string
-	 */
-	const VERSION_KEY = 'basicrum_version';
-
-	/**
 	 * Settings required before monitoring can run.
 	 *
 	 * @var array
@@ -63,22 +56,6 @@ class Helpers {
 		if ( ! is_array( $settings ) ) {
 			$settings = array();
 		}
-
-		// Existing installations predate automatic provider loading and may
-		// already execute one of the copyable adapters. Keep them manual until an
-		// administrator explicitly selects automatic integration. New installs
-		// persist the automatic default during activation.
-		if ( ! array_key_exists( 'consent_integration', $settings ) ) {
-			$settings['consent_integration'] = ConsentIntegration::MODE_MANUAL;
-		}
-
-		// Preserve values saved under the setting name used before 1.0.1.
-		if ( ! array_key_exists( 'brum_site_id', $settings ) && isset( $settings['site_id'] ) ) {
-			$settings['brum_site_id'] = $settings['site_id'];
-		}
-
-		unset( $settings['site_id'] );
-		unset( $settings['consent_mode'] );
 
 		$defaults = self::get_defaults();
 		$settings = wp_parse_args( $settings, $defaults );

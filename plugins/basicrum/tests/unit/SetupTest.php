@@ -14,7 +14,7 @@ use Brain\Monkey\Functions;
 use Mockery;
 
 /**
- * SetupTest - tests activation behavior and migration safety.
+ * SetupTest - tests activation behavior.
  */
 class SetupTest extends TestCase {
 
@@ -29,20 +29,12 @@ class SetupTest extends TestCase {
 	}
 
 	/**
-	 * Test a new installation receives defaults and the current version.
+	 * Test a new installation receives the complete default settings.
 	 */
-	public function test_new_installation_stores_defaults_and_current_version() {
+	public function test_new_installation_stores_defaults() {
 		Functions\expect( 'get_option' )
 			->once()
 			->with( 'basicrum_settings', false )
-			->andReturn( false );
-		Functions\expect( 'get_option' )
-			->once()
-			->with( 'basicrum_version', false )
-			->andReturn( false );
-		Functions\expect( 'get_option' )
-			->once()
-			->with( 'basicrum_options', false )
 			->andReturn( false );
 		Functions\expect( 'update_option' )
 			->once()
@@ -55,60 +47,24 @@ class SetupTest extends TestCase {
 							&& isset( $settings['consent_integration'] )
 							&& ConsentIntegration::MODE_AUTOMATIC === $settings['consent_integration']
 							&& isset( $settings['strip_query_string'] )
-							&& '0' === $settings['strip_query_string']
-							&& ! array_key_exists( 'consent_mode', $settings );
+							&& '0' === $settings['strip_query_string'];
 					}
 				)
 			);
-		Functions\expect( 'update_option' )
-			->once()
-			->with( 'basicrum_version', BASICRUM_VERSION );
 
 		$setup = new Setup();
 		$setup->activate();
 	}
 
 	/**
-	 * Test reactivation preserves an old version so migrations still run.
+	 * Test reactivation preserves existing settings.
 	 */
-	public function test_reactivation_does_not_skip_pending_migrations() {
+	public function test_reactivation_preserves_existing_settings() {
 		Functions\expect( 'get_option' )
 			->once()
 			->with( 'basicrum_settings', false )
 			->andReturn( array( 'enabled' => '1' ) );
-		Functions\expect( 'get_option' )
-			->once()
-			->with( 'basicrum_version', false )
-			->andReturn( '1.0.1' );
 		Functions\expect( 'update_option' )->never();
-
-		$setup = new Setup();
-		$setup->activate();
-	}
-
-	/**
-	 * Test a versionless PoC installation is not marked current before migration.
-	 */
-	public function test_versionless_poc_installation_keeps_migration_pending() {
-		Functions\expect( 'get_option' )
-			->once()
-			->with( 'basicrum_settings', false )
-			->andReturn( false );
-		Functions\expect( 'get_option' )
-			->once()
-			->with( 'basicrum_version', false )
-			->andReturn( false );
-		Functions\expect( 'get_option' )
-			->once()
-			->with( 'basicrum_options', false )
-			->andReturn( array( 'url_to_send_data' => 'https://legacy.example/beacon' ) );
-
-		Functions\expect( 'update_option' )
-			->once()
-			->with( 'basicrum_settings', Mockery::type( 'array' ) );
-		Functions\expect( 'update_option' )
-			->with( 'basicrum_version', Mockery::any() )
-			->never();
 
 		$setup = new Setup();
 		$setup->activate();

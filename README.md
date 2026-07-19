@@ -84,11 +84,8 @@ evidence for all three supported providers, one next action, and copyable
 non-secret diagnostics. A blocked result can reveal the matching manual setup
 without silently saving the mode change.
 
-Sites upgraded from a version without the connection setting remain on **Manual
-callbacks** to avoid running a second adapter beside an existing webmaster
-snippet. Manual handling loads no adapter automatically. The webmaster must
-load one adapter after the Basicrum consent loader and call one callback on
-every page.
+Manual handling loads no adapter automatically. The webmaster must load one
+adapter after the Basicrum consent loader and call one callback on every page.
 
 Basicrum does not persist a separate consent choice across page loads; the
 external tool is authoritative on every page. If consent is withdrawn after
@@ -246,7 +243,7 @@ security advisories. CI runs all three checks on every push and pull request.
 It also verifies that the plugin header version, `BASICRUM_VERSION`, WordPress
 `Stable tag`, and top changelog version match. Release workflows additionally
 compare the GitHub release tag to that version. Release tags must use the
-`v<version>` form, such as `v1.0.2`. To check a planned release locally, run
+`v<version>` form, such as `v0.0.8`. To check a planned release locally, run
 `BASICRUM_RELEASE_TAG=v<version> make conventions`.
 
 Dependabot checks npm, Composer dependencies, and GitHub Actions weekly. CI

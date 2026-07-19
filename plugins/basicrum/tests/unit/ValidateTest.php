@@ -248,16 +248,6 @@ class ValidateTest extends TestCase {
 	}
 
 	/**
-	 * Test the retired consent mode cannot be saved again.
-	 */
-	public function test_retired_consent_mode_is_not_saved() {
-		$input  = array( 'consent_mode' => 'cookie_popup' );
-		$result = $this->validate->sanitize( $this->full_input( $input ) );
-
-		$this->assertArrayNotHasKey( 'consent_mode', $result );
-	}
-
-	/**
 	 * Test script position whitelist.
 	 */
 	public function test_invalid_script_position_falls_back_to_default() {

@@ -1,7 +1,7 @@
 # Basicrum WordPress Privacy Audit (2026-07-18)
 
 Evidence-based privacy engineering and compliance-readiness audit of
-`plugins/basicrum/` at version 1.0.2, including the uncommitted privacy-first
+`plugins/basicrum/` at version 0.0.8, including the uncommitted privacy-first
 header and readme edits. Method: four parallel code tracers over data flow,
 cookies/consent, WordPress integration, and disclosures; every claimed defect
 adversarially verified by three independent refuters (majority rule); full test
@@ -114,9 +114,8 @@ documentation, though excluded from the release ZIP.
 ## 8. Clean up multisite uninstall residue (BR-WP-14)
 
 `uninstall.php` deletes options only on the site where uninstall runs. On
-multisite networks, `basicrum_settings` and `basicrum_version` rows persist on
-other subsites. Low severity: the residue is operator configuration, not
-visitor personal data.
+multisite networks, `basicrum_settings` rows persist on other subsites. Low
+severity: the residue is operator configuration, not visitor personal data.
 
 - [ ] Iterate `get_sites()` with `switch_to_blog()`/`restore_current_blog()`
   on multisite, or document the limitation in `readme.txt`.
@@ -156,9 +155,9 @@ visitor personal data.
 - [x] Opt-in is idempotent; opt-out disables collection and removes RT/BA at
   the host and all parent domains, runtime-verified (COOKIE-04, COOKIE-06,
   DF-04).
-- [x] Validation fails closed: invalid consent input selects consent mode;
-  retired `consent_mode` cannot be re-saved; migrations never flip consent
-  posture or silently enable monitoring (BR-WP-09, BR-WP-10).
+- [x] Validation fails closed: invalid consent input selects manual callbacks;
+  no pre-release compatibility path can flip consent posture or silently enable
+  monitoring (BR-WP-09, BR-WP-10).
 - [x] HTTPS enforced: `http://` beacon URLs upgrade unless development mode is
   explicitly on and warned; the bundle also defaults `beacon_url_force_https`.
   Tracer claim BR-WP-06 (protocol-relative bypass) was overturned in
@@ -228,7 +227,7 @@ visitor personal data.
   `examples/integrations/README.md` rides on generic WP Consent API evidence;
   verify or soften it.
 - [ ] Run the release packaging verification so the new privacy copy provably
-  lands in the 1.0.2 ZIP before shipping.
+  lands in the 0.0.8 ZIP before shipping.
 
 ## 14. Primary sources (accessed 2026-07-18)
 

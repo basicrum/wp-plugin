@@ -61,10 +61,9 @@ operator-journey defect, P3 = minor/polish.
   browser coverage, and release ZIP required-file checks.
 - [x] P2 Replace the proposed "persistent consent warning" with contextual
   detection and privacy-safe automatic handling in `render_consent_info()` -
-  never a site-wide notice. New installations default to automatic handling;
-  existing installations without the setting remain manual. WP Consent API
-  takes priority, exactly one direct Borlabs Cookie or CookieYes provider may
-  be selected, and ambiguous or missing providers fail closed. The settings
+  never a site-wide notice. Automatic handling is the first-release default.
+  WP Consent API takes priority, exactly one direct Borlabs Cookie or CookieYes
+  provider may be selected, and ambiguous or missing providers fail closed. The settings
   page shows an Active, Action needed, Off, or Blocked verdict with provider
   evidence, one next action, and copyable non-secret diagnostics. Only manual
   handling reveals the callback contract and matching packaged adapter tabs;
@@ -123,7 +122,7 @@ operator-journey defect, P3 = minor/polish.
   category, stale caches). (UX 3 / BR-DOC-08, BR-DOC-09, walkthrough-06)
 - [ ] P2 Lifecycle docs: purge caches after disabling/deactivating (cached
   pages keep the loader; browser-cached HTML cannot be purged at all);
-  what deactivation keeps vs uninstall removes; migration notes; multisite
+  what deactivation keeps vs uninstall removes; multisite
   guidance. (UX 8 / BR-DOC-13, BR-DOC-17, BR-DOC-18, BR-DOC-20)
 - [ ] P2 wp.org listing: add the four screenshots or drop the section;
   fix Installation step order; add a Support section; align page-type

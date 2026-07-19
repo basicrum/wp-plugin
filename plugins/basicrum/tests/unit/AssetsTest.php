@@ -24,7 +24,7 @@ class AssetsTest extends TestCase {
 		parent::set_up();
 
 		if ( ! defined( 'BASICRUM_VERSION' ) ) {
-			define( 'BASICRUM_VERSION', '1.0.2' );
+			define( 'BASICRUM_VERSION', '0.0.8' );
 		}
 
 		if ( ! defined( 'BASICRUM_PLUGIN_FILE' ) ) {

@@ -73,7 +73,7 @@ class HelpersTest extends TestCase {
 		$this->assertSame( 'https://custom.example.com/beacon', $settings['beacon_url'] );
 		// Defaults filled in.
 		$this->assertSame( 0, $settings['delay_ms'] );
-		$this->assertSame( ConsentIntegration::MODE_MANUAL, $settings['consent_integration'], 'Existing installations without the setting must remain manual.' );
+		$this->assertSame( ConsentIntegration::MODE_AUTOMATIC, $settings['consent_integration'], 'Missing settings should use the first-release default.' );
 		$this->assertSame( '0', $settings['strip_query_string'] );
 	}
 
@@ -94,47 +94,6 @@ class HelpersTest extends TestCase {
 		$settings = Helpers::get_settings();
 
 		$this->assertSame( ConsentIntegration::MODE_AUTOMATIC, $settings['consent_integration'] );
-	}
-
-	/**
-	 * Test get_settings maps the legacy site ID setting to Brum Site ID.
-	 */
-	public function test_get_settings_maps_legacy_site_id() {
-		Functions\expect( 'get_option' )
-			->with( 'basicrum_settings', array() )
-			->andReturn( array( 'site_id' => '550e8400-e29b-41d4-a716-446655440000' ) );
-
-		Functions\when( 'wp_parse_args' )->alias( function( $args, $defaults ) {
-			return array_merge( $defaults, $args );
-		});
-
-		$settings = Helpers::get_settings();
-
-		$this->assertSame( '550e8400-e29b-41d4-a716-446655440000', $settings['brum_site_id'] );
-		$this->assertArrayNotHasKey( 'site_id', $settings );
-	}
-
-	/**
-	 * Test get_settings discards the retired consent mode setting.
-	 */
-	public function test_get_settings_discards_retired_consent_mode() {
-		Functions\expect( 'get_option' )
-			->with( 'basicrum_settings', array() )
-			->andReturn(
-				array(
-					'consent_enabled' => '1',
-					'consent_mode'    => 'cookie_popup',
-				)
-			);
-
-		Functions\when( 'wp_parse_args' )->alias( function( $args, $defaults ) {
-			return array_merge( $defaults, $args );
-		});
-
-		$settings = Helpers::get_settings();
-
-		$this->assertSame( '1', $settings['consent_enabled'] );
-		$this->assertArrayNotHasKey( 'consent_mode', $settings );
 	}
 
 	/**
@@ -186,7 +145,7 @@ class HelpersTest extends TestCase {
 
 		$this->assertSame( '0', $settings['enabled'] );
 		$this->assertSame( '1', $settings['consent_enabled'] );
-		$this->assertSame( ConsentIntegration::MODE_MANUAL, $settings['consent_integration'] );
+		$this->assertSame( ConsentIntegration::MODE_AUTOMATIC, $settings['consent_integration'] );
 	}
 
 	/**
