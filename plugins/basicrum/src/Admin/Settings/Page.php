@@ -117,9 +117,36 @@ class Page {
 			'manage_options',
 			self::SLUG,
 			array( $this, 'render_settings_page' ),
-			'dashicons-analytics',
+			$this->get_menu_icon(),
 			null
 		);
+	}
+
+	/**
+	 * Get the monochrome Basicrum mark for the WordPress admin menu.
+	 *
+	 * WordPress recolors base64-encoded SVG menu icons to match the active admin
+	 * color scheme. Fall back to the analytics Dashicon if the packaged SVG
+	 * cannot be read.
+	 *
+	 * @return string SVG data URI or Dashicon class.
+	 */
+	private function get_menu_icon() {
+		$icon_path = Helpers::get_asset_path( 'images/basicrum-menu-icon.svg' );
+
+		if ( ! is_readable( $icon_path ) ) {
+			return 'dashicons-analytics';
+		}
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Reading a trusted packaged SVG.
+		$svg = file_get_contents( $icon_path );
+
+		if ( false === $svg || '' === trim( $svg ) ) {
+			return 'dashicons-analytics';
+		}
+
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- Required for a WordPress SVG menu icon data URI.
+		return 'data:image/svg+xml;base64,' . base64_encode( $svg );
 	}
 
 	/**

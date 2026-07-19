@@ -52,6 +52,7 @@ require_entry 'basicrum/assets/js/integrations/cookieyes.js'
 require_entry 'basicrum/assets/js/integrations/generic-opt-in.js'
 require_entry 'basicrum/assets/js/integrations/generic-opt-out.js'
 require_entry 'basicrum/assets/images/basicrum-logo.png'
+require_entry 'basicrum/assets/images/basicrum-menu-icon.svg'
 require_entry 'basicrum/languages/basicrum.pot'
 
 if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Fqx 'basicrum/assets/js/loaders/consent-api.js'; then

@@ -77,6 +77,34 @@ class SettingsPageTest extends TestCase {
 	}
 
 	/**
+	 * Test the top-level menu uses the packaged monochrome Basicrum mark.
+	 */
+	public function test_admin_menu_uses_packaged_brand_icon() {
+		$menu_arguments = null;
+
+		Functions\when( 'add_menu_page' )->alias(
+			function() use ( &$menu_arguments ) {
+				$menu_arguments = func_get_args();
+			}
+		);
+
+		$page = new Page();
+		$page->add_menu_page();
+
+		$this->assertIsArray( $menu_arguments );
+		$this->assertArrayHasKey( 5, $menu_arguments );
+		$this->assertStringStartsWith( 'data:image/svg+xml;base64,', $menu_arguments[5] );
+
+		$encoded_svg = substr( $menu_arguments[5], strlen( 'data:image/svg+xml;base64,' ) );
+		$svg         = base64_decode( $encoded_svg, true );
+
+		$this->assertIsString( $svg );
+		$this->assertStringContainsString( 'viewBox="0 0 24 24"', $svg );
+		$this->assertStringContainsString( 'style="fill:#a7aaad"', $svg );
+		$this->assertStringContainsString( 'M0 4h4v16H0z', $svg );
+	}
+
+	/**
 	 * Set up WordPress function stubs.
 	 */
 	protected function set_up() {
