@@ -51,8 +51,208 @@
 	margin: 4px 0 0 24px;
 }
 
+.basicrum-radio-group {
+	border: 0;
+	margin: 0;
+	min-width: 0;
+	padding: 0;
+}
+
+.basicrum-radio-group-legend {
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.4;
+	margin: 0 0 12px;
+	padding: 0;
+}
+
+.basicrum-consent-connection-hidden,
+.basicrum-consent-connection-row[hidden] {
+	display: none;
+}
+
+.form-table .basicrum-consent-connection-row > th {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+.form-table .basicrum-consent-connection-row > td {
+	padding-top: 0;
+}
+
+.basicrum-consent-connection-card {
+	background: #f6f7f7;
+	border: 1px solid #c3c4c7;
+	border-left: 4px solid #2271b1;
+	box-sizing: border-box;
+	max-width: none;
+	padding: 16px 20px 20px;
+	position: relative;
+	width: 100%;
+}
+
+.basicrum-consent-connection-card::before {
+	border-left: 2px solid #c3c4c7;
+	content: "";
+	height: 16px;
+	left: 16px;
+	position: absolute;
+	top: -17px;
+}
+
+.basicrum-consent-connection-card .basicrum-consent-mode-panels {
+	border-top: 1px solid #dcdcde;
+	margin-top: 16px;
+	padding-top: 8px;
+}
+
+.basicrum-consent-connection-card .basicrum-consent-mode-panel {
+	max-width: none;
+}
+
 .basicrum-consent-info {
 	max-width: 760px;
+}
+
+.basicrum-consent-mode-panel {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-left: 4px solid #2271b1;
+	box-sizing: border-box;
+	margin: 8px 0 0;
+	max-width: 760px;
+	padding: 12px 16px 16px;
+}
+
+.basicrum-consent-mode-panel[hidden] {
+	display: none;
+}
+
+.basicrum-consent-mode-panel h3 {
+	font-size: 1.1em;
+	margin: 0 0 12px;
+}
+
+.basicrum-consent-manual {
+	border-left-color: #646970;
+}
+
+.basicrum-consent-status.notice {
+	margin: 12px 0;
+}
+
+.basicrum-consent-status-heading {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.basicrum-consent-tier,
+.basicrum-consent-provider-state {
+	background: #f0f0f1;
+	border-radius: 999px;
+	box-sizing: border-box;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 20px;
+	padding: 0 8px;
+}
+
+.basicrum-consent-tier.is-active,
+.basicrum-consent-provider-state.is-selected {
+	background: #edfaef;
+	color: #006b1b;
+}
+
+.basicrum-consent-tier.is-action-needed,
+.basicrum-consent-provider-state.is-detected {
+	background: #fcf9e8;
+	color: #6e4b00;
+}
+
+.basicrum-consent-tier.is-blocked {
+	background: #fcf0f1;
+	color: #8a2424;
+}
+
+.basicrum-consent-tier.is-off,
+.basicrum-consent-provider-state.is-not-detected {
+	background: #f0f0f1;
+	color: #50575e;
+}
+
+.basicrum-consent-checklist {
+	margin: 10px 0;
+}
+
+.basicrum-consent-checklist li {
+	align-items: center;
+	display: flex;
+	gap: 6px;
+	margin: 5px 0;
+}
+
+.basicrum-consent-checklist .dashicons {
+	color: #646970;
+}
+
+.basicrum-consent-checklist .is-done .dashicons {
+	color: #00a32a;
+}
+
+.basicrum-consent-next-action {
+	border-top: 1px solid #dcdcde;
+	padding-top: 10px;
+}
+
+.basicrum-consent-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.basicrum-consent-detection {
+	margin: 18px 0;
+}
+
+.basicrum-consent-detection h4 {
+	margin: 0 0 8px;
+}
+
+.basicrum-consent-detection ul {
+	border: 1px solid #dcdcde;
+	margin: 0;
+}
+
+.basicrum-consent-detection li {
+	align-items: center;
+	display: flex;
+	gap: 12px;
+	justify-content: space-between;
+	margin: 0;
+	padding: 8px 10px;
+}
+
+.basicrum-consent-detection li + li {
+	border-top: 1px solid #dcdcde;
+}
+
+.basicrum-consent-diagnostics {
+	border-top: 1px solid #dcdcde;
+	margin: 18px 0 0;
+	padding-top: 12px;
+}
+
+.basicrum-consent-diagnostics summary {
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.basicrum-consent-diagnostics textarea {
+	margin-top: 10px;
+	resize: vertical;
 }
 
 .basicrum-consent-tabs {

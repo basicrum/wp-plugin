@@ -8,6 +8,7 @@
 namespace Basicrum\WP\Tests\Unit;
 
 use Basicrum\WP\Admin\Settings\Validate;
+use Basicrum\WP\ConsentIntegration;
 use Basicrum\WP\Tests\TestCase;
 use Brain\Monkey\Functions;
 
@@ -132,7 +133,7 @@ class ValidateTest extends TestCase {
 	}
 
 	/**
-	 * Test invalid monitoring start values fail closed.
+	 * Test invalid visitor consent values fail closed.
 	 */
 	public function test_invalid_monitoring_start_falls_back_to_default() {
 		$input  = array( 'consent_enabled' => 'invalid' );
@@ -141,11 +142,11 @@ class ValidateTest extends TestCase {
 	}
 
 	/**
-	 * Test both supported monitoring start values are accepted.
+	 * Test both supported visitor consent values are accepted.
 	 *
 	 * @dataProvider monitoring_start_provider
 	 *
-	 * @param string $value Monitoring start value.
+	 * @param string $value Visitor consent value.
 	 */
 	public function test_valid_monitoring_start_is_accepted( $value ) {
 		$input  = array( 'consent_enabled' => $value );
@@ -181,14 +182,68 @@ class ValidateTest extends TestCase {
 	}
 
 	/**
-	 * Provide supported monitoring start values.
+	 * Provide supported visitor consent values.
 	 *
 	 * @return array[] Test cases.
 	 */
 	public function monitoring_start_provider() {
 		return array(
-			'immediate loading'          => array( '0' ),
-			'consent-controlled loading' => array( '1' ),
+			'without consent' => array( '0' ),
+			'require consent' => array( '1' ),
+		);
+	}
+
+	/**
+	 * Test supported consent tool connection modes are accepted.
+	 *
+	 * @dataProvider consent_integration_provider
+	 *
+	 * @param string $value Consent tool connection mode.
+	 */
+	public function test_valid_consent_integration_is_accepted( $value ) {
+		$result = $this->validate->sanitize( $this->full_input( array( 'consent_integration' => $value ) ) );
+
+		$this->assertSame( $value, $result['consent_integration'] );
+	}
+
+	/**
+	 * Provide supported consent tool connection modes.
+	 *
+	 * @return array[] Test cases.
+	 */
+	public function consent_integration_provider() {
+		return array(
+			'automatic' => array( ConsentIntegration::MODE_AUTOMATIC ),
+			'manual'    => array( ConsentIntegration::MODE_MANUAL ),
+		);
+	}
+
+	/**
+	 * Test missing or malformed consent tool connection input fails to manual mode.
+	 *
+	 * @dataProvider invalid_consent_integration_provider
+	 *
+	 * @param array $input Submitted input override.
+	 */
+	public function test_invalid_consent_integration_fails_to_manual( $input ) {
+		$full_input = $this->full_input();
+		unset( $full_input['consent_integration'] );
+		$full_input = array_merge( $full_input, $input );
+
+		$result = $this->validate->sanitize( $full_input );
+
+		$this->assertSame( ConsentIntegration::MODE_MANUAL, $result['consent_integration'] );
+	}
+
+	/**
+	 * Provide unsafe consent tool connection inputs.
+	 *
+	 * @return array[] Test cases.
+	 */
+	public function invalid_consent_integration_provider() {
+		return array(
+			'missing'     => array( array() ),
+			'unsupported' => array( array( 'consent_integration' => 'provider-script' ) ),
 		);
 	}
 
@@ -242,6 +297,7 @@ class ValidateTest extends TestCase {
 			'beacon_url'             => '',
 			'brum_site_id'           => '',
 			'consent_enabled'        => '0',
+			'consent_integration'    => ConsentIntegration::MODE_AUTOMATIC,
 			'strip_query_string'     => '0',
 			'wait_after_onload'      => '0',
 			'delay_ms'               => '0',

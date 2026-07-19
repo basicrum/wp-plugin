@@ -37,9 +37,15 @@ Decision:
 - Basicrum supplies an integration gate, not a consent popup, legal-basis
   decision, or compliance guarantee.
 - In consent-controlled loading, the site's external consent tool is the source
-  of truth on every page. Its adapter loads after the consent loader and calls
-  exactly one of the two public callbacks. Basicrum does not persist consent
-  across page loads.
+  of truth on every page. Automatic handling loads one unambiguous supported
+  adapter after the consent loader; manual handling leaves adapter placement to
+  the webmaster. The adapter calls exactly one of the two public callbacks.
+  Basicrum does not persist consent across page loads.
+- The settings page uses progressive disclosure: automatic handling shows only
+  a compact verdict, provider evidence, one next action, and copyable non-secret
+  diagnostics. Manual handling reveals the callback contract and copyable
+  provider adapters in a separate sibling panel. Blocked automatic states can
+  reveal the appropriate manual setup but never save the mode automatically.
 
 Acceptance criteria:
 
@@ -95,7 +101,7 @@ Acceptance criteria:
 - [x] Add PHP 8.4 and PHP 8.5 unit coverage.
 - [x] Test the latest stable WordPress release with a currently supported PHP
   version.
-- [ ] Test WordPress trunk with the newest compatible PHP version in the first
+- [x] Test WordPress trunk with the newest compatible PHP version in the first
   CI run of the expanded matrix.
 - [x] Add an isolated WooCommerce E2E suite covering shop, product, cart,
   checkout, order-pay, and order-received page types through actual Basicrum
@@ -107,8 +113,8 @@ Current compatibility reference:
 
 - WordPress latest stable tested: 7.0.2.
 - Plugin `Tested up to`: 7.0.
-- Expanded PHP and WordPress matrix: configured locally, pending its first CI
-  run.
+- Expanded PHP and WordPress matrix: passed in CI run #35 at commit `31851b5`,
+  including PHP 8.5 with WordPress trunk.
 - Official references:
   - https://en-gb.wordpress.org/download/releases/
   - https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/
@@ -116,7 +122,7 @@ Current compatibility reference:
 
 Acceptance criteria:
 
-- [ ] CI passes the minimum, latest stable, and forward-looking runtime boundaries
+- [x] CI passes the minimum, latest stable, and forward-looking runtime boundaries
   represented by the plugin metadata.
 
 ## 6. Add stronger automated analysis and dependency controls

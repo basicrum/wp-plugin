@@ -3,6 +3,15 @@
 
 	document.addEventListener( 'DOMContentLoaded', function() {
 		var consentTabs = document.querySelectorAll( '.basicrum-consent-tabs' );
+		var consentModeContainer = document.querySelector( '.basicrum-consent-mode-panels' );
+		var consentModeOptions = Array.from( document.querySelectorAll( 'input[name="basicrum_settings[consent_integration]"]' ) );
+		var consentRequirementOptions = Array.from( document.querySelectorAll( 'input[name="basicrum_settings[consent_enabled]"]' ) );
+		var consentConnectionRows = Array.from( document.querySelectorAll( '.basicrum-consent-connection-row' ) );
+		var consentModePanels = consentModeContainer ? Array.from( consentModeContainer.querySelectorAll( '[data-basicrum-consent-integration-panel]' ) ) : [];
+		var consentModeAnnouncement = consentModeContainer ? consentModeContainer.querySelector( '.basicrum-consent-mode-announcement' ) : null;
+		var consentRequirementAnnouncement = document.querySelector( '.basicrum-consent-requirement-announcement' );
+		var openManualConsentButtons = document.querySelectorAll( '.basicrum-open-manual-consent' );
+		var copyTextButtons = document.querySelectorAll( '.basicrum-copy-text' );
 		var enabled = document.getElementById( 'basicrum_enabled' );
 		var waitAfterOnload = document.getElementById( 'basicrum_wait_after_onload' );
 		var delay = document.getElementById( 'basicrum_delay_ms' );
@@ -15,6 +24,58 @@
 			return field !== enabled && 'hidden' !== field.type && 0 === field.name.indexOf( 'basicrum_settings[' );
 		} ) : [];
 		var preservedValues = form ? Array.from( form.querySelectorAll( '.basicrum-disabled-setting-value' ) ) : [];
+
+		/**
+		 * Show only the details associated with the selected integration mode.
+		 *
+		 * @param {boolean} announce Whether to announce a user-triggered change.
+		 * @return {void}
+		 */
+		function syncConsentIntegrationMode( announce ) {
+			var selectedOption = consentModeOptions.find( function( option ) {
+				return option.checked;
+			} );
+
+			if ( ! selectedOption ) {
+				return;
+			}
+
+			consentModePanels.forEach( function( panel ) {
+				panel.hidden = panel.dataset.basicrumConsentIntegrationPanel !== selectedOption.value;
+			} );
+
+			if ( announce && consentModeAnnouncement ) {
+				consentModeAnnouncement.textContent = 'automatic' === selectedOption.value
+					? consentModeContainer.dataset.automaticAnnouncement
+					: consentModeContainer.dataset.manualAnnouncement;
+			}
+		}
+
+		/**
+		 * Show consent-tool connection settings only when visitor consent is required.
+		 *
+		 * @param {boolean} announce Whether to announce a user-triggered change.
+		 * @return {boolean} Whether the connection settings are relevant.
+		 */
+		function syncConsentConnectionVisibility( announce ) {
+			var consentRequirement = consentRequirementOptions.find( function( option ) {
+				return option.checked;
+			} );
+			var isConnectionRelevant = consentRequirement && '1' === consentRequirement.value;
+
+			consentConnectionRows.forEach( function( row ) {
+				row.hidden = ! isConnectionRelevant;
+				row.classList.toggle( 'basicrum-consent-connection-hidden', ! isConnectionRelevant );
+			} );
+
+			if ( announce && consentRequirementAnnouncement ) {
+				consentRequirementAnnouncement.textContent = consentRequirementAnnouncement.getAttribute(
+					'data-basicrum-announcement-' + consentRequirement.value
+				);
+			}
+
+			return Boolean( isConnectionRelevant );
+		}
 
 		/**
 		 * Activate one consent integration tab.
@@ -82,48 +143,6 @@
 				} );
 			} );
 
-			tabContainer.querySelectorAll( '.basicrum-copy-consent-snippet' ).forEach( function( button ) {
-				button.addEventListener( 'click', function() {
-					var target = document.getElementById( button.dataset.copyTarget );
-					var status = button.parentElement.querySelector( '.basicrum-copy-status' );
-
-					if ( ! target ) {
-						return;
-					}
-
-					function reportCopied() {
-						if ( status ) {
-							status.textContent = button.dataset.copiedLabel;
-						}
-					}
-
-					function reportCopyFallback() {
-						if ( status ) {
-							status.textContent = button.dataset.copyFallbackLabel;
-						}
-					}
-
-					function copyWithSelection() {
-						target.focus();
-						target.select();
-
-						if ( 'function' === typeof document.execCommand && document.execCommand( 'copy' ) ) {
-							reportCopied();
-							return;
-						}
-
-						reportCopyFallback();
-					}
-
-					if ( navigator.clipboard && 'function' === typeof navigator.clipboard.writeText ) {
-						navigator.clipboard.writeText( target.value ).then( reportCopied, copyWithSelection );
-						return;
-					}
-
-					copyWithSelection();
-				} );
-			} );
-
 			tabContainer.classList.add( 'is-initialized' );
 			activateConsentTab(
 				tabContainer,
@@ -131,7 +150,95 @@
 			);
 		}
 
+		/**
+		 * Add copy behavior to a read-only text field.
+		 *
+		 * @param {HTMLButtonElement} button Copy button.
+		 * @return {void}
+		 */
+		function initializeCopyButton( button ) {
+			button.addEventListener( 'click', function() {
+				var target = document.getElementById( button.dataset.copyTarget );
+				var status = button.parentElement.querySelector( '.basicrum-copy-status' );
+
+				if ( ! target ) {
+					return;
+				}
+
+				function reportCopied() {
+					if ( status ) {
+						status.textContent = button.dataset.copiedLabel;
+					}
+				}
+
+				function reportCopyFallback() {
+					if ( status ) {
+						status.textContent = button.dataset.copyFallbackLabel;
+					}
+				}
+
+				function copyWithSelection() {
+					target.focus();
+					target.select();
+
+					if ( 'function' === typeof document.execCommand && document.execCommand( 'copy' ) ) {
+						reportCopied();
+						return;
+					}
+
+					reportCopyFallback();
+				}
+
+				if ( navigator.clipboard && 'function' === typeof navigator.clipboard.writeText ) {
+					navigator.clipboard.writeText( target.value ).then( reportCopied, copyWithSelection );
+					return;
+				}
+
+				copyWithSelection();
+			} );
+		}
+
+		/**
+		 * Reveal manual setup without saving or submitting the settings form.
+		 *
+		 * @param {HTMLButtonElement} button Manual setup button.
+		 * @return {void}
+		 */
+		function openManualConsentSetup( button ) {
+			var manualOption = consentModeOptions.find( function( option ) {
+				return 'manual' === option.value;
+			} );
+			var manualTab = button.dataset.basicrumManualTab;
+			var targetTab = manualTab ? document.getElementById( 'basicrum-consent-tab-' + manualTab ) : null;
+
+			if ( ! manualOption || manualOption.disabled ) {
+				return;
+			}
+
+			manualOption.checked = true;
+			manualOption.dispatchEvent( new Event( 'change', { bubbles: true } ) );
+
+			if ( targetTab ) {
+				activateConsentTab( targetTab.closest( '.basicrum-consent-tabs' ), targetTab );
+			}
+
+			( targetTab || document.querySelector( '#basicrum-consent-manual-panel [role="tab"][aria-selected="true"]' ) || manualOption ).focus();
+		}
+
 		consentTabs.forEach( initializeConsentTabs );
+		copyTextButtons.forEach( initializeCopyButton );
+		consentModeOptions.forEach( function( option ) {
+			option.addEventListener( 'change', function() {
+				syncConsentIntegrationMode( true );
+			} );
+		} );
+		openManualConsentButtons.forEach( function( button ) {
+			button.addEventListener( 'click', function() {
+				openManualConsentSetup( button );
+			} );
+		} );
+		syncConsentIntegrationMode( false );
+		syncConsentConnectionVisibility( false );
 
 		if ( ! enabled || ! form || ! requiredFields.length ) {
 			return;
@@ -184,6 +291,21 @@
 			} );
 
 			syncDelayAvailability();
+			syncConsentConnectionAvailability();
+		}
+
+		/**
+		 * Allow consent-tool connection choices only when visitor consent is required.
+		 *
+		 * @return {void}
+		 */
+		function syncConsentConnectionAvailability( announce ) {
+			var isConnectionEnabled = enabled.checked && syncConsentConnectionVisibility( announce );
+
+			consentModeOptions.forEach( function( option ) {
+				option.disabled = ! isConnectionEnabled;
+				option.setAttribute( 'aria-disabled', isConnectionEnabled ? 'false' : 'true' );
+			} );
 		}
 
 		function syncDelayAvailability() {
@@ -225,11 +347,21 @@
 			waitAfterOnload.addEventListener( 'change', syncDelayAvailability );
 		}
 
+		consentRequirementOptions.forEach( function( option ) {
+			option.addEventListener( 'change', function() {
+				syncConsentConnectionAvailability( true );
+			} );
+		} );
+
 		form.addEventListener( 'submit', function() {
 			if ( enabled.checked ) {
 				if ( waitAfterOnload && delay && ! waitAfterOnload.checked ) {
 					delay.disabled = false;
 				}
+
+				consentModeOptions.forEach( function( option ) {
+					option.disabled = false;
+				} );
 
 				return;
 			}

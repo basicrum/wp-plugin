@@ -38,12 +38,39 @@ class Helpers {
 	const REQUIRED_SETTINGS = array( 'beacon_url', 'brum_site_id' );
 
 	/**
+	 * Settings stored as canonical '1' or '0' strings.
+	 *
+	 * @var array
+	 */
+	const BOOLEAN_SETTINGS = array(
+		'enabled',
+		'development_mode',
+		'track_admins',
+		'consent_enabled',
+		'strip_query_string',
+		'wait_after_onload',
+		'use_unminified_loaders',
+	);
+
+	/**
 	 * Get plugin settings merged with defaults.
 	 *
 	 * @return array
 	 */
 	public static function get_settings() {
 		$settings = get_option( self::OPTION_KEY, array() );
+
+		if ( ! is_array( $settings ) ) {
+			$settings = array();
+		}
+
+		// Existing installations predate automatic provider loading and may
+		// already execute one of the copyable adapters. Keep them manual until an
+		// administrator explicitly selects automatic integration. New installs
+		// persist the automatic default during activation.
+		if ( ! array_key_exists( 'consent_integration', $settings ) ) {
+			$settings['consent_integration'] = ConsentIntegration::MODE_MANUAL;
+		}
 
 		// Preserve values saved under the setting name used before 1.0.1.
 		if ( ! array_key_exists( 'brum_site_id', $settings ) && isset( $settings['site_id'] ) ) {
@@ -53,7 +80,34 @@ class Helpers {
 		unset( $settings['site_id'] );
 		unset( $settings['consent_mode'] );
 
-		return wp_parse_args( $settings, self::get_defaults() );
+		$defaults = self::get_defaults();
+		$settings = wp_parse_args( $settings, $defaults );
+
+		foreach ( self::BOOLEAN_SETTINGS as $setting_key ) {
+			$settings[ $setting_key ] = self::normalize_boolean_setting( $settings[ $setting_key ], $defaults[ $setting_key ] );
+		}
+
+		return $settings;
+	}
+
+	/**
+	 * Normalize a stored boolean-like value without accepting arbitrary truthy
+	 * input from programmatic option writes.
+	 *
+	 * @param mixed  $value         Stored setting value.
+	 * @param string $default_value Canonical fallback value.
+	 * @return string Canonical '1' or '0' value.
+	 */
+	private static function normalize_boolean_setting( $value, $default_value ) {
+		if ( '1' === $value || 1 === $value || true === $value ) {
+			return '1';
+		}
+
+		if ( '0' === $value || 0 === $value || false === $value ) {
+			return '0';
+		}
+
+		return $default_value;
 	}
 
 	/**
@@ -69,6 +123,7 @@ class Helpers {
 			'brum_site_id'           => '',
 			'track_admins'           => '0',
 			'consent_enabled'        => '1',
+			'consent_integration'    => ConsentIntegration::MODE_AUTOMATIC,
 			'strip_query_string'     => '0',
 			'wait_after_onload'      => '0',
 			'delay_ms'               => 0,

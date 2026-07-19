@@ -13,15 +13,14 @@ operator-journey defect, P3 = minor/polish.
   Completed in `784b2bf`. Two consecutive generations produced identical
   catalogs, and the translation CI gate passed after push. (privacy 5 /
   DISC-10, lab-elevated)
-- [ ] P1 Make `strip_query_string` a first-class Visitor Privacy setting,
+- [x] P1 Make `strip_query_string` a first-class Visitor Privacy setting,
   disabled by default by product decision and emitted as a Boomerang boolean.
   When enabled, this flag redacts `u`, `nu`, `r`, and `restiming`
   (`?qs-redacted`) - no separate ResourceTiming measure is needed for query
   strings. URL paths remain and may need a future `ResourceTiming.trimUrls`
-  policy. Add a real-bundle negative beacon test with planted document and
-  resource tokens, asserting the token appears in no beacon field.
-  Implementation and verification are complete in the working tree; keep this
-  item open until the change is committed. (privacy 1 / DF-07)
+  policy. A real-bundle negative beacon test plants document and resource
+  tokens and asserts that neither appears in any beacon field.
+  Completed in `6805b09`. (privacy 1 / DF-07)
 - [ ] P1 Apply the opt-out race fix. Port the deterministic test from the
   temporary worktree before cleaning it up. The minimum fix should null
   `basicRumBoomerangConfig`; do not add the proposed `optedOut` marker or any
@@ -51,28 +50,30 @@ operator-journey defect, P3 = minor/polish.
 - [x] P2 Ship the consent adapters inside the plugin (distribution model C):
   move `examples/integrations/*.js` to
   `plugins/basicrum/assets/js/integrations/`, render each as copyable text
-  in `render_consent_info()` (webmasters paste TEXT into their consent
-  tool's UI - the file on disk is not the deliverable), update the three
-  spec-file paths so the tested, shipped, and displayed artifact are one
-  file, and add the three files to `tools/verify-release.sh` required
-  entries. Add the required-category warning header to `cookieyes.js`
-  (wrong category = silent no-data; tested distinction) and equivalents to
-  the other adapters. (UX 1+2 / CI-01, CI-05, BR-DOC-12)
+  in `render_consent_info()`, update the three spec-file paths so the tested,
+  shipped, displayed, and automatically loaded artifact is one file, and add
+  the three files to `tools/verify-release.sh` required entries. Add the
+  required-category warning header to `cookieyes.js` (wrong category = silent
+  no-data; tested distinction) and equivalents to the other adapters. (UX 1+2
+  / CI-01, CI-05, BR-DOC-12)
   Completed with four accessible settings tabs, including separate generic
   opt-in and opt-out snippets, copy fallback guidance, exact packaged-adapter
   browser coverage, and release ZIP required-file checks.
-- [ ] P2 Replace the proposed "persistent consent warning" with contextual
-  detection hints (design analysis): in `render_consent_info()` only -
-  never a site-wide notice - detect Borlabs / Complianz / CookieYes / WP
-  Consent API via class/function/constant markers and show "X detected -
-  use the Y adapter"; flag the one verifiable misconfiguration (Complianz
-  or CookieYes active while `wp_has_consent` is unavailable); when consent
-  mode is on and no known plugin is found, show one neutral sentence that
-  monitoring will not start until the opt-in callback runs. A persistent
-  warning would have a 100 percent false-positive rate on working
-  integrations (no server-side ground truth exists without a rejected
-  visitor-side ping) and would pressure admins toward Load immediately.
-  (UX 1 / BR-DOC-07 + design Q-A)
+- [x] P2 Replace the proposed "persistent consent warning" with contextual
+  detection and privacy-safe automatic handling in `render_consent_info()` -
+  never a site-wide notice. New installations default to automatic handling;
+  existing installations without the setting remain manual. WP Consent API
+  takes priority, exactly one direct Borlabs Cookie or CookieYes provider may
+  be selected, and ambiguous or missing providers fail closed. The settings
+  page shows an Active, Action needed, Off, or Blocked verdict with provider
+  evidence, one next action, and copyable non-secret diagnostics. Only manual
+  handling reveals the callback contract and matching packaged adapter tabs;
+  blocked automatic states may reveal that setup without silently saving the
+  selection. (UX 1 / BR-DOC-07 + design Q-A)
+- [ ] P3 Add a Site Health consent result only after Basicrum can distinguish a
+  working manual callback from an unwired one. PHP provider detection alone
+  cannot verify a webmaster-managed frontend callback and would create false
+  warnings for valid manual installations.
 - [ ] P2 Replace the abstract load-order rule with one safe recipe (Script
   Position on Header + adapter in the consent tool's custom-JS area) and
   make the admin example actionable (placement, event wiring or per-tool

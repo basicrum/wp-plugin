@@ -7,6 +7,7 @@
 
 namespace Basicrum\WP\Tests\Unit;
 
+use Basicrum\WP\ConsentIntegration;
 use Basicrum\WP\Helpers;
 use Basicrum\WP\Tests\TestCase;
 use Brain\Monkey\Functions;
@@ -29,6 +30,7 @@ class HelpersTest extends TestCase {
 			'brum_site_id',
 			'track_admins',
 			'consent_enabled',
+			'consent_integration',
 			'strip_query_string',
 			'wait_after_onload',
 			'delay_ms',
@@ -41,6 +43,7 @@ class HelpersTest extends TestCase {
 		}
 
 		$this->assertSame( '1', $defaults['consent_enabled'], 'New installations should wait for consent by default.' );
+		$this->assertSame( ConsentIntegration::MODE_AUTOMATIC, $defaults['consent_integration'], 'New installations should use automatic consent-tool integration by default.' );
 		$this->assertSame( '0', $defaults['strip_query_string'], 'Query strings should be collected by default.' );
 	}
 
@@ -70,7 +73,27 @@ class HelpersTest extends TestCase {
 		$this->assertSame( 'https://custom.example.com/beacon', $settings['beacon_url'] );
 		// Defaults filled in.
 		$this->assertSame( 0, $settings['delay_ms'] );
+		$this->assertSame( ConsentIntegration::MODE_MANUAL, $settings['consent_integration'], 'Existing installations without the setting must remain manual.' );
 		$this->assertSame( '0', $settings['strip_query_string'] );
+	}
+
+	/**
+	 * Test an explicitly saved automatic integration mode is preserved.
+	 */
+	public function test_get_settings_preserves_explicit_automatic_integration() {
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn( array( 'consent_integration' => ConsentIntegration::MODE_AUTOMATIC ) );
+
+		Functions\when( 'wp_parse_args' )->alias(
+			function( $args, $defaults ) {
+				return array_merge( $defaults, $args );
+			}
+		);
+
+		$settings = Helpers::get_settings();
+
+		$this->assertSame( ConsentIntegration::MODE_AUTOMATIC, $settings['consent_integration'] );
 	}
 
 	/**
@@ -115,11 +138,63 @@ class HelpersTest extends TestCase {
 	}
 
 	/**
+	 * Test programmatic option writes are normalized to the stored schema.
+	 */
+	public function test_get_settings_normalizes_boolean_like_values() {
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn(
+				array(
+					'enabled'                => 1,
+					'development_mode'       => true,
+					'track_admins'           => 0,
+					'consent_enabled'        => 1,
+					'strip_query_string'     => false,
+					'wait_after_onload'      => '1',
+					'use_unminified_loaders' => 'invalid',
+				)
+			);
+
+		Functions\when( 'wp_parse_args' )->alias( function( $args, $defaults ) {
+			return array_merge( $defaults, $args );
+		});
+
+		$settings = Helpers::get_settings();
+
+		$this->assertSame( '1', $settings['enabled'] );
+		$this->assertSame( '1', $settings['development_mode'] );
+		$this->assertSame( '0', $settings['track_admins'] );
+		$this->assertSame( '1', $settings['consent_enabled'] );
+		$this->assertSame( '0', $settings['strip_query_string'] );
+		$this->assertSame( '1', $settings['wait_after_onload'] );
+		$this->assertSame( '0', $settings['use_unminified_loaders'] );
+	}
+
+	/**
+	 * Test malformed option storage falls back without causing a runtime error.
+	 */
+	public function test_get_settings_handles_non_array_storage() {
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn( 'invalid' );
+
+		Functions\when( 'wp_parse_args' )->alias( function( $args, $defaults ) {
+			return array_merge( $defaults, $args );
+		});
+
+		$settings = Helpers::get_settings();
+
+		$this->assertSame( '0', $settings['enabled'] );
+		$this->assertSame( '1', $settings['consent_enabled'] );
+		$this->assertSame( ConsentIntegration::MODE_MANUAL, $settings['consent_integration'] );
+	}
+
+	/**
 	 * Test consent-controlled loading status.
 	 *
 	 * @dataProvider consent_enabled_provider
 	 *
-	 * @param string $stored_value Stored consent gate value.
+	 * @param mixed  $stored_value Stored consent gate value.
 	 * @param bool   $expected     Expected enabled state.
 	 */
 	public function test_is_consent_enabled( $stored_value, $expected ) {
@@ -143,6 +218,10 @@ class HelpersTest extends TestCase {
 		return array(
 			'immediate loading'          => array( '0', false ),
 			'consent-controlled loading' => array( '1', true ),
+			'integer immediate loading'  => array( 0, false ),
+			'integer consent loading'    => array( 1, true ),
+			'boolean immediate loading'  => array( false, false ),
+			'boolean consent loading'    => array( true, true ),
 		);
 	}
 

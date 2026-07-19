@@ -36,9 +36,21 @@ authoritative decision.
   domains.
 - Put canonical webmaster adapters in
   `plugins/basicrum/assets/js/integrations/`. Display the exact packaged files
-  as escaped, copyable text in the settings page; never enqueue or execute them
-  automatically. Do not modify a production loader merely to accommodate a
-  test.
+  as escaped, copyable text in the settings page. Automatic handling may
+  enqueue exactly one of those same files after the consent loader; manual
+  handling must enqueue none. Give WP Consent API priority over direct provider
+  adapters, select a direct adapter only when exactly one supported provider is
+  detected, and fail closed on ambiguity. Do not modify a production loader
+  merely to accommodate a test.
+- Preserve upgrades safely: existing sites without the integration-handling
+  option remain manual because they may already inject a copied adapter. New
+  installations may default to automatic handling.
+- Use progressive disclosure in settings: automatic handling shows a compact
+  verdict, provider evidence, one next action, and copyable non-secret
+  diagnostics. Manual handling reveals the callback contract and copyable
+  adapters in a separate sibling panel after an accessible radio fieldset.
+  Blocked automatic states may reveal the appropriate manual tab but must not
+  save the mode automatically.
 - Document script ordering and cache/minification exclusions. Do not claim that
   an adapter replaces legal review or consent-tool configuration.
 

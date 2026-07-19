@@ -25,14 +25,15 @@ tool the consent loader waits forever: zero data, no warning, indefinitely.
 The enabled-but-inactive notice only checks Beacon URL and Brum Site ID. The
 three tested copy-paste adapters in `examples/integrations/` were outside the
 release ZIP and were never mentioned by readme.txt or the settings page, so the
-likely escape hatch for a stuck webmaster was switching to Load immediately,
+likely escape hatch for a stuck webmaster was switching to Monitor without consent,
 which the plugin itself warns may be unlawful. (CI-01, BR-DOC-07, BR-DOC-12,
 walkthrough-07)
 
 Post-audit update: the current consent-adapter distribution work resolves the
 adapter-availability portion of this finding. The packaged adapters now appear
-as copyable settings tabs and are required in the release ZIP. Contextual
-detection and monitoring-start guidance remain separate open checklist items.
+as copyable settings tabs and are required in the release ZIP. Automatic
+detection, Visitor Consent guidance, and the conditionally hidden Consent Tool Connection
+dependency now address the contextual setup portion.
 
 - [ ] Add a plain-language consequence sentence to the consent panel: until
   the consent tool calls the opt-in callback, Basicrum will not load and no
@@ -152,7 +153,7 @@ settings screen. (issue-backoffice-unlinked, walkthrough-05, BR-DOC-16)
 
 - [ ] Guard the global `settings_errors()` call so core Settings screens do
   not show duplicated notices. (issue-duplicate-notices)
-- [ ] Give the Delay number input and Monitoring Start radios proper
+- [ ] Give the Delay number input and Visitor Consent radios proper
   accessible names (label_for / fieldset legend / aria-describedby), matching
   the text fields' rigor. (issue-number-radio-a11y)
 - [ ] Add a Settings action link to the Plugins list row.

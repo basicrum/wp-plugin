@@ -7,6 +7,7 @@
 
 namespace Basicrum\WP\Tests\Unit;
 
+use Basicrum\WP\ConsentIntegration;
 use Basicrum\WP\Setup;
 use Basicrum\WP\Tests\TestCase;
 use Brain\Monkey\Functions;
@@ -51,6 +52,8 @@ class SetupTest extends TestCase {
 					function( $settings ) {
 						return isset( $settings['consent_enabled'] )
 							&& '1' === $settings['consent_enabled']
+							&& isset( $settings['consent_integration'] )
+							&& ConsentIntegration::MODE_AUTOMATIC === $settings['consent_integration']
 							&& isset( $settings['strip_query_string'] )
 							&& '0' === $settings['strip_query_string']
 							&& ! array_key_exists( 'consent_mode', $settings );

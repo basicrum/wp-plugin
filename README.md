@@ -57,23 +57,42 @@ complete query strings in page, navigation, referrer, and resource URLs with
 setting disabled, beacons can include complete query strings, so review whether
 site URLs contain personal or sensitive information.
 
-Basicrum supports two observable loading policies under **Basicrum > Visitor
-Privacy**:
+Under **Basicrum > Visitor Privacy > Visitor Consent**, choose whether
+monitoring requires an allow decision:
 
-- **Load immediately** loads Boomerang on every eligible page without waiting
-  for a consent signal.
-- **Follow external consent tool** blocks or loads Boomerang according to the
-  current allow or deny decision reported by the site's consent tool. The tool
-  calls `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` when monitoring is allowed and
-  `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when monitoring is denied, expires,
-  or is withdrawn.
+- **Monitor without consent** loads Boomerang without a consent check. It may
+  set cookies and send performance data, so use it only when the site is
+  permitted to monitor without prior consent.
+- **Require consent before monitoring (recommended)** keeps Boomerang off and
+  sends no data until the site's consent tool reports an allow decision on each
+  page. The tool calls `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` when monitoring
+  is allowed and `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when monitoring is
+  denied, expires, or is withdrawn.
 
 The callbacks are registered when the consent loader reaches its configured
-Script Position. The consent integration must run after those callbacks are
-available and call one of them on every page. Basicrum does not persist a
-separate consent choice across page loads; the external tool is authoritative
-on every page. If consent is withdrawn after Boomerang loading starts, reload
-the page before granting it again.
+Script Position. **Consent Tool Connection** appears only when consent is
+required. New installations default to **Automatic connection**. Basicrum
+detects and loads one packaged adapter
+after the callbacks are available. WP Consent API has priority; without it,
+Basicrum selects Borlabs Cookie 3.2+ or a connected modern CookieYes 3.x
+installation only when exactly one is detected. CookieYes legacy mode is not
+selected because it exposes an incompatible browser API. If no supported
+integration is found, or multiple direct providers make the choice ambiguous,
+monitoring remains blocked rather than guessing. The settings page separates
+the automatic result into Active, Action needed, Off, or Blocked. It shows
+evidence for all three supported providers, one next action, and copyable
+non-secret diagnostics. A blocked result can reveal the matching manual setup
+without silently saving the mode change.
+
+Sites upgraded from a version without the connection setting remain on **Manual
+callbacks** to avoid running a second adapter beside an existing webmaster
+snippet. Manual handling loads no adapter automatically. The webmaster must
+load one adapter after the Basicrum consent loader and call one callback on
+every page.
+
+Basicrum does not persist a separate consent choice across page loads; the
+external tool is authoritative on every page. If consent is withdrawn after
+Boomerang loading starts, reload the page before granting it again.
 
 An allow decision does not always mean that the visitor clicked an accept
 button. Region-aware tools such as WP Consent API may allow a category before
@@ -96,12 +115,23 @@ function reportBasicrumConsent(allowed) {
 }
 ```
 
-Tested adapters for Borlabs Cookie 3.0.6+, WP Consent API with Complianz or
-CookieYes, and connected CookieYes without WP Consent API are shipped under
+The manual Borlabs adapter supports Borlabs Cookie 3.0.6+, while automatic
+detection requires Borlabs Cookie 3.2+ and its public PHP API. WP Consent API
+must be installed as a separate plugin when it is used with Complianz.
+
+Tested adapters for Borlabs Cookie, WP Consent API with Complianz or CookieYes,
+and connected modern CookieYes without WP Consent API are shipped under
 [`plugins/basicrum/assets/js/integrations/`](plugins/basicrum/assets/js/integrations/).
-The Basicrum settings page displays the exact packaged files in provider tabs so
-webmasters can copy them into their consent tool. A Generic tab provides
-separate allow and deny snippets for other consent tools.
+Automatic handling loads from these exact packaged files. The Basicrum settings
+page also displays them in provider tabs so webmasters can use the same tested
+code in manual mode. The detailed callbacks and provider tabs are shown only
+when **Manual callbacks** is selected. A Generic tab provides separate allow and
+deny snippets for other consent tools.
+
+Provider detection confirms that a supported WordPress integration is present;
+it does not prove that the consent popup is configured to publish the required
+decision. Follow the status panel's verification step and test both allow and
+deny in a private window.
 
 Basicrum does not display a consent popup, select a legal basis, or make a site
 compliant by itself. The WordPress Privacy Policy Guide includes editable

@@ -7,6 +7,7 @@
 
 namespace Basicrum\WP\Admin\Settings;
 
+use Basicrum\WP\ConsentIntegration;
 use Basicrum\WP\Helpers;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -57,8 +58,11 @@ class Validate {
 		// Track admins (checkbox).
 		$output['track_admins'] = $this->sanitize_checkbox( $input, 'track_admins' );
 
-		// Monitoring start policy.
+		// Visitor consent requirement.
 		$output['consent_enabled'] = $this->sanitize_monitoring_start( $input );
+
+		// Consent tool connection handling.
+		$output['consent_integration'] = $this->sanitize_consent_integration( $input );
 
 		// Query-string privacy (checkbox).
 		$output['strip_query_string'] = $this->sanitize_checkbox( $input, 'strip_query_string' );
@@ -188,13 +192,13 @@ class Validate {
 	}
 
 	/**
-	 * Sanitize the monitoring start policy without failing open.
+	 * Sanitize the visitor consent requirement without failing open.
 	 *
 	 * Invalid or missing values select consent-controlled loading so malformed
 	 * input cannot silently start monitoring before a consent signal.
 	 *
 	 * @param array $input Raw input.
-	 * @return string '0' for immediate or '1' for consent-controlled loading.
+	 * @return string '0' for no consent requirement or '1' for required consent.
 	 */
 	private function sanitize_monitoring_start( $input ) {
 		if ( isset( $input['consent_enabled'] ) && in_array( $input['consent_enabled'], array( '0', '1' ), true ) ) {
@@ -204,11 +208,35 @@ class Validate {
 		add_settings_error(
 			'basicrum_settings',
 			'consent_enabled_invalid',
-			esc_html__( 'Invalid monitoring start value. Basicrum will follow the external consent tool.', 'basicrum' ),
+			esc_html__( 'Invalid visitor consent value. Basicrum will require consent before monitoring.', 'basicrum' ),
 			'warning'
 		);
 
 		return '1';
+	}
+
+	/**
+	 * Sanitize consent tool connection handling without enabling automation on
+	 * malformed or missing input.
+	 *
+	 * @param array $input Raw input.
+	 * @return string Automatic or manual integration mode.
+	 */
+	private function sanitize_consent_integration( $input ) {
+		$allowed = array( ConsentIntegration::MODE_AUTOMATIC, ConsentIntegration::MODE_MANUAL );
+
+		if ( isset( $input['consent_integration'] ) && in_array( $input['consent_integration'], $allowed, true ) ) {
+			return sanitize_text_field( $input['consent_integration'] );
+		}
+
+		add_settings_error(
+			'basicrum_settings',
+			'consent_integration_invalid',
+			esc_html__( 'Invalid consent tool connection value. Basicrum will use manual callbacks.', 'basicrum' ),
+			'warning'
+		);
+
+		return ConsentIntegration::MODE_MANUAL;
 	}
 
 	/**

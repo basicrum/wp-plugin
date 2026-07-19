@@ -36,120 +36,121 @@ msgstr "Цветан Стойчев"
 msgid "https://www.basicrum.com/contact/"
 msgstr "https://www.basicrum.com/contact/"
 
-#: src/Admin/Settings/Page.php:114
-#: src/Admin/Settings/Page.php:509
+#: src/Admin/Settings/Page.php:115
+#: src/Admin/Settings/Page.php:547
 msgid "Basicrum Settings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:115
+#: src/Admin/Settings/Page.php:116
 msgid "Basicrum"
 msgstr "Basicrum"
 
-#: src/Admin/Settings/Page.php:154
+#: src/Admin/Settings/Page.php:155
 msgid "General Settings"
 msgstr "Основни настройки"
 
-#: src/Admin/Settings/Page.php:161
+#: src/Admin/Settings/Page.php:162
 msgid "Enable Basicrum"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:167
+#: src/Admin/Settings/Page.php:168
 msgid "Enable real user monitoring on your site."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:173
+#: src/Admin/Settings/Page.php:174
 msgid "Beacon URL"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:190
+#: src/Admin/Settings/Page.php:191
 msgid "Brum Site ID"
 msgstr "Brum Site ID"
 
-#: src/Admin/Settings/Page.php:207
+#: src/Admin/Settings/Page.php:208
 msgid "Track Admin Users"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:213
+#: src/Admin/Settings/Page.php:214
 msgid "Track logged-in administrators (users with manage_options capability)."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:219
+#: src/Admin/Settings/Page.php:220
 msgid "Boomerang Version"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:362
+#: src/Admin/Settings/Page.php:399
 msgid "Performance"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:369
+#: src/Admin/Settings/Page.php:406
 msgid "Wait After Onload"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:375
+#: src/Admin/Settings/Page.php:412
 msgid "Delay beacon sending until after page load completes."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:381
+#: src/Admin/Settings/Page.php:418
 msgid "Delay (milliseconds)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:387
+#: src/Admin/Settings/Page.php:424
 msgid "Milliseconds to delay the beacon after onload. Leave 0 to disable the delay."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:418
+#: src/Admin/Settings/Page.php:456
 msgid "Developer Settings"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:395
+#: src/Admin/Settings/Page.php:432
+#: src/Admin/Settings/Page.php:438
 msgid "Script Position"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:401
+#: src/Admin/Settings/Page.php:439
 msgid "Where to insert the monitoring script."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:403
+#: src/Admin/Settings/Page.php:441
 msgid "Header (wp_head)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:404
+#: src/Admin/Settings/Page.php:442
 msgid "Footer (wp_footer)"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:437
+#: src/Admin/Settings/Page.php:475
 msgid "Use Unminified Loaders"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:443
+#: src/Admin/Settings/Page.php:481
 msgid "Load unminified JavaScript loaders for debugging."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:731
+#: src/Admin/Settings/Page.php:814
 msgid "~30 KB gzipped"
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:119
+#: src/Admin/Settings/Validate.php:123
 msgid "Beacon URL was automatically upgraded to HTTPS."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:128
+#: src/Admin/Settings/Validate.php:132
 msgid "Invalid Beacon URL. The default URL has been restored."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:154
+#: src/Admin/Settings/Validate.php:158
 msgid "Invalid Brum Site ID. Copy it from the Basicrum backoffice and try again."
 msgstr "Невалиден Brum Site ID. Копирайте го от административния панел на Basicrum и опитайте отново."
 
-#: src/Admin/Settings/Validate.php:181
+#: src/Admin/Settings/Validate.php:185
 msgid "Delay cannot exceed 30000 milliseconds. It has been capped at 30000."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:431
+#: src/Admin/Settings/Page.php:469
 msgid "Allow HTTP beacon URLs for local testing. Do not enable this on production sites."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:425
+#: src/Admin/Settings/Page.php:463
 msgid "HTTP Strictness"
 msgstr ""
 
@@ -158,36 +159,36 @@ msgid "Basicrum could not start because its Composer dependencies are missing. R
 msgstr ""
 
 #. translators: %s: Link to the Basicrum settings page.
-#: src/Admin/Settings/Page.php:514
+#: src/Admin/Settings/Page.php:552
 #, php-format
 msgid "Basicrum monitoring is enabled but inactive because the Beacon URL and Brum Site ID are missing. Configure them in %s."
 msgstr ""
 
 #. translators: %s: Link to the Basicrum settings page.
-#: src/Admin/Settings/Page.php:517
+#: src/Admin/Settings/Page.php:555
 #, php-format
 msgid "Basicrum monitoring is enabled but inactive because the Beacon URL is missing. Configure it in %s."
 msgstr ""
 
 #. translators: %s: Link to the Basicrum settings page.
-#: src/Admin/Settings/Page.php:520
+#: src/Admin/Settings/Page.php:558
 #, php-format
 msgid "Basicrum monitoring is enabled but inactive because the Brum Site ID is missing. Configure it in %s."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:180
+#: src/Admin/Settings/Page.php:181
 msgid "URL where Boomerang beacons are sent. Example: https://www.example.com/beacon/catcher. Required when Basicrum is enabled."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:184
+#: src/Admin/Settings/Page.php:185
 msgid "Beacon URL is required when Basicrum is enabled."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:197
+#: src/Admin/Settings/Page.php:198
 msgid "Copy the Brum Site ID from the Basicrum backoffice. Required when Basicrum is enabled."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:201
+#: src/Admin/Settings/Page.php:202
 msgid "Brum Site ID is required when Basicrum is enabled."
 msgstr ""
 
@@ -203,20 +204,8 @@ msgstr ""
 msgid "Monitoring is configured to start immediately on eligible pages without waiting for a consent signal."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:294
+#: src/Admin/Settings/Page.php:306
 msgid "Visitor Privacy"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:313
-msgid "Monitoring Start"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:326
-msgid "Load immediately"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:794
-msgid "Consent Tool Integration"
 msgstr ""
 
 #: src/Admin/Privacy.php:42
@@ -233,31 +222,11 @@ msgstr ""
 msgid "When monitoring runs, performance data is sent to the collector configured at %s."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:319
-msgid "Select when Boomerang may load on an eligible page."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:327
-msgid "Boomerang loads on eligible pages without waiting for a consent signal. This may set cookies and send performance data. Use this only when your site is permitted to monitor without prior consent."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:798
-msgid "The callbacks are registered at the configured Script Position. Load the consent integration after that point; calls made before registration are not replayed."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:322
-msgid "Follow external consent tool"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:323
-msgid "Boomerang follows the current allow or deny decision reported by your consent or cookie tool on each page."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:796
+#: src/Admin/Settings/Page.php:940
 msgid "Call when the external tool reports that performance monitoring is allowed. This executes the standard Boomerang loader."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:799
+#: src/Admin/Settings/Page.php:943
 msgid "Basicrum does not persist consent across page loads or in its own cookie or server-side record, and it does not display a consent popup. Your consent tool remains the source of truth. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again."
 msgstr ""
 
@@ -265,11 +234,7 @@ msgstr ""
 msgid "Monitoring is configured to follow the site's consent tool on every page. Basicrum does not persist consent across page loads or in its own cookie or server-side record. The consent tool may report monitoring as allowed before visitor interaction where an opt-out policy applies. Signaling denial, expiry, or withdrawal stops future browser collection but does not retract data already sent."
 msgstr ""
 
-#: src/Admin/Settings/Validate.php:207
-msgid "Invalid monitoring start value. Basicrum will follow the external consent tool."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:797
+#: src/Admin/Settings/Page.php:941
 msgid "Call when the external tool reports that monitoring is denied or that permission has expired or been withdrawn. Basicrum disables loaded collection and attempts to remove the Boomerang RT and BA cookies, but it cannot retract data already sent."
 msgstr ""
 
@@ -282,98 +247,445 @@ msgstr ""
 msgid "Query-string stripping is disabled, so page, navigation, referrer, and resource URLs may include complete query strings. Review whether your URLs can contain personal or sensitive information before using this configuration."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:301
+#: src/Admin/Settings/Page.php:313
 msgid "Strip Query Strings"
-msgstr ""
-
-#: src/Admin/Settings/Page.php:350
-msgid "Control URL query-string handling and choose when monitoring starts. Basicrum does not display a consent popup, determine your legal basis, or make a site compliant by itself."
 msgstr ""
 
 #: src/Admin/Privacy.php:52
 msgid "Basicrum is configured to replace complete query strings in page, navigation, referrer, and resource URLs with the marker ?qs-redacted before sending beacons. URL paths are still collected."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:307
+#: src/Admin/Settings/Page.php:319
 msgid "When enabled, replace complete query strings in page, navigation, referrer, and resource URLs with ?qs-redacted before sending beacons. URL paths are still collected."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:743
+#: src/Admin/Settings/Page.php:857
 msgid "Borlabs Cookie v3"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:744
-msgid "Create and enable a Borlabs service with the ID basicrum, normally in the Statistics service group. Add this adapter as unblocked site code that runs on every page."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:747
+#: src/Admin/Settings/Page.php:861
 msgid "Borlabs Cookie adapter"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:754
+#: src/Admin/Settings/Page.php:868
+#: src/Admin/Settings/Page.php:1280
 msgid "WP Consent API"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:755
-msgid "Use this shared adapter with a consent tool such as Complianz or CookieYes that publishes its Statistics decision through WP Consent API."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:758
+#: src/Admin/Settings/Page.php:872
 msgid "WP Consent API adapter"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:765
+#: src/Admin/Settings/Page.php:879
+#: src/Admin/Settings/Page.php:1282
 msgid "CookieYes"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:766
-msgid "Use this direct adapter only for a connected CookieYes installation when WP Consent API is not active. It must follow the Analytics category; another category can silently result in no Basicrum data."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:769
+#: src/Admin/Settings/Page.php:883
 msgid "CookieYes adapter"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:776
+#: src/Admin/Settings/Page.php:890
 msgid "Generic"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:777
+#: src/Admin/Settings/Page.php:891
 msgid "Use these separate snippets when your consent tool provides custom callbacks for an allow decision and a deny, expiry, or withdrawal decision."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:780
+#: src/Admin/Settings/Page.php:894
 msgid "Allow or grant callback"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:785
+#: src/Admin/Settings/Page.php:899
 msgid "Deny, expiry, or withdrawal callback"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:795
-msgid "When \"Follow external consent tool\" is selected, copy the matching integration below into your consent or cookie tool. The integration must run on every page after the Basicrum consent loader is available."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:800
-msgid "These snippets help connect the tools, but they do not configure your consent categories or replace legal review."
-msgstr ""
-
-#: src/Admin/Settings/Page.php:803
+#: src/Admin/Settings/Page.php:947
 msgid "Consent tool integrations"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:858
+#: src/Admin/Settings/Page.php:1302
 msgid "This integration snippet is unavailable. Reinstall Basicrum from a complete release package."
 msgstr ""
 
-#: src/Admin/Settings/Page.php:873
+#: src/Admin/Settings/Page.php:1262
+#: src/Admin/Settings/Page.php:1317
 msgid "Copied"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:876
+#: src/Admin/Settings/Page.php:1320
 msgid "Copy snippet"
 msgstr ""
 
-#: src/Admin/Settings/Page.php:874
+#: src/Admin/Settings/Page.php:1263
+#: src/Admin/Settings/Page.php:1318
 msgid "Press Ctrl+C or Command+C to copy."
 msgstr ""
+
+#: src/Admin/Settings/Page.php:370
+msgid "Manual callbacks"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:366
+msgid "Best for most sites. Detect a supported consent tool and load one matching Basicrum adapter."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:371
+msgid "For unsupported or custom tools, or when a webmaster already manages the integration snippet."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:938
+msgid "Manual callbacks are selected. Basicrum will not load a provider adapter automatically."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:939
+msgid "Use one matching integration below in your consent or cookie tool. Load it on every page after the Basicrum consent loader."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:942
+msgid "The callbacks are registered at the configured Script Position. Load the manual integration after that point; calls made before registration are not replayed."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:944
+msgid "The files below are the same tested adapters included with Basicrum. They do not configure your consent categories or replace legal review."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:996
+#: src/Admin/Settings/Page.php:1008
+msgid "Off"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1000
+msgid "Basicrum monitoring is disabled, so no consent adapter is enqueued."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1020
+msgid "Active"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1023
+msgid "WP Consent API selected"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1024
+msgid "Basicrum will load its packaged WP Consent API adapter and follow the Statistics decision. This shared API takes priority over direct provider adapters."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1025
+msgid "Confirm that your consent popup publishes Statistics decisions to WP Consent API, then test both allow and deny in a private window."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1032
+#: src/Admin/Settings/Page.php:1053
+msgid "Action needed"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1035
+msgid "Borlabs Cookie selected"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1037
+msgid "Create and enable the Borlabs service with the ID basicrum in the Statistics service group, then re-check and test both decisions in a private window."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1043
+#: src/Admin/Settings/Page.php:1064
+msgid "Packaged Basicrum adapter selected"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1047
+msgid "Borlabs service basicrum enabled in the Statistics group"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1056
+msgid "CookieYes selected"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1058
+msgid "Confirm that CookieYes exposes Analytics consent on the frontend, then re-check and test both decisions in a private window. Prefer WP Consent API when it is available."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1068
+msgid "CookieYes Analytics consent available through the connected browser API"
+msgstr ""
+
+#. translators: %s: Comma-separated consent provider names.
+#: src/Admin/Settings/Page.php:1086
+#, php-format
+msgid "Basicrum detected multiple direct providers: %s. It did not guess which provider controls monitoring, so no adapter is loaded."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1089
+#: src/Admin/Settings/Page.php:1102
+msgid "Blocked"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1092
+msgid "Multiple direct providers detected"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1094
+msgid "Choose Manual callbacks and select the provider that controls Basicrum, or keep only that provider active."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1105
+msgid "No supported provider detected"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1106
+msgid "Basicrum did not find WP Consent API, Borlabs Cookie, or CookieYes. No automatic adapter is loaded and monitoring remains blocked."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1138
+msgid "Done"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1138
+msgid "Verify"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1144
+msgid "Next:"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1151
+msgid "Open manual setup"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1156
+#: src/Admin/Settings/Page.php:1163
+msgid "Re-check detection"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1181
+msgid "Provider detection"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1189
+msgid "Selected - priority"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1192
+msgid "Selected"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1195
+msgid "Detected"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1198
+msgid "Not detected"
+msgstr ""
+
+#. translators: %s: Basicrum plugin version.
+#: src/Admin/Settings/Page.php:1236
+#, php-format
+msgid "Basicrum version: %s"
+msgstr ""
+
+#. translators: %s: Consent tool connection mode.
+#: src/Admin/Settings/Page.php:1238
+msgid "Automatic"
+msgstr ""
+
+#. translators: %s: Enabled or disabled.
+#: src/Admin/Settings/Page.php:1240
+#, php-format
+msgid "Monitoring: %s"
+msgstr ""
+
+#. translators: %s: Enabled or disabled.
+#: src/Admin/Settings/Page.php:1240
+msgid "Enabled"
+msgstr ""
+
+#. translators: %s: Enabled or disabled.
+#: src/Admin/Settings/Page.php:1240
+msgid "Disabled"
+msgstr ""
+
+#. translators: %s: Comma-separated consent provider names.
+#: src/Admin/Settings/Page.php:1244
+#, php-format
+msgid "Detected providers: %s"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1231
+msgid "None"
+msgstr ""
+
+#. translators: %s: Selected consent provider name.
+#: src/Admin/Settings/Page.php:1246
+#, php-format
+msgid "Selected provider: %s"
+msgstr ""
+
+#. translators: 1: Status tier. 2: Status verdict.
+#: src/Admin/Settings/Page.php:1248
+#, php-format
+msgid "Result: %1$s - %2$s"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1256
+msgid "This status contains no Beacon URL or Brum Site ID."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1281
+msgid "Borlabs Cookie"
+msgstr ""
+
+#: src/Admin/Settings/Page.php:858
+msgid "The manual adapter supports Borlabs Cookie 3.0.6 or newer. Automatic detection requires 3.2 or newer because it uses the public borlabsCookieApi() marker. Create and enable a Borlabs service with the ID basicrum, normally in the Statistics service group. Add this adapter as unblocked site code that runs on every page."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:869
+msgid "Install and activate the standalone WP Consent API plugin, then use this shared adapter with a consent tool such as Complianz or CookieYes that publishes its Statistics decision through the API. Complianz does not include WP Consent API by itself."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:880
+msgid "Use this direct adapter only for a connected modern CookieYes 3.x installation when WP Consent API is not active. CookieYes legacy mode uses an incompatible browser API and is deliberately not detected. The adapter follows the Analytics category and fails closed when the browser API is unavailable."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1036
+msgid "Basicrum detected the public Borlabs Cookie 3.2+ PHP API and will load its packaged adapter."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1057
+msgid "Basicrum detected the modern CookieYes 3.x runtime and will load its packaged direct adapter. The adapter remains blocked if the connected CookieYes browser API is unavailable."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:1107
+msgid "If you use Complianz, install and activate the standalone WP Consent API plugin. Otherwise use Manual callbacks to connect an unsupported or custom consent tool."
+msgstr ""
+
+#: src/Admin/Settings/Page.php:325
+#: src/Admin/Settings/Page.php:331
+msgid "Visitor Consent"
+msgstr "Съгласие на посетителя"
+
+#: src/Admin/Settings/Page.php:332
+msgid "Choose whether Boomerang requires an allow decision before monitoring a visitor."
+msgstr "Изберете дали Boomerang да изисква решение за разрешаване, преди да започне наблюдение на посетителя."
+
+#: src/Admin/Settings/Page.php:344
+msgid "Require consent before monitoring (recommended)"
+msgstr "Изискване на съгласие преди наблюдение (препоръчително)"
+
+#: src/Admin/Settings/Page.php:345
+msgid "Boomerang stays off and no data is sent until your consent or cookie tool reports an allow decision on each page. Visitors who decline are not monitored. Connect your tool below under Consent Tool Connection."
+msgstr "Boomerang остава изключен и не се изпращат данни, докато инструментът ви за съгласие или бисквитки не отчете решение за разрешаване на всяка страница. Посетителите, които откажат, не се наблюдават. Свържете инструмента си по-долу в „Свързване на инструмент за съгласие“."
+
+#: src/Admin/Settings/Page.php:340
+msgid "Monitor without consent"
+msgstr "Наблюдение без съгласие"
+
+#: src/Admin/Settings/Page.php:341
+msgid "Boomerang loads for visitors without a consent check. It may set cookies and send performance data. Use this only when your site is permitted to monitor without prior consent."
+msgstr "Boomerang се зарежда за посетителите без проверка за съгласие. Той може да задава бисквитки и да изпраща данни за производителността. Използвайте това само когато сайтът ви има право да извършва наблюдение без предварително съгласие."
+
+#: src/Admin/Settings/Page.php:360
+msgid "Consent Tool Connection"
+msgstr "Свързване на инструмент за съгласие"
+
+#: src/Admin/Settings/Page.php:365
+msgid "Automatic connection (recommended)"
+msgstr "Автоматично свързване (препоръчително)"
+
+#: src/Admin/Settings/Page.php:387
+msgid "Control URL query-string handling and choose whether monitoring waits for visitor consent. Basicrum does not display a consent popup, determine your legal basis, or make a site compliant by itself."
+msgstr "Управлявайте обработката на параметрите в URL адресите и изберете дали наблюдението да изчаква съгласието на посетителя. Basicrum не показва прозорец за съгласие, не определя правното ви основание и сам по себе си не осигурява съответствие на сайта."
+
+#: src/Admin/Settings/Page.php:909
+msgid "Automatic connection details shown."
+msgstr "Показани са подробностите за автоматичното свързване."
+
+#: src/Admin/Settings/Page.php:910
+msgid "Manual connection setup shown. Save Changes to apply this mode."
+msgstr "Показана е настройката за ръчно свързване. Изберете „Запазване на промените“, за да приложите този режим."
+
+#: src/Admin/Settings/Page.php:922
+msgid "Automatic Connection Status"
+msgstr "Състояние на автоматичното свързване"
+
+#: src/Admin/Settings/Page.php:926
+msgid "Your consent tool remains responsible for collecting and reporting the visitor decision. Automatic connection does not configure consent categories or make the site compliant by itself."
+msgstr "Вашият инструмент за съгласие остава отговорен за събирането и отчитането на решението на посетителя. Автоматичното свързване не конфигурира категории за съгласие и само по себе си не осигурява съответствие на сайта."
+
+#: src/Admin/Settings/Page.php:937
+msgid "Manual Connection Setup"
+msgstr "Настройка за ръчно свързване"
+
+#: src/Admin/Settings/Page.php:999
+msgid "Automatic connection is not running"
+msgstr "Автоматичното свързване не работи"
+
+#: src/Admin/Settings/Page.php:1001
+msgid "Enable Basicrum monitoring before checking the consent tool connection."
+msgstr "Активирайте наблюдението с Basicrum, преди да проверите свързването на инструмента за съгласие."
+
+#: src/Admin/Settings/Page.php:1011
+msgid "Consent tool connection is not used"
+msgstr "Свързването на инструмент за съгласие не се използва"
+
+#: src/Admin/Settings/Page.php:1012
+msgid "Visitor Consent is set to Monitor without consent, so Basicrum does not wait for a consent-tool decision."
+msgstr "„Съгласие на посетителя“ е зададено на „Наблюдение без съгласие“, затова Basicrum не изчаква решение от инструмент за съгласие."
+
+#: src/Admin/Settings/Page.php:1013
+msgid "Select Require consent before monitoring if Basicrum should wait for a reported decision."
+msgstr "Изберете „Изискване на съгласие преди наблюдение“, ако Basicrum трябва да изчаква отчетено решение."
+
+#. translators: %s: Consent tool connection mode.
+#: src/Admin/Settings/Page.php:1238
+#, php-format
+msgid "Connection mode: %s"
+msgstr "Режим на свързване: %s"
+
+#. translators: %s: Visitor consent requirement.
+#: src/Admin/Settings/Page.php:1242
+#, php-format
+msgid "Visitor consent: %s"
+msgstr "Съгласие на посетителя: %s"
+
+#. translators: %s: Visitor consent requirement.
+#: src/Admin/Settings/Page.php:1242
+msgid "Required before monitoring"
+msgstr "Задължително преди наблюдение"
+
+#. translators: %s: Visitor consent requirement.
+#: src/Admin/Settings/Page.php:1242
+msgid "Not required"
+msgstr "Не е задължително"
+
+#: src/Admin/Settings/Page.php:1253
+msgid "Connection diagnostics"
+msgstr "Диагностика на свързването"
+
+#: src/Admin/Settings/Page.php:1254
+msgid "Basicrum consent tool connection diagnostics"
+msgstr "Диагностика на свързването на Basicrum с инструмента за съгласие"
+
+#: src/Admin/Settings/Page.php:1265
+msgid "Copy connection status"
+msgstr "Копиране на състоянието на свързването"
+
+#: src/Admin/Settings/Validate.php:211
+msgid "Invalid visitor consent value. Basicrum will require consent before monitoring."
+msgstr "Невалидна стойност за съгласието на посетителя. Basicrum ще изисква съгласие преди наблюдение."
+
+#: src/Admin/Settings/Validate.php:235
+msgid "Invalid consent tool connection value. Basicrum will use manual callbacks."
+msgstr "Невалидна стойност за свързване на инструмент за съгласие. Basicrum ще използва ръчни функции за обратно извикване."
+
+#: src/Admin/Settings/Page.php:362
+msgid "Choose how your consent tool's decision reaches Basicrum."
+msgstr "Изберете как решението на вашия инструмент за съгласие достига до Basicrum."
+
+#: src/Admin/Settings/Page.php:335
+msgid "Consent Tool Connection hidden."
+msgstr "Връзката с инструмента за съгласие е скрита."
+
+#: src/Admin/Settings/Page.php:336
+msgid "Consent Tool Connection shown."
+msgstr "Връзката с инструмента за съгласие е показана."

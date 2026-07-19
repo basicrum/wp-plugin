@@ -27,6 +27,7 @@ class Plugin {
 		// Services loaded on every request (frontend + admin).
 		new Setup();
 		new Compatibility();
+		new ConsentIntegration();
 
 		if ( is_admin() ) {
 			$this->register_admin_services();

@@ -8,6 +8,7 @@
 namespace Basicrum\WP\Tests\Unit;
 
 use Basicrum\WP\Assets;
+use Basicrum\WP\ConsentIntegration;
 use Basicrum\WP\Tests\TestCase;
 use Brain\Monkey\Functions;
 
@@ -91,6 +92,7 @@ class AssetsTest extends TestCase {
 			'track_admins'           => '0',
 			'script_position'        => 'footer',
 			'consent_enabled'        => '0',
+			'consent_integration'    => ConsentIntegration::MODE_MANUAL,
 			'strip_query_string'     => '0',
 			'wait_after_onload'      => '0',
 			'delay_ms'               => 0,
@@ -334,7 +336,7 @@ class AssetsTest extends TestCase {
 	}
 
 	// -------------------------------------------------------------------------
-	// Monitoring start policy tests
+	// Visitor consent requirement tests.
 	// -------------------------------------------------------------------------
 
 	/**
@@ -403,6 +405,146 @@ class AssetsTest extends TestCase {
 			'immediate unminified'        => array( '0', '1', 'boomerang-loader-v15.js' ),
 			'consent-controlled minified' => array( '1', '0', 'consent-boomerang-loader-v1-15.min.js' ),
 			'consent-controlled source'   => array( '1', '1', 'consent-boomerang-loader-v1-15.js' ),
+		);
+	}
+
+	/**
+	 * Test automatic handling enqueues the selected packaged adapter after the
+	 * consent loader.
+	 */
+	public function test_automatic_consent_integration_enqueues_selected_adapter() {
+		$enqueued = array();
+
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn(
+				$this->enabled_settings(
+					array(
+						'consent_enabled'     => '1',
+						'consent_integration' => ConsentIntegration::MODE_AUTOMATIC,
+					)
+				)
+			);
+
+		$this->stub_wp_parse_args();
+		Functions\when( 'apply_filters' )->alias(
+			function( $hook, $value ) {
+				if ( 'basicrum_detected_consent_integrations' === $hook ) {
+					return array( ConsentIntegration::WP_CONSENT_API );
+				}
+
+				return $value;
+			}
+		);
+		Functions\when( 'is_user_logged_in' )->justReturn( false );
+		Functions\expect( 'wp_register_script' )->once();
+		Functions\expect( 'wp_add_inline_script' )->once();
+		Functions\expect( 'wp_enqueue_script' )
+			->times( 3 )
+			->andReturnUsing(
+				function( $handle, $src = false, $dependencies = array(), $version = false, $in_footer = false ) use ( &$enqueued ) {
+					$enqueued[ $handle ] = array( $src, $dependencies, $version, $in_footer );
+				}
+			);
+
+		$assets = new Assets();
+		$assets->maybe_enqueue();
+
+		$this->assertSame(
+			array(
+				'https://example.com/wp-content/plugins/basicrum/assets/js/integrations/wp-consent-api.js',
+				array( Assets::HANDLE_LOADER ),
+				BASICRUM_VERSION,
+				true,
+			),
+			$enqueued[ Assets::HANDLE_CONSENT_INTEGRATION ]
+		);
+	}
+
+	/**
+	 * Test manual handling never enqueues a detected provider adapter.
+	 */
+	public function test_manual_consent_integration_does_not_enqueue_provider_adapter() {
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn(
+				$this->enabled_settings(
+					array(
+						'consent_enabled'     => '1',
+						'consent_integration' => ConsentIntegration::MODE_MANUAL,
+					)
+				)
+			);
+
+		$this->stub_wp_parse_args();
+		Functions\when( 'apply_filters' )->alias(
+			function( $hook, $value ) {
+				if ( 'basicrum_detected_consent_integrations' === $hook ) {
+					return array( ConsentIntegration::COOKIEYES );
+				}
+
+				return $value;
+			}
+		);
+		Functions\when( 'is_user_logged_in' )->justReturn( false );
+		Functions\expect( 'wp_register_script' )->once();
+		Functions\expect( 'wp_add_inline_script' )->once();
+		Functions\expect( 'wp_enqueue_script' )
+			->twice()
+			->withArgs(
+				function( $handle ) {
+					return Assets::HANDLE_CONSENT_INTEGRATION !== $handle;
+				}
+			);
+
+		$assets = new Assets();
+		$assets->maybe_enqueue();
+	}
+
+	/**
+	 * Test automatic handling remains fail-closed when direct providers conflict.
+	 */
+	public function test_automatic_consent_integration_does_not_guess_between_direct_providers() {
+		Functions\expect( 'get_option' )
+			->with( 'basicrum_settings', array() )
+			->andReturn(
+				$this->enabled_settings(
+					array(
+						'consent_enabled'     => '1',
+						'consent_integration' => ConsentIntegration::MODE_AUTOMATIC,
+					)
+				)
+			);
+
+		$this->stub_wp_parse_args();
+		Functions\when( 'apply_filters' )->alias(
+			function( $hook, $value ) {
+				if ( 'basicrum_detected_consent_integrations' === $hook ) {
+					return array( ConsentIntegration::BORLABS_COOKIE, ConsentIntegration::COOKIEYES );
+				}
+
+				return $value;
+			}
+		);
+		Functions\when( 'is_user_logged_in' )->justReturn( false );
+		Functions\expect( 'wp_register_script' )->once();
+		Functions\expect( 'wp_add_inline_script' )->once();
+		Functions\expect( 'wp_enqueue_script' )->twice();
+
+		$assets = new Assets();
+		$assets->maybe_enqueue();
+	}
+
+	/**
+	 * Test Cloudflare cannot reorder the automatic adapter ahead of its loader.
+	 */
+	public function test_automatic_consent_integration_disables_cloudflare_async_reordering() {
+		$assets = new Assets();
+		$tag    = '<script src="https://example.test/adapter.js"></script>';
+
+		$this->assertSame(
+			'<script data-cfasync="false" src="https://example.test/adapter.js"></script>',
+			$assets->add_cfasync_attribute( $tag, Assets::HANDLE_CONSENT_INTEGRATION )
 		);
 	}
 

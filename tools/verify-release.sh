@@ -39,6 +39,7 @@ require_entry 'basicrum/readme.txt'
 require_entry 'basicrum/LICENSE.md'
 require_entry 'basicrum/src/Plugin.php'
 require_entry 'basicrum/src/Assets.php'
+require_entry 'basicrum/src/ConsentIntegration.php'
 require_entry 'basicrum/vendor/autoload.php'
 require_entry 'basicrum/vendor/composer/autoload_classmap.php'
 require_entry 'basicrum/vendor/composer/installed.php'
@@ -80,6 +81,11 @@ fi
 
 if ! unzip -p "$ARCHIVE_PATH" basicrum/vendor/composer/autoload_classmap.php | grep -Fq "'Basicrum\\\\WP\\\\Plugin'"; then
 	printf '%s\n' 'Composer class map does not contain the Basicrum plugin classes.' >&2
+	exit 1
+fi
+
+if ! unzip -p "$ARCHIVE_PATH" basicrum/vendor/composer/autoload_classmap.php | grep -Fq "'Basicrum\\\\WP\\\\ConsentIntegration'"; then
+	printf '%s\n' 'Composer class map does not contain the consent integration service.' >&2
 	exit 1
 fi
 

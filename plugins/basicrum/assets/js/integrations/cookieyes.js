@@ -2,9 +2,10 @@
  * Basicrum consent adapter for a connected CookieYes installation.
  *
  * Use this direct adapter only when WP Consent API is not active. It follows
- * CookieYes's Analytics category, not Performance or another category. Paste it
- * as unblocked site code that runs on every page after the Basicrum consent
- * loader. Using the wrong category can silently result in no Basicrum data.
+ * CookieYes's Analytics category, not Performance or another category.
+ * Basicrum can load this packaged adapter automatically, or a webmaster can use
+ * it as unblocked site code after the Basicrum consent loader in manual mode.
+ * Using the wrong category can silently result in no Basicrum data.
  */
 ( function( window, document ) {
 	'use strict';

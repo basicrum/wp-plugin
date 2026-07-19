@@ -1,16 +1,32 @@
 # Consent Tool Integration Examples
 
-These examples document the copy-and-paste adapters shipped with the installable
-Basicrum plugin. Select **Follow external consent tool** in Basicrum, then use
-the matching tab under **Basicrum > Visitor Privacy > Consent Tool
-Integration** to copy the packaged adapter.
+These examples document the adapters shipped with the installable Basicrum
+plugin. Select **Require consent before monitoring** under **Basicrum > Visitor
+Privacy > Visitor Consent**. Then choose **Automatic connection** to let Basicrum
+detect and load one matching adapter, or **Manual callbacks** to use the matching
+tab under **Consent Tool Connection** in the revealed **Manual Connection
+Setup** panel.
 
-Load the Basicrum consent loader before the selected adapter. Load the adapter
-as unblocked site code on every frontend page and call only one adapter. The
-external tool remains the source of truth; Basicrum does not store a separate
-consent decision.
+Automatic handling gives WP Consent API priority. Without it, Basicrum selects
+a direct Borlabs Cookie 3.2+ or connected modern CookieYes 3.x adapter only when
+exactly one is detected. No provider or multiple direct providers leave the
+consent loader blocked. Do not also paste an adapter manually while automatic
+handling is active. The automatic status panel shows the selection evidence and
+next action. Its copyable diagnostics omit the Beacon URL and Brum Site ID.
+Detection does not prove that the consent popup publishes the required
+decision, so test both allow and deny in a private window.
 
-## Borlabs Cookie 3.0.6+
+In manual mode, load the Basicrum consent loader before the selected adapter.
+Load one adapter as unblocked site code on every frontend page. The external
+tool remains the source of truth; Basicrum does not store a separate consent
+decision.
+
+Provider detection contracts were reviewed on 2026-07-19 against WP Consent API
+2.0.1 and CookieYes 3.5.3 from WordPress.org, plus the Borlabs Cookie PHP API
+and changelog documentation. Re-check these contracts when updating a packaged
+adapter or the documented compatibility floor.
+
+## Borlabs Cookie manual adapter: 3.0.6+; automatic detection: 3.2+
 
 The [`borlabs-cookie-v3.js`](../../plugins/basicrum/assets/js/integrations/borlabs-cookie-v3.js) adapter follows the public
 Borlabs Cookie JavaScript contract:
@@ -24,9 +40,16 @@ Use Borlabs Cookie 3.0.6 or newer. Version 3.0.6 introduced the
 `borlabs-cookie-after-init` event required for reliable initialization when the
 adapter loads before Borlabs finishes starting.
 
+Automatic detection requires Borlabs Cookie 3.2 or newer because Basicrum uses
+the vendor-documented `borlabsCookieApi()` PHP marker introduced in 3.2. Sites
+running 3.0.6 through 3.1.x can still use this adapter through Manual callbacks.
+Basicrum does not inspect Borlabs internal classes as a substitute for its
+public API.
+
 In Borlabs Cookie, create and enable a custom service with the service ID
 `basicrum`, normally in the Statistics service group. Do not place the adapter
 itself behind that service because it must also report rejection and withdrawal.
+Automatic detection does not create or configure this service.
 
 JavaScript combination, delay, and minification can change consent-script order.
 Exclude the Borlabs runtime, the Basicrum consent loader, and this adapter from
@@ -74,13 +97,16 @@ adapter follows the consent tool's current legal-policy decision; it does not
 always wait for an accept-button click.
 
 For Complianz, install WP Consent API and complete the normal Complianz wizard.
-There is no separate Basicrum service to configure in Complianz. Complianz maps
-its Statistics decision to WP Consent API's `statistics` category.
+Complianz does not bundle WP Consent API, so the standalone plugin must be
+active. There is no separate Basicrum service to configure in Complianz.
+Complianz maps its Statistics decision to WP Consent API's `statistics`
+category.
 
 CookieYes 3.5.3 can also bridge its Analytics decision to WP Consent
 API when that API is active, including in the standalone WordPress plugin. This
 is the preferred CookieYes path because it uses the shared WordPress contract.
-Do not load the direct CookieYes fallback below at the same time.
+Automatic handling enforces this priority. Do not load the direct CookieYes
+fallback below at the same time.
 
 The Playwright suite runs this exact adapter against a WP Consent API test double
 covering opt-in and opt-out region defaults, saved decisions, changes,
@@ -96,9 +122,11 @@ References:
 ## Connected CookieYes fallback
 
 Use [`cookieyes.js`](../../plugins/basicrum/assets/js/integrations/cookieyes.js) only when the CookieYes WordPress plugin is
-connected to the CookieYes web app and WP Consent API is not being used. The
-direct adapter follows only CookieYes's Analytics category; Performance or any
-other category cannot enable Basicrum.
+running its modern 3.x runtime, connected to the CookieYes web app, and WP
+Consent API is not being used. Basicrum deliberately does not detect CookieYes
+legacy mode: its `Cookie_Law_Info` runtime exposes an incompatible browser API.
+The direct adapter follows only CookieYes's Analytics category; Performance or
+any other category cannot enable Basicrum.
 
 The adapter uses two forms of CookieYes state:
 

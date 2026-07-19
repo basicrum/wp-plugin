@@ -12,8 +12,10 @@ namespace, PSR-4 Composer autoloading, PHP 7.4+, and WordPress 6.0+.
 - Immediate loading uses the standard loader. Consent-controlled loading uses
   the consent loader and exposes `OPT_IN_BASICRUM_LOADER_WRAPPER()` /
   `OPT_OUT_BASICRUM_LOADER_WRAPPER()` for integration with a site's external
-  consent tool. Load the adapter after the consent loader and call one callback
-  on every page. Basicrum does not persist consent across page loads.
+  consent tool. Automatic handling loads one detected packaged adapter after
+  the consent loader; manual handling leaves adapter placement to the
+  webmaster. Each adapter calls one callback on every page. Basicrum does not
+  persist consent across page loads.
 - Settings use the `basicrum_settings` option. Keep defaults, UI, and
   sanitization in sync in `Helpers`, `Admin\Settings\Page`, and
   `Admin\Settings\Validate`.
@@ -58,8 +60,18 @@ in the matching skill.
 - Boomerang lives in `assets/js/boomr/`; standard and consent loaders live in
   `assets/js/loaders/`.
 - Consent-tool adapters live in `assets/js/integrations/`. The settings page
-  displays those exact files as escaped copyable text; never enqueue or execute
-  them automatically. Browser tests must execute the same packaged files.
+  displays those exact files as escaped copyable text, and automatic handling
+  may enqueue exactly one after the consent loader. Prefer WP Consent API; when
+  it is unavailable, select a direct adapter only if exactly one supported
+  provider is detected. Ambiguous combinations fail closed. Existing sites
+  without the integration setting remain manual; new installations default to
+  automatic. Browser tests must execute the same packaged files.
+- Keep automatic and manual administrator guidance visually separate. Automatic
+  handling shows a compact verdict, provider evidence, one next action, and
+  copyable non-secret diagnostics. Reveal the callback contract, provider tabs,
+  and copyable adapters only for manual handling, as a sibling panel after an
+  accessible radio fieldset. A blocked status may reveal manual setup but must
+  not save the mode automatically.
 - WooCommerce browser E2E tests are root-level test tooling. Keep the pinned
   WooCommerce version and checksum synchronized in `tools/setup-woocommerce-e2e.sh`.
   The setup disables WooCommerce Coming soon mode so anonymous storefront tests

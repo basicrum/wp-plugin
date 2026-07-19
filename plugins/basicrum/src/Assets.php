@@ -34,6 +34,13 @@ class Assets {
 	const HANDLE_CONFIG = 'basicrum-config';
 
 	/**
+	 * Script handle for an automatically selected consent integration.
+	 *
+	 * @var string
+	 */
+	const HANDLE_CONSENT_INTEGRATION = 'basicrum-consent-integration';
+
+	/**
 	 * Constructor - register the enqueue hook.
 	 */
 	public function __construct() {
@@ -59,6 +66,7 @@ class Assets {
 
 		$this->enqueue_config_script( $settings, $in_footer );
 		$this->enqueue_loader_script( $settings, $in_footer );
+		$this->maybe_enqueue_consent_integration( $settings, $in_footer );
 	}
 
 	/**
@@ -137,6 +145,43 @@ class Assets {
 			self::HANDLE_LOADER,
 			$loader_url,
 			array( self::HANDLE_CONFIG ),
+			BASICRUM_VERSION,
+			$in_footer
+		);
+	}
+
+	/**
+	 * Enqueue one automatically selected consent-tool adapter.
+	 *
+	 * Existing installations stay in manual mode until an administrator opts
+	 * into this behavior. The consent loader remains inert when no unambiguous
+	 * supported integration can be selected.
+	 *
+	 * @param array $settings  Plugin settings.
+	 * @param bool  $in_footer Whether to load in footer.
+	 * @return void
+	 */
+	private function maybe_enqueue_consent_integration( $settings, $in_footer ) {
+		if (
+			empty( $settings['consent_enabled'] ) ||
+			'1' !== $settings['consent_enabled'] ||
+			empty( $settings['consent_integration'] ) ||
+			ConsentIntegration::MODE_AUTOMATIC !== $settings['consent_integration']
+		) {
+			return;
+		}
+
+		$integration = ConsentIntegration::get_automatic_integration();
+		$asset_path  = ConsentIntegration::get_asset_path( $integration );
+
+		if ( null === $asset_path ) {
+			return;
+		}
+
+		wp_enqueue_script(
+			self::HANDLE_CONSENT_INTEGRATION,
+			Helpers::get_asset_url( $asset_path ),
+			array( self::HANDLE_LOADER ),
 			BASICRUM_VERSION,
 			$in_footer
 		);
@@ -229,7 +274,7 @@ class Assets {
 	 * @return string Modified tag.
 	 */
 	public function add_cfasync_attribute( $tag, $handle ) {
-		if ( in_array( $handle, array( self::HANDLE_LOADER, self::HANDLE_CONFIG ), true ) ) {
+		if ( in_array( $handle, array( self::HANDLE_LOADER, self::HANDLE_CONFIG, self::HANDLE_CONSENT_INTEGRATION ), true ) ) {
 			$tag = str_replace( '<script ', '<script data-cfasync="false" ', $tag );
 		}
 
