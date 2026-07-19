@@ -19,13 +19,13 @@ Basicrum is privacy-first by design: new installations wait for an external cons
 **Features:**
 
 * **Real User Monitoring** - Collect page load timing, resource timing, and continuity metrics from actual visitors.
-* **Page Type Detection** - Automatically tags beacons with the WordPress page type (home, post, page, category, archive, search, 404) and WooCommerce types (product, cart, checkout).
+* **Page Type Detection** - Tags beacons with exact WordPress values such as `home`, `post`, `page`, `category_archive`, `archive`, `search`, and `404`, plus WooCommerce values including `shop`, `product`, `cart`, `checkout`, and `checkout_success`.
 * **Brum Site ID** - Connect this WordPress site to the matching site in your Basicrum backoffice.
-* **Consent-Controlled Loading** - Automatically connect to WP Consent API, Borlabs Cookie 3.2+, or connected modern CookieYes 3.x, with manual `OPT_IN_BASICRUM_LOADER_WRAPPER()` and `OPT_OUT_BASICRUM_LOADER_WRAPPER()` callbacks for other tools.
+* **Consent-Controlled Loading** - Detects WP Consent API, Borlabs Cookie 3.2+, and the modern CookieYes plugin runtime. Every packaged adapter fails closed until its required consent API reports a decision. Manual `OPT_IN_BASICRUM_LOADER_WRAPPER()` and `OPT_OUT_BASICRUM_LOADER_WRAPPER()` callbacks support other tools.
 * **Query String Protection** - Optionally replace URL query strings with a redaction marker before beacons are sent.
-* **3-Tier Script Loading** - Preload, iframe, and direct script loading strategy for optimal performance.
+* **3-Tier Script Loading** - Uses non-blocking preload with iframe and direct script fallbacks.
 * **Configurable Beacon Delay** - Wait after onload before sending the beacon for more complete data collection.
-* **Cache Plugin Compatibility** - Automatically excluded from optimization by WP Rocket, Autoptimize, LiteSpeed Cache, SG Optimizer, W3 Total Cache, and WP Optimize.
+* **Optimization Plugin Exclusions** - Registers Basicrum script exclusions for selected JavaScript optimization features in WP Rocket, Autoptimize, LiteSpeed Cache, SG Optimizer, W3 Total Cache, and WP-Optimize.
 
 **How it works:**
 
@@ -66,7 +66,7 @@ No plugin can guarantee legal compliance for a site. Basicrum provides immediate
 
 Under **Basicrum > Visitor Privacy > Visitor Consent**, select **Monitor without consent** only when your site is permitted to monitor without a prior consent check. Select **Require consent before monitoring (recommended)** to keep Boomerang off and send no data until your consent or cookie tool reports an allow decision on each page.
 
-When consent is required, **Consent Tool Connection** appears and defaults to **Automatic connection**. Basicrum gives WP Consent API priority, otherwise it loads the Borlabs Cookie 3.2+ or connected modern CookieYes 3.x adapter when exactly one is detected. CookieYes legacy mode is not selected because it exposes an incompatible browser API. If none or multiple direct providers are detected, monitoring remains blocked rather than guessing. Automatic mode shows an Active, Action needed, Off, or Blocked verdict; evidence for each supported provider; one next action; and copyable diagnostics that exclude the Beacon URL and Brum Site ID.
+When consent is required, **Consent Tool Connection** appears and defaults to **Automatic connection**. Basicrum gives WP Consent API priority. Without it, Basicrum loads the Borlabs Cookie adapter or CookieYes adapter only when exactly one corresponding plugin marker is detected. CookieYes legacy mode is not selected because it exposes an incompatible browser API. The CookieYes adapter still fails closed unless the connected browser API is available and reports an Analytics decision. If none or multiple direct providers are detected, monitoring remains blocked rather than guessing. Automatic mode shows an Active, Action needed, Off, or Blocked verdict; evidence for each supported provider; one next action; and copyable diagnostics that exclude the Beacon URL and Brum Site ID.
 
 Select **Manual callbacks** to reveal the detailed setup and copy-ready tabs for Borlabs Cookie v3, WP Consent API with Complianz or CookieYes, connected CookieYes, and generic callbacks. The manual Borlabs adapter supports 3.0.6+, while automatic detection requires 3.2+. Complianz requires the standalone WP Consent API plugin. Load one selected integration after the configured Script Position. It must call `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` when monitoring is allowed or `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when monitoring is denied, expires, or is withdrawn. Call one callback on every page. Basicrum does not persist a separate consent choice across page loads. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.
 
@@ -78,41 +78,23 @@ By default, Basicrum may send complete query strings in page, navigation, referr
 
 = Does it work with WooCommerce? =
 
-Yes. When WooCommerce is active, the plugin automatically detects shop, product, cart, checkout, and order confirmation page types.
+Yes. When WooCommerce is active, the plugin emits `shop`, `product`, `product_category`, `cart`, `checkout`, `checkout_payment`, `checkout_success`, and `account` page types when the corresponding WooCommerce conditional is true.
 
 = Can I use an HTTP beacon URL during local development? =
 
 Yes. Enable HTTP Strictness under Basicrum's Developer Settings to preserve HTTP beacon URLs. Keep it disabled on production sites so HTTP beacon URLs are automatically upgraded to HTTPS.
 
-== Screenshots ==
+== Third-party software ==
 
-1. Admin settings page - General settings with beacon URL and Brum Site ID.
-2. Visitor privacy settings - Query-string protection, visitor consent, and consent tool connection.
-3. Performance settings - Beacon timing and script position options.
-4. Developer settings - HTTP strictness and loader debugging options.
+Basicrum-owned code is licensed under the MIT License. The bundled Boomerang 1.815.60 library retains its upstream BSD license and copyright notices. See `THIRD-PARTY-NOTICES.md` and `assets/js/boomr/LICENSE.txt` in the plugin package.
 
 == Changelog ==
 
 = 0.0.8 =
+* First public release.
 * Reordered the Visitor Consent choices and hid Consent Tool Connection when consent is not required.
 * Replaced the unused consent-mode selector with clear immediate and consent-controlled loading choices.
 * Made external consent tools authoritative on every page through two explicit callbacks.
 * Added a privacy-safe default, transparent integration guidance, and WordPress Privacy Policy Guide content.
 * Added first-class query-string protection under Visitor Privacy, disabled by default.
-* Added privacy-safe automatic detection for WP Consent API, Borlabs Cookie 3.2+, and connected modern CookieYes, with manual callbacks available as an explicit choice.
-
-= 0.0.7 =
-* Complete rewrite with OOP architecture and PSR-4 autoloading.
-* Added page type detection (WordPress + WooCommerce).
-* Added Brum Site ID support.
-* Added consent-controlled loading with JavaScript API.
-* Added 3-tier preload, iframe, and direct script loading strategy.
-* Upgraded Boomerang.js to v1.815.60.
-* Added compatibility with popular caching plugins.
-* Added proper input validation and sanitization.
-* Added unit and integration tests.
-* Follows WordPress coding standards (PHPCS).
-
-= 0.0.6 =
-* Initial proof-of-concept release.
-* Basic Boomerang.js injection with configurable beacon URL and delay.
+* Added fail-closed automatic selection for WP Consent API, Borlabs Cookie 3.2+, and the modern CookieYes plugin marker, with manual callbacks available as an explicit choice.

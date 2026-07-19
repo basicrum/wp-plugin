@@ -8,13 +8,14 @@ tab under **Consent Tool Connection** in the revealed **Manual Connection
 Setup** panel.
 
 Automatic handling gives WP Consent API priority. Without it, Basicrum selects
-a direct Borlabs Cookie 3.2+ or connected modern CookieYes 3.x adapter only when
-exactly one is detected. No provider or multiple direct providers leave the
-consent loader blocked. Do not also paste an adapter manually while automatic
-handling is active. The automatic status panel shows the selection evidence and
-next action. Its copyable diagnostics omit the Beacon URL and Brum Site ID.
-Detection does not prove that the consent popup publishes the required
-decision, so test both allow and deny in a private window.
+a direct Borlabs Cookie or CookieYes adapter only when exactly one corresponding
+plugin marker is detected. No provider or multiple direct providers leave the
+consent loader blocked. The selected adapter still fails closed until its
+required browser API reports a decision. Do not also paste an adapter manually
+while automatic handling is active. The automatic status panel shows the
+selection evidence and next action. Its copyable diagnostics omit the Beacon URL
+and Brum Site ID. Detection does not prove that the consent popup publishes the
+required decision, so test both allow and deny in a private window.
 
 In manual mode, load the Basicrum consent loader before the selected adapter.
 Load one adapter as unblocked site code on every frontend page. The external

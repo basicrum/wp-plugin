@@ -37,6 +37,7 @@ require_entry 'basicrum/basicrum.php'
 require_entry 'basicrum/uninstall.php'
 require_entry 'basicrum/readme.txt'
 require_entry 'basicrum/LICENSE.md'
+require_entry 'basicrum/THIRD-PARTY-NOTICES.md'
 require_entry 'basicrum/src/Plugin.php'
 require_entry 'basicrum/src/Assets.php'
 require_entry 'basicrum/src/ConsentIntegration.php'
@@ -44,6 +45,7 @@ require_entry 'basicrum/vendor/autoload.php'
 require_entry 'basicrum/vendor/composer/autoload_classmap.php'
 require_entry 'basicrum/vendor/composer/installed.php'
 require_entry 'basicrum/assets/js/boomr/boomerang-1.815.60.cutting-edge.min.js'
+require_entry 'basicrum/assets/js/boomr/LICENSE.txt'
 require_entry 'basicrum/assets/js/loaders/boomerang-loader-v15.min.js'
 require_entry 'basicrum/assets/js/loaders/consent-boomerang-loader-v1-15.min.js'
 require_entry 'basicrum/assets/js/integrations/borlabs-cookie-v3.js'
@@ -70,6 +72,11 @@ if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Eq '^basicrum/(tests|\.git|\.github|
 	exit 1
 fi
 
+if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Eq '^basicrum/(AGENTS\.md|CLAUDE\.md|CONTRIBUTING\.md|SECURITY\.md|checklist\.md|docs(/|$))'; then
+	printf '%s\n' 'Release archive contains repository-only documentation.' >&2
+	exit 1
+fi
+
 if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Eq '^basicrum/vendor/(bin|antecedent|brain|dealerdirect|doctrine|hamcrest|mockery|myclabs|nikic|phar-io|php-parallel-lint|phpcompatibility|phpcsstandards|phpunit|sebastian|squizlabs|theseer|wp-coding-standards|yoast)(/|$)'; then
 	printf '%s\n' 'Release archive contains a development dependency.' >&2
 	exit 1
@@ -87,6 +94,16 @@ fi
 
 if ! unzip -p "$ARCHIVE_PATH" basicrum/vendor/composer/autoload_classmap.php | grep -Fq "'Basicrum\\\\WP\\\\ConsentIntegration'"; then
 	printf '%s\n' 'Composer class map does not contain the consent integration service.' >&2
+	exit 1
+fi
+
+if ! unzip -p "$ARCHIVE_PATH" basicrum/assets/js/boomr/LICENSE.txt | grep -Fq 'Copyright (c) 2017-2023, Akamai Technologies, Inc.'; then
+	printf '%s\n' 'Bundled Boomerang license text is incomplete.' >&2
+	exit 1
+fi
+
+if ! unzip -p "$ARCHIVE_PATH" basicrum/THIRD-PARTY-NOTICES.md | grep -Fq 'Boomerang 1.815.60'; then
+	printf '%s\n' 'Bundled software notice is incomplete.' >&2
 	exit 1
 fi
 
