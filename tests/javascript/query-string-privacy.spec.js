@@ -16,6 +16,7 @@ const BOOMERANG_URL = `${ PAGE_ORIGIN }/boomerang.js`;
 const COLLECTOR_URL = 'https://collector.basicrum.test/beacon';
 const SECRET = 'BASICRUM_PRIVATE_QUERY_VALUE_7c0f1e';
 const PAGE_URL = `${ PAGE_ORIGIN }/?search=${ SECRET }`;
+const REFERRER_URL = `${ PAGE_ORIGIN }/previous-page?source=${ SECRET }`;
 const RESOURCE_URL = `${ PAGE_ORIGIN }/private-resource.css?token=${ SECRET }`;
 
 /**
@@ -106,7 +107,10 @@ window.basicRumBoomerangConfig = ${ JSON.stringify( config ) };
 		await route.abort( 'blockedbyclient' );
 	} );
 
-	const response = await page.goto( PAGE_URL, { waitUntil: 'load' } );
+	const response = await page.goto( PAGE_URL, {
+		waitUntil: 'load',
+		referer: REFERRER_URL,
+	} );
 
 	expect( response ).not.toBeNull();
 	expect( response.ok() ).toBeTruthy();
@@ -121,6 +125,12 @@ window.basicRumBoomerangConfig = ${ JSON.stringify( config ) };
 		beacons.some( ( parameters ) => {
 			const pageUrl = parameters.get( 'u' );
 			return pageUrl && pageUrl.includes( '?qs-redacted' );
+		} )
+	).toBe( true );
+	expect(
+		beacons.some( ( parameters ) => {
+			const referrerUrl = parameters.get( 'r' );
+			return referrerUrl && referrerUrl.includes( '?qs-redacted' );
 		} )
 	).toBe( true );
 	expect(
