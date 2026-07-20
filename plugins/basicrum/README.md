@@ -9,7 +9,7 @@ This directory contains the installable Basicrum WordPress plugin. Runtime PHP, 
 - `src/Assets.php` controls frontend monitoring injection.
 - `src/Admin/Settings/` contains settings rendering and validation.
 - `readme.txt` is the canonical WordPress.org user documentation and changelog.
-- `THIRD-PARTY-NOTICES.md` records bundled software with separate licenses.
+- `THIRD-PARTY-NOTICES.txt` records bundled software with separate licenses.
 - `.distignore` defines development files excluded from releases.
 
 ## Development

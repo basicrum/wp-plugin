@@ -92,6 +92,7 @@ composer-audit:
 conventions:
 	sh tools/verify-ascii-hyphens.sh
 	sh tools/verify-version-consistency.sh
+	sh tools/verify-boomerang-provenance.sh
 
 translations:
 	$(COMPOSE) run --rm --no-deps --user "$$(id -u):$$(id -g)" -e HOME=/tmp -w $(WPCLI_PLUGIN_WORKDIR) $(WPCLI_SERVICE) sh /tools/update-translations.sh .

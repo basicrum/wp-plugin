@@ -37,7 +37,7 @@ require_entry 'basicrum/basicrum.php'
 require_entry 'basicrum/uninstall.php'
 require_entry 'basicrum/readme.txt'
 require_entry 'basicrum/LICENSE.md'
-require_entry 'basicrum/THIRD-PARTY-NOTICES.md'
+require_entry 'basicrum/THIRD-PARTY-NOTICES.txt'
 require_entry 'basicrum/src/Plugin.php'
 require_entry 'basicrum/src/Assets.php'
 require_entry 'basicrum/src/ConsentIntegration.php'
@@ -107,7 +107,7 @@ if ! unzip -p "$ARCHIVE_PATH" basicrum/assets/js/boomr/LICENSE.txt | grep -Fq 'C
 	exit 1
 fi
 
-if ! unzip -p "$ARCHIVE_PATH" basicrum/THIRD-PARTY-NOTICES.md | grep -Fq 'Boomerang 1.815.60'; then
+if ! unzip -p "$ARCHIVE_PATH" basicrum/THIRD-PARTY-NOTICES.txt | grep -Fq 'Boomerang 1.815.60'; then
 	printf '%s\n' 'Bundled software notice is incomplete.' >&2
 	exit 1
 fi

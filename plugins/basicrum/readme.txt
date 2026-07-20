@@ -86,7 +86,9 @@ Yes. Enable HTTP Strictness under Basicrum's Developer Settings to preserve HTTP
 
 == Third-party software ==
 
-Basicrum-owned code is licensed under the MIT License. The bundled Boomerang 1.815.60 library retains its upstream BSD license and copyright notices. See `THIRD-PARTY-NOTICES.md` and `assets/js/boomr/LICENSE.txt` in the plugin package.
+Basicrum-owned code is licensed under the MIT License. The bundled Boomerang 1.815.60 library retains its upstream BSD license and copyright notices. See `THIRD-PARTY-NOTICES.txt` and `assets/js/boomr/LICENSE.txt` in the plugin package.
+
+The bundled file `assets/js/boomr/boomerang-1.815.60.cutting-edge.min.js` is a minified build of the open source Boomerang project by Akamai ([github.com/akamai/boomerang](https://github.com/akamai/boomerang)). It is byte-for-byte reproducible from public source: commit `ead2783a33a2ce91205fe34f8fc992433faba9a2` on the `master` branch of [github.com/basicrum/boomerang](https://github.com/basicrum/boomerang), built with Node 12 and the repository's Grunt tooling (`grunt clean build --build-flavor=cutting-edge --build-number=815`). The version banner inside the file stamps the parent commit `564759ed70de7801bb64de5e2025fb6ac049ff5f` because the final source change was uncommitted when the shipped file was generated; the code content matches `ead2783a` exactly. The Basicrum fork differs from upstream Boomerang by a small set of maintained commits that remove Long Tasks monitoring, remove the deprecated FID metric and rework Time to First Interaction, drop unused utility functions, and add the Basicrum configuration bootstrap.
 
 == Changelog ==
 

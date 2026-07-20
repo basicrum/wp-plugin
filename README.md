@@ -61,7 +61,7 @@ The plugin header version, `BASICRUM_VERSION`, WordPress `Stable tag`, top chang
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Report suspected vulnerabilities privately according to [SECURITY.md](SECURITY.md), not through a public issue.
 
-Basicrum-owned code is available under the [MIT License](LICENSE). Bundled third-party software retains its upstream license; see the plugin's [third-party notices](plugins/basicrum/THIRD-PARTY-NOTICES.md).
+Basicrum-owned code is available under the [MIT License](LICENSE). Bundled third-party software retains its upstream license; see the plugin's [third-party notices](plugins/basicrum/THIRD-PARTY-NOTICES.txt).
 
 ## Contributors
 
