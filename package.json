@@ -7,11 +7,13 @@
   },
   "scripts": {
     "test": "npm run test:js",
-    "test:js": "playwright test",
+    "test:js": "sh tools/verify-loader-minification.sh && playwright test",
     "test:js:headed": "playwright test --headed",
-    "test:e2e:woocommerce": "playwright test --config=playwright.woocommerce-e2e.config.js"
+    "test:e2e:woocommerce": "playwright test --config=playwright.woocommerce-e2e.config.js",
+    "minify:loaders": "uglifyjs plugins/basicrum/assets/js/loaders/boomerang-loader-v15.js --mangle -o plugins/basicrum/assets/js/loaders/boomerang-loader-v15.min.js && uglifyjs plugins/basicrum/assets/js/loaders/consent-boomerang-loader-v1-15.js --mangle --comments '/^!/' -o plugins/basicrum/assets/js/loaders/consent-boomerang-loader-v1-15.min.js"
   },
   "devDependencies": {
-    "@playwright/test": "1.61.1"
+    "@playwright/test": "1.61.1",
+    "uglify-js": "3.19.3"
   }
 }
