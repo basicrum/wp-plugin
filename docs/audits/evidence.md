@@ -87,7 +87,7 @@ to the original privacy report:
 | CI-05 (UX 2, RESOLVED AFTER AUDIT) | major | `examples/integrations/cookieyes.js:4` | static | At audited ref: `sed -n '1,6p' examples/integrations/cookieyes.js` | At audited ref: `consentCategory='analytics'` was hard-coded with no warning in the file. Current packaged adapter includes the wrong-category warning. | medium |
 | BR-DOC-13 (UX 8) | major | no purge caveat on any shipped surface | static | `grep -ni 'purge\|cached' plugins/basicrum/readme.txt; echo exit=$?` | Exit 1; the non-shipped examples README does warn about cache clearing, the shipped surfaces do not | medium |
 | issue-http-strictness-inverted (UX 5, verifier-downgraded to minor) | minor | `Page.php:384,390`; `readme.txt:72-74` | static | `sed -n '384p;390p' plugins/basicrum/src/Admin/Settings/Page.php` | Label "HTTP Strictness" on a checkbox that relaxes strictness; readme FAQ repeats the inversion | medium |
-| BR-DOC-11 (UX 7, verifier-downgraded to minor) | minor | `readme.txt:76-81`; `wordpress-org-assets/` | static | `sed -n '76,81p' plugins/basicrum/readme.txt; ls wordpress-org-assets/` | Four screenshot captions, zero screenshot files in the repo | high |
+| BR-DOC-11 (UX 7, RESOLVED AFTER AUDIT) | minor | `readme.txt`; `wordpress-org-assets/` | static | `find wordpress-org-assets -maxdepth 1 -name 'screenshot-*.png'; sed -n '/== Screenshots ==/,/== Frequently Asked Questions ==/p' plugins/basicrum/readme.txt` | Current tree contains four WordPress 7.0.2 settings screenshots and four matching captions. | high |
 
 ## Runtime capture appendix
 

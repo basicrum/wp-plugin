@@ -124,27 +124,27 @@ settings screen. (issue-backoffice-unlinked, walkthrough-05, BR-DOC-16)
 
 ## 7. Repair the wp.org listing surfaces
 
-- [ ] readme.txt promises 4 screenshots; `wordpress-org-assets/` contains
-  none. Capture screenshot-1..4.png or remove the section. (BR-DOC-11)
-- [ ] Installation steps 4-5 are in the reverse order of the UI dependency
+- [x] Add four current settings screenshots to `wordpress-org-assets/` and
+  matching numbered captions to `readme.txt`. (BR-DOC-11)
+- [x] Installation steps 4-5 are in the reverse order of the UI dependency
   (fields unlock only after Enable is checked). (BR-DOC-14)
-- [ ] Add a Support section (wp.org forum, basicrum.com contact).
+- [x] Add a Support section (wp.org forum, basicrum.com contact).
   (BR-DOC-19)
-- [ ] Align page-type lists across surfaces with the detector (also privacy
+- [x] Align page-type lists across surfaces with the detector (also privacy
   audit item 6). (BR-DOC-22)
-- [ ] Replace the stock-template `plugins/basicrum/README.md` stub (also
+- [x] Replace the stock-template `plugins/basicrum/README.md` stub (also
   privacy audit item 7). (BR-DOC-21)
-- [ ] Keep the dev file `phpstan.neon.dist` out of the release ZIP.
+- [x] Keep the dev file `phpstan.neon.dist` out of the release ZIP.
   (BR-DOC-23)
 
 ## 8. Document the operating lifecycle
 
-- [ ] State that disabling or deactivating Basicrum does not immediately
+- [x] State that disabling or deactivating Basicrum does not immediately
   stop the script on cached pages; tell operators to purge page/CDN caches
   (documentation side of privacy audit item 3). (BR-DOC-13)
-- [ ] State what deactivation keeps (settings) and uninstall removes.
+- [x] State what deactivation keeps (settings) and uninstall removes.
   (BR-DOC-17)
-- [ ] Add multisite guidance; network activation leaves every subsite
+- [x] Add multisite guidance; network activation leaves every subsite
   unconfigured. (BR-DOC-20)
 
 ## 9. Small engineering fixes

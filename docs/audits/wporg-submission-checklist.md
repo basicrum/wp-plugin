@@ -59,17 +59,19 @@ refuters. 84 claims audited: 52 clean, 24 upheld findings, 8 overturned.
   itself: self-hosted collectors need no account. Reword: collector
   endpoint + Brum Site ID required; hosted account is one way to get
   them. (R24, C04)
-- [ ] Vocabulary bridge: the compliance FAQ says "immediate and
+- [x] Vocabulary bridge: the compliance FAQ says "immediate and
   consent-controlled loading" while the settings radios say "Monitor
   without consent" / "Require consent before monitoring". Bridge both
-  vocabularies once, then use the radio labels. (C02)
-- [ ] Define the server-side nouns once: collector (receives beacons) vs
+  vocabularies once, then use the radio labels. Resolved by removing the
+  competing terminology. (C02)
+- [x] Define the server-side nouns once: collector (receives beacons) vs
   backoffice (dashboard where the Brum Site ID lives) vs account (hosted
-  option); "backoffice" is currently undefined jargon. (C15)
-- [ ] Disambiguate "Basicrum" = plugin vs company vs service in the
+  option); "backoffice" is currently undefined jargon. Resolved by using
+  collector, Beacon URL, and hosted service consistently. (C15)
+- [x] Disambiguate "Basicrum" = plugin vs company vs service in the
   query-string FAQ: data goes only to the operator-configured Beacon URL;
   the plugin makes no requests to basicrum.com. (C16)
-- [ ] HTTP Strictness FAQ still inverts the semantics (enabling
+- [x] HTTP Strictness FAQ still inverts the semantics (enabling
   "Strictness" relaxes enforcement). Rewrite the FAQ to lead with the
   default (auto-upgrade to HTTPS) and what the toggle actually allows;
   the label rename remains open from the operator-experience audit. (C08)
@@ -77,24 +79,19 @@ refuters. 84 claims audited: 52 clean, 24 upheld findings, 8 overturned.
   (Privacy.php immediate-mode sentence) is undefined for site owners;
   spell out: frontend pages, admins excluded unless Track Admin Users.
   (C12)
-- [ ] Define "connected" CookieYes at first use (linked to the CookieYes
-  web app so its browser consent API is present). (C07)
-- [ ] Replace "fails closed" jargon: "keeps monitoring switched off until
-  its consent API reports a decision". (C19)
-- [ ] "How it works" step 2 orders enable-before-Site-ID, contradicting
-  Installation steps 4-5 and triggering the enabled-but-inactive notice;
-  align the order. (C22)
-- [ ] "after the configured Script Position" forward-references an
-  undefined setting; name it: Basicrum > Performance > Script Position
-  (header or footer). (C23)
+- [x] Define "connected" CookieYes at first use. Resolved by removing the
+  ambiguous implementation detail from the customer-facing overview. (C07)
+- [x] Replace "fails closed" jargon with plain language. (C19)
+- [x] Align the installation order with the enabled-field dependency and
+  remove the redundant "How it works" sequence. (C22)
+- [x] Remove the undefined Script Position forward reference from the
+  consent overview. (C23)
 
 ## 4. Optional but recommended
 
-- [ ] Screenshots: the section was correctly removed (no files existed),
-  but an image-free listing forces users to imagine the settings-driven
-  consent workflow. Capture screenshot-1..N.png using the exact current
-  labels (Visitor Consent, Consent Tool Connection) and restore a
-  matching section. (C24)
+- [x] Screenshots: four current WordPress 7.0.2 settings captures use the exact
+  Visitor Consent and Consent Tool Connection labels, privacy-safe example
+  values, and matching numbered captions in `readme.txt`. (C24)
 - [ ] Spot-check the two basicrum.com URLs (home, /contact/) resolve;
   reviewers click them. (R45)
 - [ ] CookieYes "modern ... runtime" - one refuter pair split on this;

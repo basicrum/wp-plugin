@@ -119,14 +119,16 @@ operator-journey defect, P3 = minor/polish.
   backoffice with a time expectation) and "No data is arriving" checklist
   (admin tracking off, consent mode with no adapter, wrong CookieYes
   category, stale caches). (UX 3 / BR-DOC-08, BR-DOC-09, walkthrough-06)
-- [ ] P2 Lifecycle docs: purge caches after disabling/deactivating (cached
+- [x] P2 Lifecycle docs: purge caches after disabling/deactivating (cached
   pages keep the loader; browser-cached HTML cannot be purged at all);
   what deactivation keeps vs uninstall removes; multisite
   guidance. (UX 8 / BR-DOC-13, BR-DOC-17, BR-DOC-18, BR-DOC-20)
-- [ ] P2 wp.org listing: add the four screenshots or drop the section;
-  fix Installation step order; add a Support section; align page-type
-  lists with the detector; replace the stock `plugins/basicrum/README.md`
-  stub. (privacy 6+7, UX 7 / DISC-08, DISC-09, BR-DOC-11, BR-DOC-14,
+- [x] P2 wp.org screenshots: add four current settings captures and matching
+  numbered `readme.txt` captions. (UX 7 / BR-DOC-11)
+- [x] P2 wp.org listing: fix Installation step order; add a Support section;
+  align page-type lists with the detector; replace the stock
+  `plugins/basicrum/README.md`
+  stub. (privacy 6+7, UX 7 / DISC-08, DISC-09, BR-DOC-14,
   BR-DOC-19)
 - [ ] P3 Soften or verify the "reviewed against Complianz" claim in the
   integrations README. (UX residual)

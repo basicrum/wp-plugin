@@ -12,97 +12,103 @@ Privacy-first Real User Monitoring with consent-controlled loading, page types, 
 
 == Description ==
 
-Basicrum is a free, open source Real User Monitoring (RUM) system. This plugin integrates [Boomerang.js](https://github.com/akamai/boomerang) into your WordPress site to collect real performance data from your visitors.
+Basicrum connects WordPress to a hosted or self-hosted Basicrum collector. It uses the bundled open source Boomerang library to measure how real visitors experience your site.
 
-Basicrum is privacy-first by design: new installations wait for an external consent decision by default, and the plugin contributes editable disclosure text to the WordPress Privacy Policy Guide. Site owners remain responsible for selecting an appropriate legal basis, configuring consent where required, and publishing an accurate privacy notice.
+**Basicrum is currently in private beta.** [Contact Basicrum](https://www.basicrum.com/contact/) to request beta access and receive the Beacon URL and Brum Site ID required to configure the plugin.
+
+Basicrum supports two monitoring modes:
+
+* **Monitor without consent** - Start monitoring without waiting for a consent decision. Use this only when you have determined that prior consent is not required for your site.
+* **Require consent before monitoring (recommended)** - Keep monitoring off until an external consent tool reports that the visitor has allowed it. This privacy-first mode is the default for new installations.
+
+Basicrum does not display a consent popup or determine your legal basis. Site owners remain responsible for configuring consent where required and publishing an accurate privacy notice.
 
 **Features:**
 
-* **Real User Monitoring** - Collect page load timing, resource timing, and continuity metrics from actual visitors.
-* **Page Type Detection** - Tags beacons with exact WordPress values such as `home`, `post`, `page`, `category_archive`, `archive`, `search`, and `404`, plus WooCommerce values including `shop`, `product`, `cart`, `checkout`, and `checkout_success`.
-* **Brum Site ID** - Connect this WordPress site to the matching site in your Basicrum backoffice.
-* **Consent-Controlled Loading** - Detects WP Consent API, Borlabs Cookie 3.2+, and the modern CookieYes plugin runtime. Every packaged adapter fails closed until its required consent API reports a decision. Manual `OPT_IN_BASICRUM_LOADER_WRAPPER()` and `OPT_OUT_BASICRUM_LOADER_WRAPPER()` callbacks support other tools.
-* **Query String Protection** - Optionally replace URL query strings with a redaction marker before beacons are sent.
-* **3-Tier Script Loading** - Uses non-blocking preload with iframe and direct script fallbacks.
-* **Configurable Beacon Delay** - Wait after onload before sending the beacon for more complete data collection.
-* **Optimization Plugin Exclusions** - Registers Basicrum script exclusions for selected JavaScript optimization features in WP Rocket, Autoptimize, LiteSpeed Cache, SG Optimizer, W3 Total Cache, and WP-Optimize.
-
-**How it works:**
-
-1. Configure the beacon endpoint URL for your hosted or self-hosted Basicrum collector.
-2. Enable monitoring and copy the Brum Site ID from your Basicrum backoffice.
-3. The plugin injects Boomerang.js on your frontend pages.
-4. Performance beacons are sent to your collector for analysis.
+* **Real User Monitoring** - Measure page loads, resources, interactions, and Core Web Vitals.
+* **WordPress and WooCommerce Page Types** - Tag beacons with the current page type.
+* **Consent-Controlled Loading** - Connect automatically through WP Consent API, Borlabs Cookie, or CookieYes, or use manual callbacks for another tool.
+* **Privacy Controls** - Optionally remove URL query strings and exclude logged-in administrators.
+* **Loading Controls** - Choose the script position and an optional post-load beacon delay.
+* **Optimization Compatibility** - Exclude Basicrum scripts from selected optimization features in popular caching plugins.
 
 Visit [basicrum.com](https://www.basicrum.com/) for more information about the Basicrum platform.
 
 == Installation ==
 
-1. Upload the `basicrum` folder to `/wp-content/plugins/`.
-2. Activate the plugin through the "Plugins" menu in WordPress.
-3. Go to **Basicrum** in the admin sidebar to configure settings.
-4. Set your beacon URL and Brum Site ID.
-5. Enable monitoring.
+1. Install and activate Basicrum.
+2. Open **Basicrum** in the WordPress admin sidebar.
+3. Check **Enable Basicrum** to unlock its settings.
+4. Enter the Beacon URL and Brum Site ID provided with your beta access.
+5. Review the Visitor Consent and Consent Tool Connection settings.
+6. Save Changes.
+
+== Screenshots ==
+
+1. Configure monitoring, the collector connection, administrator tracking, and query-string protection.
+2. Use the recommended automatic connection with WP Consent API and review provider detection.
+3. Connect a custom consent tool with the manual opt-in and opt-out callbacks and packaged adapters.
+4. Configure beacon timing, script position, and development-only HTTP behavior.
 
 == Frequently Asked Questions ==
 
-= What is Real User Monitoring? =
+= What do I need to use Basicrum? =
 
-Real User Monitoring (RUM) collects performance data from actual visitors to your site, as opposed to synthetic testing which simulates visits. This gives you accurate data about how fast your site loads for real people.
-
-= What is Boomerang.js? =
-
-Boomerang.js is an open source JavaScript library by Akamai that measures the performance of your website from the end user's perspective. It collects detailed timing data and sends it to a beacon endpoint for analysis.
-
-= Do I need a Basicrum account? =
-
-You need a Basicrum collector endpoint and the matching Brum Site ID. A hosted account from [basicrum.com](https://www.basicrum.com/) is one way to get them; running your own self-hosted collector requires no account.
+You need a Basicrum collector endpoint and its matching Brum Site ID. During the private beta, [contact Basicrum](https://www.basicrum.com/contact/) to request access and receive both values.
 
 = Does Basicrum make my site compliant with privacy laws? =
 
-No plugin can guarantee legal compliance for a site. Basicrum provides immediate and consent-controlled loading, but it does not determine your legal basis, display a consent popup, retain a server-side consent record, or configure your privacy notice. Choose the loading behavior that matches your consent tool and the requirements that apply to your site.
+No. Basicrum provides consent-controlled loading and editable text for the WordPress Privacy Policy Guide, but it does not determine your legal basis, display a consent popup, or configure your privacy notice.
 
 = How do I connect my consent or cookie tool? =
 
-Under **Basicrum > Visitor Privacy > Visitor Consent**, select **Monitor without consent** only when your site is permitted to monitor without a prior consent check. Select **Require consent before monitoring (recommended)** to keep Boomerang off and send no data until your consent or cookie tool reports an allow decision on each page.
+The recommended mode keeps monitoring off until your consent tool reports an allow decision on each page. Automatic connection supports WP Consent API, Borlabs Cookie 3.2+, and CookieYes 3.x. If Basicrum cannot choose one safely, monitoring remains off.
 
-When consent is required, **Consent Tool Connection** appears and defaults to **Automatic connection**. Basicrum gives WP Consent API priority. Without it, Basicrum loads the Borlabs Cookie adapter or CookieYes adapter only when exactly one corresponding plugin marker is detected. CookieYes legacy mode is not selected because it exposes an incompatible browser API. The CookieYes adapter still fails closed unless the connected browser API is available and reports an Analytics decision. If none or multiple direct providers are detected, monitoring remains blocked rather than guessing. Automatic mode shows an Active, Action needed, Off, or Blocked verdict; evidence for each supported provider; one next action; and copyable diagnostics that exclude the Beacon URL and Brum Site ID.
-
-Select **Manual callbacks** to reveal the detailed setup and copy-ready tabs for Borlabs Cookie v3, WP Consent API with Complianz or CookieYes, connected CookieYes, and generic callbacks. The manual Borlabs adapter supports 3.0.6+, while automatic detection requires 3.2+. Complianz requires the standalone WP Consent API plugin. Load one selected integration after the configured Script Position. It must call `window.OPT_IN_BASICRUM_LOADER_WRAPPER()` when monitoring is allowed or `window.OPT_OUT_BASICRUM_LOADER_WRAPPER()` when monitoring is denied, expires, or is withdrawn. Call one callback on every page. Basicrum does not persist a separate consent choice across page loads. A region-aware tool may report allowed before visitor interaction in an opt-out region. If consent is withdrawn after Boomerang loading starts, reload the page before granting it again.
-
-Detection confirms that a supported integration is present, not that its consent categories are configured correctly. Follow the status panel's verification step and test both allow and deny in a private window.
+For another tool, choose **Manual callbacks** and use one of the copy-ready integrations in the settings page. Basicrum does not store its own consent choice. Always test both allow and deny decisions.
 
 = Does Basicrum send URL query strings? =
 
-By default, Basicrum may send complete query strings in page, navigation, referrer, and resource URLs. Enable **Basicrum > Visitor Privacy > Strip Query Strings** to replace them with `?qs-redacted` before sending beacons. URL paths are still collected. Review whether your URLs can contain personal or sensitive information before deciding whether to enable this setting.
+By default, page and resource URLs may include complete query strings. Enable **Strip Query Strings** to replace them with `?qs-redacted` before sending beacons. URL paths are still collected.
 
 = Does Basicrum set cookies? =
 
-When Boomerang runs, it sets a first-party `RT` cookie that maintains timing state across consecutive pages. It uses `SameSite=Strict`, carries the `Secure` flag on HTTPS sites, and expires seven days after the last monitored page view. In **Require consent before monitoring** mode no cookie is set until your consent tool reports an allow decision, and the opt-out callback removes the `RT` cookie together with any legacy `BA` cookie left by older Boomerang setups.
+When monitoring runs, Boomerang sets a first-party `RT` cookie at path `/`. It contains a random session identifier that links page views, uses a 30-minute session window, and has a rolling seven-day expiry. It uses `SameSite=Strict` and is marked `Secure` on HTTPS sites. The opt-out callback removes `RT` and any legacy `BA` cookie.
 
 = Does it work with WooCommerce? =
 
-Yes. When WooCommerce is active, the plugin emits `shop`, `product`, `product_category`, `cart`, `checkout`, `checkout_payment`, `checkout_success`, and `account` page types when the corresponding WooCommerce conditional is true.
+Yes. Basicrum detects `shop`, `product`, `product_category`, `cart`, `checkout`, `checkout_payment`, `checkout_success`, and `account`. Standard WordPress values include `home`, `post`, `page`, `custom_post`, `category_archive`, `tag_archive`, `taxonomy_archive`, `author_archive`, `date_archive`, `archive`, `search`, and `404`.
+
+= Why is no data arriving? =
+
+Test in a private window because administrator tracking is disabled by default. Confirm that monitoring is enabled, the Beacon URL and Brum Site ID are valid, and the consent connection reports an active decision. Check the browser network panel for a request to your Beacon URL. After changing or disabling Basicrum, purge page and CDN caches so they do not serve old HTML.
 
 = Can I use an HTTP beacon URL during local development? =
 
-Yes. Enable HTTP Strictness under Basicrum's Developer Settings to preserve HTTP beacon URLs. Keep it disabled on production sites so HTTP beacon URLs are automatically upgraded to HTTPS.
+HTTP beacon URLs are upgraded to HTTPS by default. For local testing only, select **Developer Settings > HTTP Strictness > Allow HTTP beacon URLs**. Do not enable this on a production site.
+
+= What happens when I disable or uninstall Basicrum? =
+
+Disabling monitoring or deactivating the plugin stops new script injection, but cached pages may continue serving old markup until caches expire or are purged. Deactivation keeps your settings. Uninstall removes Basicrum settings from the current site; it does not delete data already stored by a remote collector. On multisite, configure and remove settings for each site separately.
 
 == External services ==
 
-This plugin sends visitor performance beacons to the collector endpoint that the site administrator configures under **Basicrum > General Settings > Beacon URL**. No beacon is sent until monitoring is enabled and, in the default **Require consent before monitoring** mode, an allow decision is reported by the site's consent tool.
+When monitoring runs, the browser sends performance beacons to the administrator-configured Beacon URL. In the default consent-controlled mode, this starts only after the site's consent tool reports an allow decision.
 
-Each beacon carries performance data: page and resource URLs (with optional query-string redaction), timing metrics, the detected page type, and the configured Brum Site ID. As with any HTTP request, the collector also observes the visitor's IP address and user agent. Beacons go only to the configured Beacon URL; the plugin makes no requests to basicrum.com or any other service on its own.
+Beacons may include page, navigation, referrer, and resource URLs; query strings unless redaction is enabled; timing and page-type data; interaction counts and timestamps; pointer coordinates and element selectors where available; screen, browser, device, network, memory, DOM, and browser-storage size information; the Brum Site ID; and the random `RT` session identifier. Keystroke values and browser-storage contents are not collected. The collector also observes the IP address and user agent carried by the HTTP request.
 
-The collector can be the hosted Basicrum service or a self-hosted installation. For the hosted service, see the [Basicrum website](https://www.basicrum.com/) for service and privacy information. Operators of self-hosted collectors are responsible for their own hosting arrangements.
+Beacons go only to the configured endpoint. The plugin does not contact basicrum.com unless the administrator configures a hosted Basicrum collector URL. Basicrum does not store visitor beacon data in the WordPress database.
+
+The collector may be hosted or self-hosted. Its operator determines retention, access, deletion, hosting, and transfer arrangements. Review the applicable service and privacy information before enabling monitoring. See [basicrum.com](https://www.basicrum.com/) for the Basicrum platform.
 
 == Third-party software ==
 
-Basicrum-owned code is licensed under the MIT License. The bundled Boomerang 1.815.60 library retains its upstream BSD license and copyright notices. See `THIRD-PARTY-NOTICES.txt` and `assets/js/boomr/LICENSE.txt` in the plugin package.
+Basicrum-owned code uses the MIT License. The bundled Boomerang 1.815.60 library comes from the [official Akamai Boomerang project](https://github.com/akamai/boomerang) and retains its BSD license. Basicrum's build comes from [Basicrum's Boomerang fork at commit ead2783a](https://github.com/basicrum/boomerang/tree/ead2783a33a2ce91205fe34f8fc992433faba9a2); the bundle banner identifies parent commit `564759ed70de7801bb64de5e2025fb6ac049ff5f`. License, fork-change, and reproducible-build details are in [THIRD-PARTY-NOTICES.txt](https://github.com/basicrum/basicrum-wordpress/blob/main/plugins/basicrum/THIRD-PARTY-NOTICES.txt).
 
-The bundled file `assets/js/boomr/boomerang-1.815.60.cutting-edge.min.js` is a minified build of the open source Boomerang project by Akamai ([github.com/akamai/boomerang](https://github.com/akamai/boomerang)). It is byte-for-byte reproducible from public source: commit `ead2783a33a2ce91205fe34f8fc992433faba9a2` on the `master` branch of [github.com/basicrum/boomerang](https://github.com/basicrum/boomerang), built with Node 12 and the repository's Grunt tooling (`grunt clean build --build-flavor=cutting-edge --build-number=815`). The version banner inside the file stamps the parent commit `564759ed70de7801bb64de5e2025fb6ac049ff5f` because the final source change was uncommitted when the shipped file was generated; the code content matches `ead2783a` exactly. The Basicrum fork differs from upstream Boomerang by a small set of maintained commits that remove Long Tasks monitoring, remove the deprecated FID metric and rework Time to First Interaction, drop unused utility functions, and add the Basicrum configuration bootstrap.
+== Support ==
+
+Use the Support tab on WordPress.org, open a [GitHub issue](https://github.com/basicrum/basicrum-wordpress/issues), or contact Basicrum through [basicrum.com](https://www.basicrum.com/contact/).
 
 == Changelog ==
 
 = 0.0.8 =
-* First public release: Real User Monitoring via the bundled Boomerang.js with WordPress and WooCommerce page-type detection, a consent-required default with fail-closed automatic consent-tool detection (WP Consent API, Borlabs Cookie 3.2+, CookieYes 3.x) plus manual callbacks, optional query-string redaction, editable WordPress Privacy Policy Guide text, and optimization-plugin script exclusions.
+* First public release with consent-controlled monitoring, WordPress and WooCommerce page types, query-string redaction, privacy-policy guidance, and caching-plugin exclusions.
