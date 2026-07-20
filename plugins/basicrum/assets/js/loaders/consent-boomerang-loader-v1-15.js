@@ -220,6 +220,19 @@
 
   // Consent wrapper opt-out callback: disable collection and remove cookies.
   mainWin.OPT_OUT_BASICRUM_LOADER_WRAPPER = function() {
+    // Neutralize the inline configuration only after an opt-in has already
+    // started injecting Boomerang on this page: a script that is still
+    // downloading when consent is withdrawn must not initialize when it
+    // arrives, because the bundle only calls BOOMR.init() while
+    // basicRumBoomerangConfig is truthy. A deny that happens before any
+    // opt-in must keep the configuration - fail-closed adapters report deny
+    // before the visitor decides, and a later allow on the same page must
+    // still initialize. After injection, re-granting requires a reload,
+    // matching the documented consent-loader behavior.
+    if (mainWin.BOOMR && mainWin.BOOMR.snippetExecuted) {
+      mainWin.basicRumBoomerangConfig = null;
+    }
+
     if (mainWin.BOOMR) {
       if (typeof mainWin.BOOMR.disable === "function") {
         mainWin.BOOMR.disable();
