@@ -18,4 +18,4 @@ Include, where possible:
 
 Avoid accessing data that does not belong to you, degrading a live service, or testing against production systems without permission. Please allow time for the report to be reproduced and addressed before public disclosure.
 
-General support questions and non-sensitive defects may use the repository's [public issue tracker](https://github.com/basicrum/wp-plugin/issues).
+General support questions and non-sensitive defects may use the repository's [public issue tracker](https://github.com/basicrum/basicrum-wordpress/issues).

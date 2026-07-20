@@ -67,4 +67,4 @@ Basicrum-owned code is available under the [MIT License](LICENSE). Bundled third
 
 Thank you to everyone who contributes to Basicrum. This grid is generated from GitHub's contributor data.
 
-[![Basicrum contributors](https://contrib.rocks/image?repo=basicrum/wp-plugin)](https://github.com/basicrum/wp-plugin/graphs/contributors)
+[![Basicrum contributors](https://contrib.rocks/image?repo=basicrum/basicrum-wordpress)](https://github.com/basicrum/basicrum-wordpress/graphs/contributors)
