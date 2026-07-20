@@ -632,7 +632,7 @@ class Page {
 			'<input id="basicrum_%1$s" name="%2$s" type="text" size="%3$d" value="%4$s" placeholder="%5$s" class="%6$s"',
 			esc_attr( $id ),
 			esc_attr( $name ),
-			$size,
+			absint( $size ),
 			esc_attr( $value ),
 			esc_attr( $placeholder ),
 			esc_attr( implode( ' ', $input_classes ) )
@@ -691,9 +691,9 @@ class Page {
 			'<input id="basicrum_%1$s" name="%2$s" type="number" min="%3$d" max="%4$d" value="%5$d"',
 			esc_attr( $id ),
 			esc_attr( $name ),
-			$min,
-			$max,
-			$value
+			absint( $min ),
+			absint( $max ),
+			absint( $value )
 		);
 		if ( $is_disabled ) {
 			echo ' disabled="disabled"';

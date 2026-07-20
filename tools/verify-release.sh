@@ -38,6 +38,7 @@ require_entry 'basicrum/uninstall.php'
 require_entry 'basicrum/readme.txt'
 require_entry 'basicrum/LICENSE.md'
 require_entry 'basicrum/THIRD-PARTY-NOTICES.txt'
+require_entry 'basicrum/composer.json'
 require_entry 'basicrum/src/Plugin.php'
 require_entry 'basicrum/src/Assets.php'
 require_entry 'basicrum/src/ConsentIntegration.php'
@@ -112,7 +113,7 @@ if ! unzip -p "$ARCHIVE_PATH" basicrum/THIRD-PARTY-NOTICES.txt | grep -Fq 'Boome
 	exit 1
 fi
 
-if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Eq '^basicrum/(\.distignore|composer\.(json|lock)|package(-lock)?\.json|playwright[^/]*\.config\.(js|cjs|mjs|ts)|patchwork\.json|phpcs\.ruleset\.xml|phpunit[^/]*\.xml|README\.md|coverage\.xml|\.phpunit\.result\.cache)$'; then
+if printf '%s\n' "$ARCHIVE_ENTRIES" | grep -Eq '^basicrum/(\.distignore|composer\.lock|package(-lock)?\.json|playwright[^/]*\.config\.(js|cjs|mjs|ts)|patchwork\.json|phpcs\.ruleset\.xml|phpunit[^/]*\.xml|phpstan\.neon\.dist|README\.md|coverage\.xml|\.phpunit\.result\.cache)$'; then
 	printf '%s\n' 'Release archive contains a development file.' >&2
 	exit 1
 fi

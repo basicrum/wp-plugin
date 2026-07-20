@@ -1,5 +1,5 @@
 === Basicrum - Real User Monitoring ===
-Contributors: tstoychev
+Contributors: basicrum
 Tags: analytics, performance, rum, real-user-monitoring, web-vitals
 Requires at least: 6.0
 Tested up to: 7.0
@@ -56,7 +56,7 @@ Boomerang.js is an open source JavaScript library by Akamai that measures the pe
 
 = Do I need a Basicrum account? =
 
-Yes. You need a Basicrum collector endpoint and the matching Brum Site ID. Visit [basicrum.com](https://www.basicrum.com/) for hosted options, or use your own self-hosted collector.
+You need a Basicrum collector endpoint and the matching Brum Site ID. A hosted account from [basicrum.com](https://www.basicrum.com/) is one way to get them; running your own self-hosted collector requires no account.
 
 = Does Basicrum make my site compliant with privacy laws? =
 
@@ -76,6 +76,10 @@ Detection confirms that a supported integration is present, not that its consent
 
 By default, Basicrum may send complete query strings in page, navigation, referrer, and resource URLs. Enable **Basicrum > Visitor Privacy > Strip Query Strings** to replace them with `?qs-redacted` before sending beacons. URL paths are still collected. Review whether your URLs can contain personal or sensitive information before deciding whether to enable this setting.
 
+= Does Basicrum set cookies? =
+
+When Boomerang runs, it sets a first-party `RT` cookie that maintains timing state across consecutive pages. It uses `SameSite=Strict`, carries the `Secure` flag on HTTPS sites, and expires seven days after the last monitored page view. In **Require consent before monitoring** mode no cookie is set until your consent tool reports an allow decision, and the opt-out callback removes the `RT` cookie together with any legacy `BA` cookie left by older Boomerang setups.
+
 = Does it work with WooCommerce? =
 
 Yes. When WooCommerce is active, the plugin emits `shop`, `product`, `product_category`, `cart`, `checkout`, `checkout_payment`, `checkout_success`, and `account` page types when the corresponding WooCommerce conditional is true.
@@ -83,6 +87,14 @@ Yes. When WooCommerce is active, the plugin emits `shop`, `product`, `product_ca
 = Can I use an HTTP beacon URL during local development? =
 
 Yes. Enable HTTP Strictness under Basicrum's Developer Settings to preserve HTTP beacon URLs. Keep it disabled on production sites so HTTP beacon URLs are automatically upgraded to HTTPS.
+
+== External services ==
+
+This plugin sends visitor performance beacons to the collector endpoint that the site administrator configures under **Basicrum > General Settings > Beacon URL**. No beacon is sent until monitoring is enabled and, in the default **Require consent before monitoring** mode, an allow decision is reported by the site's consent tool.
+
+Each beacon carries performance data: page and resource URLs (with optional query-string redaction), timing metrics, the detected page type, and the configured Brum Site ID. As with any HTTP request, the collector also observes the visitor's IP address and user agent. Beacons go only to the configured Beacon URL; the plugin makes no requests to basicrum.com or any other service on its own.
+
+The collector can be the hosted Basicrum service or a self-hosted installation. For the hosted service, see the [Basicrum website](https://www.basicrum.com/) for service and privacy information. Operators of self-hosted collectors are responsible for their own hosting arrangements.
 
 == Third-party software ==
 
@@ -93,10 +105,4 @@ The bundled file `assets/js/boomr/boomerang-1.815.60.cutting-edge.min.js` is a m
 == Changelog ==
 
 = 0.0.8 =
-* First public release.
-* Reordered the Visitor Consent choices and hid Consent Tool Connection when consent is not required.
-* Replaced the unused consent-mode selector with clear immediate and consent-controlled loading choices.
-* Made external consent tools authoritative on every page through two explicit callbacks.
-* Added a privacy-safe default, transparent integration guidance, and WordPress Privacy Policy Guide content.
-* Added first-class query-string protection under Visitor Privacy, disabled by default.
-* Added fail-closed automatic selection for WP Consent API, Borlabs Cookie 3.2+, and the modern CookieYes plugin marker, with manual callbacks available as an explicit choice.
+* First public release: Real User Monitoring via the bundled Boomerang.js with WordPress and WooCommerce page-type detection, a consent-required default with fail-closed automatic consent-tool detection (WP Consent API, Borlabs Cookie 3.2+, CookieYes 3.x) plus manual callbacks, optional query-string redaction, editable WordPress Privacy Policy Guide text, and optimization-plugin script exclusions.

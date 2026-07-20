@@ -67,6 +67,8 @@ class PrivacyTest extends TestCase {
 		$this->assertStringContainsString( '?qs-redacted', $content );
 		$this->assertStringContainsString( 'URL paths are still collected', $content );
 		$this->assertStringContainsString( 'IP address and user agent', $content );
+		$this->assertStringContainsString( 'cookie named RT', $content );
+		$this->assertStringContainsString( 'expires seven days after the last monitored page view', $content );
 		$this->assertStringContainsString( '<code>https://collector.example.test/beacon</code>', $content );
 		$this->assertStringContainsString( 'consent tool on every page', $content );
 		$this->assertStringContainsString( 'does not persist consent across page loads', $content );

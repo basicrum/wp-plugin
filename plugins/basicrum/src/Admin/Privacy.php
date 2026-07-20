@@ -45,7 +45,7 @@ class Privacy {
 		$content .= '</p>';
 		$content .= '<p><strong>' . esc_html__( 'Suggested text:', 'basicrum' ) . '</strong></p>';
 		$content .= '<p>';
-		$content .= esc_html__( 'This site uses Basicrum to measure real-user performance. When monitoring runs, a visitor\'s browser sends page and resource URLs, performance and interaction timing metrics, page type, the configured site identifier, and technical browser, device, and network information to a performance collector. The collector also receives request information such as the IP address and user agent. Boomerang may use first-party cookies to maintain measurement state.', 'basicrum' );
+		$content .= esc_html__( 'This site uses Basicrum to measure real-user performance. When monitoring runs, a visitor\'s browser sends page and resource URLs, performance and interaction timing metrics, page type, the configured site identifier, and technical browser, device, and network information to a performance collector. The collector also receives request information such as the IP address and user agent. Boomerang stores measurement state in a first-party cookie named RT, which contains a random session identifier that links page views, uses SameSite=Strict, is marked Secure on HTTPS sites, and expires seven days after the last monitored page view. Opting out removes the RT cookie and any legacy BA cookie.', 'basicrum' );
 		$content .= '</p>';
 		$content .= '<p>';
 		if ( '1' === $settings['strip_query_string'] ) {

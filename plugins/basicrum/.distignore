@@ -8,7 +8,6 @@
 /.distignore
 
 .phpunit.result.cache
-composer.json
 composer.lock
 patchwork.json
 phpcs.ruleset.xml
@@ -24,3 +23,4 @@ playwright*.config.js
 coverage.xml
 basicrum.zip
 /release
+phpstan.neon.dist
