@@ -149,8 +149,9 @@ Acceptance criteria:
 - [ ] Make CI regenerate the loaders and fail when the committed output differs.
 - [ ] Document the source and version of the bundled Boomerang asset.
 - [x] Add a repeatable command for generating `languages/basicrum.pot`.
-- [x] Add a repeatable command for compiling translation MO files.
-- [x] Make CI detect stale POT or MO files.
+- [x] Keep locale-specific PO and MO files out of the repository and release ZIP.
+- [x] Keep POT generation as a local maintenance command; the standalone
+  translation CI job was removed by product decision.
 
 Acceptance criteria:
 

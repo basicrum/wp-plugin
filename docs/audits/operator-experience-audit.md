@@ -159,9 +159,9 @@ settings screen. (issue-backoffice-unlinked, walkthrough-05, BR-DOC-16)
 - [ ] Declare WooCommerce HPOS (custom order tables) compatibility via
   `FeaturesUtil::declare_compatibility()`; the plugin advertises WooCommerce
   support but makes no declaration. (critic)
-- [ ] Resolve the Bulgarian catalog: 8 of 66 strings translated yet a
-  compiled .mo ships, giving Bulgarian admins a mixed-language UI. Complete
-  it or drop the pair until substantially complete. (critic)
+- [x] Remove the incomplete Bulgarian PO/MO catalogs and keep locale-specific
+  catalogs out of release ZIPs until bundled translations are deliberately
+  restored. (critic, superseded by product decision on 2026-07-19)
 - [ ] Explain in plain language why fields are grayed out before Enable is
   checked. (issue-disabled-state-unexplained)
 - [ ] Soften residual developer jargon: `manage_options capability`,

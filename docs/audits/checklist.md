@@ -95,8 +95,6 @@ operator-journey defect, P3 = minor/polish.
   limitation. (privacy 8 / BR-WP-14)
 - [ ] P3 Declare WooCommerce HPOS compatibility
   (`FeaturesUtil::declare_compatibility`, guarded). (UX 9)
-- [ ] P3 Bulgarian catalog: complete it or drop the po/mo pair (8 of 66
-  strings translated ships today). (UX 9)
 - [ ] P3 Optional hardening: reject protocol-relative/relative beacon URLs
   in `Validate.php` (BR-WP-06 was overturned to PASS - the bundle's
   `beacon_url_force_https` already prevents plaintext beacons). (privacy 10)

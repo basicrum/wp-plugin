@@ -80,17 +80,15 @@ cookies to maintain measurement state".
 - [ ] Update `tests/unit/PrivacyTest.php` string assertions.
 - [ ] Keep the wording editable and qualified; no compliance claims.
 
-## 5. Regenerate translation catalogs for the pending header edit (DISC-10)
+## 5. Translation catalogs (DISC-10, superseded)
 
-The uncommitted `basicrum.php` Description change makes
-`languages/basicrum.pot` and the bg_BG catalogs stale; the CI translation job
-runs `git diff --exit-code` on `plugins/basicrum/languages` and will fail on
-this working tree.
+Resolved by product decision on 2026-07-19: the Bulgarian PO/MO catalogs and
+standalone translation CI job were removed. Keep the POT-only local generator
+for future gettext changes, and keep locale-specific catalogs out of release
+ZIPs unless bundled translations are deliberately restored.
 
-- [ ] Run `make translations` and commit the regenerated `basicrum.pot`,
-  `basicrum-bg_BG.po`, and `basicrum-bg_BG.mo` together with the header and
-  readme edits.
-- [ ] Fold in the new strings from items 3 and 4 when those land.
+- [x] Regenerate and commit `languages/basicrum.pot` when source strings change.
+- [x] Exclude and reject locale-specific PO/MO files in release packages.
 
 ## 6. Match public page-type lists to the detector (DISC-08)
 
