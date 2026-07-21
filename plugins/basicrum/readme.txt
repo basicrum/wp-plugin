@@ -1,5 +1,5 @@
 === Basicrum - Real User Monitoring ===
-Contributors: basicrum
+Contributors: basicrum, rawbird
 Tags: analytics, performance, rum, real-user-monitoring, web-vitals
 Requires at least: 6.0
 Tested up to: 7.0
