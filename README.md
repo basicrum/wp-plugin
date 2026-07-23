@@ -57,6 +57,15 @@ See [AGENTS.md](AGENTS.md) for repository invariants, the complete check suite, 
 
 The plugin header version, `BASICRUM_VERSION`, WordPress `Stable tag`, top changelog version, and `v<version>` release tag must match.
 
+To publish a stable release, push its version tag after the required checks pass:
+
+```bash
+git tag -a vX.Y.Z -m "Basicrum vX.Y.Z"
+git push origin vX.Y.Z
+```
+
+The tag workflow verifies the version, runs the release tests, builds and smoke-tests the installable ZIP, and only then creates the GitHub Release with `basicrum.zip` and `basicrum.zip.sha256`. Do not create the GitHub Release or upload the ZIP manually.
+
 ## Contributing and security
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Report suspected vulnerabilities privately according to [SECURITY.md](SECURITY.md), not through a public issue.
